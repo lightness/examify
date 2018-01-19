@@ -25,6 +25,14 @@ export class QuestionService extends ServiceBase<Question> implements Service<Qu
         return this.databaseService.getRepository(Question);
     }
 
+    public async getById(id: number): Promise<Question> {
+        let question: Question = await super.getById(id);
+
+        question.answers = await this.answerService.getByQuestionId(id);
+
+        return question;
+    }
+
     public async add(question: Question): Promise<Question> {
         try {
             return await super.add(question);
@@ -37,11 +45,13 @@ export class QuestionService extends ServiceBase<Question> implements Service<Qu
     public async createWithAnswers(question: Question): Promise<Question> {
         let createdQuestion: Question = await this.add(question);
 
-        createdQuestion.answers = await Bluebird.map(question.answers, answer => {
-            answer = _.extend(answer, { questionId: createdQuestion.id });
+        if (question.answers) {
+            createdQuestion.answers = await Bluebird.map(question.answers, answer => {
+                answer = _.extend(answer, { questionId: createdQuestion.id });
 
-            return this.answerService.add(answer);
-        });
+                return this.answerService.add(answer);
+            });
+        }
 
         return createdQuestion;
     }

@@ -20,6 +20,13 @@ export class QuestionController {
         res.status(HttpStatus.OK).json(questions);
     }
 
+    @Get("/:id")
+    public async getById( @Res() res: Response, @Param("id", new ParseIntPipe()) id: number) {
+        let question: Question = await this.questionService.getById(id);
+
+        res.status(HttpStatus.OK).json(question);
+    }
+
     @Post()
     public async create( @Res() res: Response, @Body() question: Question) {
         let createdQuestion: Question = await this.questionService.createWithAnswers(question);

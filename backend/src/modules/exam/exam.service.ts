@@ -14,7 +14,7 @@ import { TopicWithoutQuestionsException } from "../topic/topic-without-questions
 @Component()
 export class ExamService {
 
-    private readonly QUESTIONS_IN_TEST = 3; // TODO: move to db settings
+    private readonly QUESTIONS_IN_TEST = 10; // TODO: move to db settings
 
     public constructor(private databaseService: DatabaseService) {
 

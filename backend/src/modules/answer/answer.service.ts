@@ -28,4 +28,12 @@ export class AnswerService extends ServiceBase<Answer> implements Service<Answer
         }
     }
 
+    public async getByQuestionId(questionId: number): Promise<Answer[]> {
+        let answers: Answer[] = await this.repository.createQueryBuilder("answer")
+            .where("answer.questionId = :questionId", { questionId })
+            .getMany();
+
+        return answers;
+    }
+
 }
