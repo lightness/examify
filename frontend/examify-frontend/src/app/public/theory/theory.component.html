@@ -1,0 +1,6 @@
+<h3 *ngIf="topic" >{{topic?.title}}</h3>
+
+<pre *ngIf="topic">{{topic?.theory}}<pre>
+
+<a href="/">To topic list</a>
+<a *ngIf="topic?.hasQuestions" href="/topic/{{topic?.id}}/exam">Exam</a>

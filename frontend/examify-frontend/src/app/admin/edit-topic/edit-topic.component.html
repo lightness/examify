@@ -1,0 +1,30 @@
+<div *ngIf="topic">
+
+    <h3>Topic "{{topic.title}}"</h3>
+
+    <input type="text" [(ngModel)]="topic.title" />
+
+    <textarea [(ngModel)]="topic.theory"></textarea>
+
+    <button (click)="save()" >Save</button>
+    <button (click)="deleteTopic()">Delete topic</button>
+    <a href="/admin/topics">Back to topics list</a>
+
+    <hr>
+
+    <a href="/admin/topic/{{topicId}}/question/new">Add new question</a>
+
+    <div *ngFor="let question of questions">
+        <pre>{{question.text}}</pre>
+        <ul>
+            <li *ngFor="let answer of question.answers">
+                <input type="checkbox" [checked]="answer.isCorrect" disabled />
+                {{answer.text}}
+            </li>
+        </ul>
+        <a href="/admin/topic/{{topicId}}/question/{{question.id}}">Edit question</a>
+        <button (click)="deleteQuestion(question.id)">Delete question</button>
+    </div>
+
+
+</div>

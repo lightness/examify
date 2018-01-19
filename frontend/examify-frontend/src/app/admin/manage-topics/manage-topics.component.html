@@ -1,0 +1,13 @@
+<h3>Topics</h3>
+
+<a href="/admin/topic/new">Add new</a>
+
+<div *ngIf="topics"> 
+    <ul *ngFor="let topic of topics">
+        <li>
+            {{ topic.title }}
+            <a href="/admin/topic/{{topic.id}}">Manage</a>
+            <button (click)="delete(topic.id)">Delete</button>
+        </li>
+    </ul>
+</div>

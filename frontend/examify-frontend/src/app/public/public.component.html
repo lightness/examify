@@ -1,0 +1,10 @@
+<div>
+  Topics: 
+  <ul>
+    <li *ngFor="let topic of topics">
+      {{topic.title}} 
+      <a href="/topic/{{topic.id}}/theory">Learn</a>
+      <a *ngIf="topic.hasQuestions" href="/topic/{{topic.id}}/exam">Exam</a>
+    </li>
+  </ul>
+</div>
