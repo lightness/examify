@@ -12,3 +12,6 @@ gulp start
 cd frontend/examify-frontend
 npm start
 ```
+
+App: `http://localhost:4200`
+Admin console: `http://localhost:4200/admin`
