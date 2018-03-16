@@ -13,7 +13,7 @@ const instance = express();
 instance.use(bodyParser.json());
 
 async function bootstrap() {
-    const app = await NestFactory.create(ApplicationModule, instance);
+    const app = await NestFactory.create(ApplicationModule, instance, null);
     app.setGlobalPrefix("/api/v1");
     await app.listen(PORT, () => console.log(`Application is listening on port ${PORT}`));
 }

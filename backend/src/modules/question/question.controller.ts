@@ -1,6 +1,6 @@
 import * as _ from "lodash";
 import { Response } from "express";
-import { Controller, Body, HttpStatus, Res, Post, Put, Param, ParseIntPipe, Delete, Get, Query } from "@nestjs/common"
+import { Controller, Body, HttpStatus, Res, Post, Put, Param, ParseIntPipe, Delete, Get, Query } from "@nestjs/common";
 
 import { Question } from "./question.entity";
 import { QuestionService } from "./question.service";
@@ -29,14 +29,15 @@ export class QuestionController {
 
     @Post()
     public async create( @Res() res: Response, @Body() question: Question) {
-        let createdQuestion: Question = await this.questionService.createWithAnswers(question);
+        let createdQuestion: Question = await this.questionService.createWithAnswers(question, null, null);
 
         res.status(HttpStatus.OK).json(createdQuestion);
     }
 
     @Put("/:id")
     public async update( @Res() res: Response, @Body() question: Question, @Param("id", new ParseIntPipe()) id: number) {
-        let updatedQuestion: Question = await this.questionService.updateWithAnswers(_.extend(question, { id }));
+        let questionWithId: Question = _.extend(question, { id });
+        let updatedQuestion: Question = await this.questionService.updateWithAnswers(questionWithId, null, null);
 
         res.status(HttpStatus.OK).json(updatedQuestion);
     }

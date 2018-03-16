@@ -9,6 +9,8 @@ import { Question } from "./question.entity";
 import { ServiceBase } from "../../common/base.service";
 import { AnswerService } from "../answer/answer.service";
 import { DatabaseService } from "../database/database.service";
+import { AnswerRepository } from "../answer/answer.repository";
+import { QuestionRepository } from "./question.repository";
 import { QuestionAlreadyExistsException } from "./question.already-exists.exception";
 
 
@@ -21,54 +23,56 @@ export class QuestionService extends ServiceBase<Question> implements Service<Qu
         super();
     }
 
-    protected get repository(): Repository<Question> {
-        return this.databaseService.getRepository(Question);
+    protected get repository(): QuestionRepository {
+        return this.databaseService.getEntityManager().getCustomRepository(QuestionRepository);
     }
 
-    public async getById(id: number): Promise<Question> {
-        let question: Question = await super.getById(id);
+    public async getById(id: number, options?: { repository: QuestionRepository }): Promise<Question> {
+        let repository = options && options.repository || this.repository;
 
-        question.answers = await this.answerService.getByQuestionId(id);
+        let question: Question = await repository.createQueryBuilder("question")
+            .leftJoinAndSelect("question.answers", "answer", "answer.questionId = question.id")
+            .where("question.id = :id", { id })
+            .getOne();
 
         return question;
     }
 
-    public async add(question: Question): Promise<Question> {
-        try {
-            return await super.add(question);
-        }
-        catch (e) {
-            throw new QuestionAlreadyExistsException(question);
-        }
-    }
-
-    public async createWithAnswers(question: Question): Promise<Question> {
-        let createdQuestion: Question = await this.add(question);
+    @Transaction()
+    public async createWithAnswers(
+        question: Question,
+        @TransactionRepository() questionRepository: QuestionRepository,
+        @TransactionRepository() answerRepository: AnswerRepository
+    ): Promise<Question> {
+        let createdQuestion: Question = await questionRepository.saveQuestion(question);
 
         if (question.answers) {
             createdQuestion.answers = await Bluebird.map(question.answers, answer => {
                 answer = _.extend(answer, { questionId: createdQuestion.id });
 
-                return this.answerService.add(answer);
+                return answerRepository.saveAnswer(answer);
             });
         }
 
         return createdQuestion;
     }
 
-    public async updateWithAnswers(question: Question): Promise<Question> {
-        let questionWithoutAnswers: Question = _.omit(question, "answers") as Question;
-        let updatedQuestion: Question = await this.update(questionWithoutAnswers);
+    @Transaction()
+    public async updateWithAnswers(
+        question: Question,
+        @TransactionRepository() questionRepository: QuestionRepository,
+        @TransactionRepository() answerRepository: AnswerRepository
+    ): Promise<Question> {
+        let questionWithoutAnswers: Partial<Question> = _.omit(question, "answers");
+        await questionRepository.updateById(question.id, questionWithoutAnswers);
 
-        console.log(">>>", updatedQuestion);
+        let answers = await Bluebird.map(question.answers, answer => {
+            answer = _.extend(answer, { questionId: question.id });
 
-        updatedQuestion.answers = await Bluebird.map(question.answers, answer => {
-            answer = _.extend(answer, { questionId: updatedQuestion.id });
-
-            return this.answerService.update(answer);
+            return answerRepository.saveAnswer(answer);
         });
 
-        return updatedQuestion;
+        return this.getById(question.id, { repository: questionRepository });
     }
 
     public async getByTopicId(topicId: number): Promise<Question[]> {

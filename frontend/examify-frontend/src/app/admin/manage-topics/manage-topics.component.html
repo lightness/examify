@@ -1,13 +1,11 @@
-<h3>Topics</h3>
+<h3 class="display-4 text-right">Topics</h3>
 
-<a href="/admin/topic/new">Add new</a>
+<div class="add-topic-btn">
+    <a href="/admin/topic/new" class="btn btn-primary">Add new</a>
+</div>
 
-<div *ngIf="topics"> 
-    <ul *ngFor="let topic of topics">
-        <li>
-            {{ topic.title }}
-            <a href="/admin/topic/{{topic.id}}">Manage</a>
-            <button (click)="delete(topic.id)">Delete</button>
-        </li>
-    </ul>
+<div *ngIf="topics" class="card-deck">
+
+    <ex-topic-card *ngFor="let topic of topics" [topic]="topic" (onDelete)="onDelete(topic)"></ex-topic-card>
+
 </div>

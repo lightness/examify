@@ -17,7 +17,7 @@ export class Question extends EntityBase {
     public topic: Topic;
 
     @Column({ nullable: false })
-    public topicId: number
+    public topicId: number;
 
     @OneToMany(type => Answer, answer => answer.question)
     public answers: Answer[];

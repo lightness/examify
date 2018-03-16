@@ -1,5 +1,10 @@
 ## Backend
 
+First time:
+```sql
+create database examify;
+```
+
 ```
 cd backend
 gulp compile

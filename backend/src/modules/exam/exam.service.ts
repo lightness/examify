@@ -62,7 +62,7 @@ export class ExamService {
 
         _.each(topic.questions, question => {
             question.answers = _.map(question.answers, answer => _.omit(answer, "isCorrect") as Answer);
-        })
+        });
 
         return topic;
     }
@@ -97,7 +97,7 @@ export class ExamService {
             totalQuestionsCount,
             answeredQuestionsCount,
             correctlyAnsweredQuestionsCount
-        }
+        };
     }
 
 }

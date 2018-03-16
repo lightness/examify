@@ -38,7 +38,7 @@ export class DatabaseService implements OnModuleInit {
      * Connects to the database if needed and returns a reference to the EntityManager
      * @returns {Promise<EntityManager>}
      */
-    public async getEntityManager(): Promise<EntityManager> {
+    public getEntityManager(): EntityManager {
         return this.connection.createEntityManager();
     }
 
