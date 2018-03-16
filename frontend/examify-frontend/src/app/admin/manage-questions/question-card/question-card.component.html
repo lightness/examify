@@ -1,0 +1,9 @@
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Question №{{ question.id }}</h5>
+        <p class="card-text">{{ question.text }}</p>
+
+        <!-- <a href="/admin/topic/{{topic.id}}" class="btn btn-primary">Manage</a> -->
+        <a (click)="onDeleteClick()" class="btn btn-outline-danger float-right">Delete</a>
+    </div>
+</div>

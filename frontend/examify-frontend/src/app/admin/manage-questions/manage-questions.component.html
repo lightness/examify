@@ -1,0 +1,5 @@
+<div *ngIf="questions" class="card-deck">
+
+    <ex-question-card *ngFor="let question of questions" [question]="question" (onDelete)="onDelete(topic)"></ex-question-card>
+
+</div>

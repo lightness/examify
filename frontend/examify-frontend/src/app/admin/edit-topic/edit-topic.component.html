@@ -1,30 +1,45 @@
 <div *ngIf="topic">
 
-    <h3>Topic "{{topic.title}}"</h3>
+    <h3 *ngIf="!topic?.title" class="display-4 text-right">New Topic</h3>
+    <h3 *ngIf="topic?.title" class="display-4 text-right">Topic "{{topic.title}}"</h3>
 
-    <input type="text" [(ngModel)]="topic.title" />
+    <form>
+        <div class="form-group">
+            <label for="input-title">Title</label>
+            <input id="input-title" type="text" [(ngModel)]="topic.title" name="title" class="form-control" placeholder="Topic title"
+            />
+        </div>
 
-    <textarea [(ngModel)]="topic.theory"></textarea>
+        <div class="form-group">
+            <label for="input-theory">Theory</label>
+            <textarea id="input-theory" [(ngModel)]="topic.theory" name="theory" class="form-control" placeholder="Some theory by topic"></textarea>
+        </div>
 
-    <button (click)="save()" >Save</button>
-    <button (click)="deleteTopic()">Delete topic</button>
-    <a href="/admin/topics">Back to topics list</a>
+        <hr>
 
-    <hr>
+        <h4 class="h4 text-right">Questions</h4>
 
-    <a href="/admin/topic/{{topicId}}/question/new">Add new question</a>
+        <a href="/admin/topic/{{topicId}}/question/new" class="btn btn-primary">Add question</a>
 
-    <div *ngFor="let question of questions">
-        <pre>{{question.text}}</pre>
-        <ul>
-            <li *ngFor="let answer of question.answers">
-                <input type="checkbox" [checked]="answer.isCorrect" disabled />
-                {{answer.text}}
-            </li>
-        </ul>
-        <a href="/admin/topic/{{topicId}}/question/{{question.id}}">Edit question</a>
-        <button (click)="deleteQuestion(question.id)">Delete question</button>
-    </div>
+        <div *ngFor="let question of questions">
+            <pre>{{question.text}}</pre>
+            <ul>
+                <li *ngFor="let answer of question.answers">
+                    <input type="checkbox" [checked]="answer.isCorrect" disabled /> {{answer.text}}
+                </li>
+            </ul>
+            <a href="/admin/topic/{{topicId}}/question/{{question.id}}">Edit question</a>
+            <button (click)="deleteQuestion(question.id)">Delete question</button>
+        </div>
 
+
+        <hr>
+
+        <button (click)="save()" class="btn btn-success">{{ topic.id ? "Update" : "Create" }}</button>
+        <button *ngIf="topic?.id" (click)="deleteTopic()" class="btn btn-outline-danger">Delete topic</button>
+        <a href="/admin/topics" class="btn btn-light">Back to topics list</a>
+
+
+    </form>
 
 </div>

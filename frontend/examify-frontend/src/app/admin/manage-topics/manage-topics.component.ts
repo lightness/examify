@@ -13,7 +13,6 @@ import { Subject } from "rxjs/Subject";
 export class ManageTopicsComponent implements OnInit {
 
     private topics: Topic[];
-    private topicToDelete$ = new Subject<Topic>();
 
     constructor(private adminService: AdminService) { }
 
