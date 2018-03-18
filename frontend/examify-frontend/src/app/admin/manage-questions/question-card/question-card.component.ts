@@ -12,13 +12,16 @@ export class QuestionCardComponent {
 
     @Input() private question: Question;
     @Output() private onDelete = new EventEmitter<Question>();
+    @Output() private onEdit = new EventEmitter<Question>();
 
     constructor() { }
 
     public onDeleteClick() {
-        if (confirm(`Doy you really want to delete question №${this.question.id}?`)) {
-            this.onDelete.emit(this.question);
-        }
+        this.onDelete.emit(this.question);
+    }
+
+    public onEditClick() {
+        this.onEdit.emit(this.question);
     }
 
 }

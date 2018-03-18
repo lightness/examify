@@ -3,9 +3,9 @@ import { Answer } from "./answer.entity";
 
 
 export interface Question {
-    id?: number;    
+    id?: number;
     text?: string;
     topic?: Topic;
-    topicId?: number
+    topicId?: number;
     answers?: Answer[];
 }

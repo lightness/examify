@@ -55,14 +55,14 @@ export class EditQuestionComponent implements OnInit {
         }
 
         result.subscribe(newTopic => {
-            this.router.navigate(["/admin", "topic", this.topicId]);
+            this.router.navigate(["/admin", "topic", this.topicId, "questions"]);
         });
     }
 
     public deleteQuestion() {
         this.adminService.deleteQuestion(this.questionId)
             .subscribe(() => {
-                this.router.navigate(["/admin", "topic", this.topicId]);
+                this.router.navigate(["/admin", "topic", this.topicId, "questions"]);
             });
     }
 

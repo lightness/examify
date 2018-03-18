@@ -1,9 +1,10 @@
-import { ActivatedRoute } from "@angular/router";
+import { switchMap } from "rxjs/operators";
 import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 
+import { Topic } from "../../../common/entity/topic.entity";
 import { Question } from "../../../common/entity/question.entity";
 import { AdminService } from "../admin.service";
-import { Subject } from "rxjs/Subject";
 
 
 @Component({
@@ -13,36 +14,34 @@ import { Subject } from "rxjs/Subject";
 })
 export class ManageQuestionsComponent implements OnInit {
 
+    private topic: Topic;
     private questions: Question[];
 
     constructor(
         private adminService: AdminService,
-        private route: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        private router: Router
     ) { }
 
     public ngOnInit() {
-        this.fetchQuestions();
+        this.topic = this.activatedRoute.snapshot.data["topic"];
+        this.questions = this.activatedRoute.snapshot.data["questions"];
     }
 
-    // public onDelete(topic: Topic) {
-    //     this.adminService.deleteTopic(topic.id)
-    //         .subscribe(() => {
-    //             this.fetchTopics();
-    //         });
-    // }
+    public onDelete(question) {
+        if (confirm(`Doy you really want to delete question №${question.id}?`)) {
+            this.adminService.deleteQuestion(question.id)
+                .pipe(
+                    switchMap(() => this.adminService.getQuestionsByTopic(this.topic.id)),
+                )
+                .subscribe((questions: Question[]) => {
+                    this.questions = questions;
+                });
+        }
+    }
 
-    public fetchQuestions() {
-        let topicId: number = this.route.snapshot.params["topicId"];
-
-        this.adminService.getQuestionsByTopic(topicId)
-            .subscribe((questions: Question[]) => {
-                this.questions = questions;
-            });
-
-        // this.adminService.getAllTopics()
-        //     .subscribe(topics => {
-        //         this.questions = topics;
-        //     });
+    public onEdit(question) {
+        this.router.navigate(["/admin", "topic", this.topic.id, "question", question.id]);
     }
 
 }

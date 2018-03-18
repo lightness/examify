@@ -7,9 +7,9 @@ import { AdminService } from "../admin.service";
 
 
 @Component({
-  selector: "ex-edit-topic",
-  templateUrl: "./edit-topic.component.html",
-  styleUrls: ["./edit-topic.component.css"]
+    selector: "ex-edit-topic",
+    templateUrl: "./edit-topic.component.html",
+    styleUrls: ["./edit-topic.component.css"]
 })
 export class EditTopicComponent implements OnInit {
 
@@ -52,7 +52,7 @@ export class EditTopicComponent implements OnInit {
         let result;
 
         if (this.topicId) {
-            result = this.adminService.updateTopic({...this.topic, id: this.topicId });
+            result = this.adminService.updateTopic({ ...this.topic, id: this.topicId });
         } else {
             result = this.adminService.createTopic(this.topic);
         }
@@ -62,18 +62,20 @@ export class EditTopicComponent implements OnInit {
         });
     }
 
-    public deleteQuestion(questionId: number) {
-        this.adminService.deleteQuestion(questionId)
-            .subscribe(() => {
-                this.fetchTopic();
-            });
-    }
+    // public deleteQuestion(questionId: number) {
+    //     this.adminService.deleteQuestion(questionId)
+    //         .subscribe(() => {
+    //             this.fetchTopic();
+    //         });
+    // }
 
     public deleteTopic() {
-        this.adminService.deleteTopic(this.topicId)
-            .subscribe(() => {
-                this.router.navigate(["/admin", "topics"]);
-            });
+        if (confirm(`Do you really want to delete "${this.topic.title}" topic?`)) {
+            this.adminService.deleteTopic(this.topicId)
+                .subscribe(() => {
+                    this.router.navigate(["/admin", "topics"]);
+                });
+        }
     }
 
 }

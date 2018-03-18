@@ -1,5 +1,17 @@
+<p class="display-4 text-right">{{ topic.title }}</p>
+<p class="lead text-right">Questions</p>
+
+<div class="add-question-btn">
+    <a href="/admin/topic/{{ topic.id }}/question/new" class="btn btn-primary">Add question</a>
+</div>
+
 <div *ngIf="questions" class="card-deck">
 
-    <ex-question-card *ngFor="let question of questions" [question]="question" (onDelete)="onDelete(topic)"></ex-question-card>
+    <ex-question-card 
+        *ngFor="let question of questions" 
+        [question]="question" 
+        (onDelete)="onDelete(question)"
+        (onEdit)="onEdit(question)">
+    </ex-question-card>
 
 </div>

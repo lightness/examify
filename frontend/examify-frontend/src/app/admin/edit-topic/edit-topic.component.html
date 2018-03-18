@@ -15,9 +15,11 @@
             <textarea id="input-theory" [(ngModel)]="topic.theory" name="theory" class="form-control" placeholder="Some theory by topic"></textarea>
         </div>
 
-        <hr>
 
-        <h4 class="h4 text-right">Questions</h4>
+        <button (click)="save()" class="btn btn-success">{{ topic.id ? "Update" : "Create" }}</button>
+        <a href="/admin/topic/{{topicId}}/questions" class="btn btn-primary">Manage questions</a>
+        
+        <!-- <h4 class="h4 text-right">Questions</h4>
 
         <a href="/admin/topic/{{topicId}}/question/new" class="btn btn-primary">Add question</a>
 
@@ -30,14 +32,12 @@
             </ul>
             <a href="/admin/topic/{{topicId}}/question/{{question.id}}">Edit question</a>
             <button (click)="deleteQuestion(question.id)">Delete question</button>
+        </div> -->
+
+        <div class="float-right">
+            <button *ngIf="topic?.id" (click)="deleteTopic()" class="btn btn-outline-danger">Delete topic</button>
+            <a href="/admin/topics" class="btn btn-light">Back to topics list</a>
         </div>
-
-
-        <hr>
-
-        <button (click)="save()" class="btn btn-success">{{ topic.id ? "Update" : "Create" }}</button>
-        <button *ngIf="topic?.id" (click)="deleteTopic()" class="btn btn-outline-danger">Delete topic</button>
-        <a href="/admin/topics" class="btn btn-light">Back to topics list</a>
 
 
     </form>

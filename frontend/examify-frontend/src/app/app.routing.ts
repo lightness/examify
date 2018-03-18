@@ -2,17 +2,17 @@ import { Routes, RouterModule } from "@angular/router";
 
 
 const appRoutes: Routes = [
-    { 
-        path: "admin", 
-        loadChildren: "./admin/admin.module#AdminModule" 
+    {
+        path: "admin",
+        loadChildren: "./admin/admin.module#AdminModule",
     },
     {
-        path: "", 
+        path: "",
         loadChildren: "./public/public.module#PublicModule",
     },
-    { 
-        path: "**", 
-        redirectTo: "/" 
+    {
+        path: "**",
+        redirectTo: "/"
     }
 ];
 

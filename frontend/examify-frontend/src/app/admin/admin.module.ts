@@ -11,6 +11,10 @@ import { EditQuestionComponent } from "./edit-question/edit-question.component";
 import { ManageTopicsComponent } from "./manage-topics/manage-topics.component";
 import { ManageQuestionsComponent } from "./manage-questions/manage-questions.component";
 import { QuestionCardComponent } from "./manage-questions/question-card/question-card.component";
+import { AllTopicsResolver } from "./common/all-topics.resolver";
+import { QuestionResolver } from "./common/question.resolver";
+import { QuestionsByTopicResolver } from "./common/questions-by-topic.resolver";
+import { TopicResolver } from "./common/topic.resolver";
 
 
 @NgModule({
@@ -28,6 +32,12 @@ import { QuestionCardComponent } from "./manage-questions/question-card/question
         EditTopicComponent,
         EditQuestionComponent,
     ],
-    providers: [AdminService]
+    providers: [
+        AdminService,
+        AllTopicsResolver,
+        QuestionResolver,
+        QuestionsByTopicResolver,
+        TopicResolver
+    ]
 })
 export class AdminModule { }
