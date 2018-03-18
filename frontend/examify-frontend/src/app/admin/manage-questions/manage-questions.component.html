@@ -2,16 +2,25 @@
 <p class="lead text-right">Questions</p>
 
 <div class="add-question-btn">
-    <a href="/admin/topic/{{ topic.id }}/question/new" class="btn btn-primary">Add question</a>
+    <a href="/admin/topic/{{ topic.id }}/question/new" class="btn btn-primary">
+        <i class="fas fa-plus"></i>
+        Add Question
+    </a>
+
+    <div class="float-right">
+        <a href="/admin/topic/{{ topic.id }}" class="btn btn-link">
+            <i class="fas fa-pencil-alt"></i>
+            Edit Topic
+        </a>
+        <a href="/admin/topics" class="btn btn-link">
+            To Topic List
+        </a>
+    </div>
 </div>
 
 <div *ngIf="questions" class="card-deck">
 
-    <ex-question-card 
-        *ngFor="let question of questions" 
-        [question]="question" 
-        (onDelete)="onDelete(question)"
-        (onEdit)="onEdit(question)">
+    <ex-question-card *ngFor="let question of questions" [question]="question" (onDelete)="onDelete(question)" (onEdit)="onEdit(question)">
     </ex-question-card>
 
 </div>

@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Topic } from "../../../common/entity/topic.entity";
 import { Question } from "../../../common/entity/question.entity";
 import { AdminService } from "../admin.service";
+import { Answer } from "../../../common/entity/answer.entity";
 
 
 @Component({
@@ -14,8 +15,7 @@ import { AdminService } from "../admin.service";
 })
 export class EditQuestionComponent implements OnInit {
 
-    private topicId: number;
-    private questionId: number;
+    private topic: Topic;
     private question: Question;
 
     constructor(
@@ -25,49 +25,35 @@ export class EditQuestionComponent implements OnInit {
     ) { }
 
     public ngOnInit() {
-        this.activatedRoute.params
-            .subscribe(params => {
-                this.topicId = +params["topicId"];
-                this.questionId = +params["questionId"];
-
-                this.fetchQuestion();
-            });
-    }
-
-    public fetchQuestion() {
-        if (this.questionId) {
-            this.adminService.getQuestion(this.questionId)
-                .subscribe(question => {
-                    this.question = question;
-                });
-        } else {
-            this.question = {};
-        }
+        this.question = this.activatedRoute.snapshot.data["question"] || {};
+        this.topic = this.activatedRoute.snapshot.data["topic"];
     }
 
     public save() {
         let result;
 
-        if (this.questionId) {
-            result = this.adminService.updateQuestion({ ...this.question, id: this.questionId });
+        if (this.question.id) {
+            result = this.adminService.updateQuestion({ ...this.question, id: this.question.id });
         } else {
-            result = this.adminService.createQuestion({ ...this.question, topicId: this.topicId });
+            result = this.adminService.createQuestion({ ...this.question, topicId: this.topic.id });
         }
 
         result.subscribe(newTopic => {
-            this.router.navigate(["/admin", "topic", this.topicId, "questions"]);
+            this.router.navigate(["/admin", "topic", this.topic.id, "questions"]);
         });
     }
 
     public deleteQuestion() {
-        this.adminService.deleteQuestion(this.questionId)
-            .subscribe(() => {
-                this.router.navigate(["/admin", "topic", this.topicId, "questions"]);
-            });
+        if (confirm(`Do you really want to remove this question?`)) {
+            this.adminService.deleteQuestion(this.question.id)
+                .subscribe(() => {
+                    this.router.navigate(["/admin", "topic", this.topic.id, "questions"]);
+                });
+        }
     }
 
-    public deleteAnswer(answerId: number) {
-        _.remove(this.question.answers, { id: answerId });
+    public deleteAnswer(answer: Answer) {
+        _.remove(this.question.answers, answer);
     }
 
     public addAnswer() {

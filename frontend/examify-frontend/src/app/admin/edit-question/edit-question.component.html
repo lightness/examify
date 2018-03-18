@@ -1,20 +1,57 @@
-<div *ngIf="question">
+<p class="display-4 text-right">Question #{{ question.id }}</p>
+<p class="lead text-right">Topic #{{ topic.id }} "{{ topic.title }}"</p>
 
-    <input type="text" [(ngModel)]="question.text" />
+<div class="form-group">
+    <label for="input-text">Question text</label>
+    <textarea id="input-text" [(ngModel)]="question.text" class="form-control"></textarea>
+</div>
 
-    <button (click)="save()" >Save</button>
-    <button *ngIf="question.id" (click)="deleteQuestion()">Delete question</button>
-    <a href="/admin/topic/{{topicId}}">Back to topic</a>
+<p class="lead text-right">Answer options</p>
 
-    <hr>
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col" class="col-8">Text answer</th>
+            <th scope="col">Correctness</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let answer of question.answers">
+            <td>
+                <input type="text" [(ngModel)]="answer.text" class="form-control" />
+            </td>
+            <td class="td-correctness">
+                <input type="checkbox" [(ngModel)]="answer.isCorrect" class="form-control" />
+            </td>
+            <td>
+                <button (click)="deleteAnswer(answer)" class="btn btn-outline-danger">
+                    <i class="fas fa-times"></i>
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <button (click)="addAnswer()" class="btn btn-primary">
+                    <i class="fas fa-plus"></i>
+                    Add answer option
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
 
-    <button (click)="addAnswer()">Add new answer option</button>
+<hr>
 
-    <div *ngFor="let answer of question.answers">
-        <input type="text" [(ngModel)]="answer.text" />
-        <input type="checkbox" [(ngModel)]="answer.isCorrect" />
-        <button (click)="deleteAnswer(answer.id)">Delete answer</button>
-    </div>
+<button (click)="save()" class="btn btn-success">
+    <i class="fas fa-save"></i>
+    Save
+</button>
 
-
+<div class="float-right">
+    <a href="/admin/topic/{{ topic.id }}/questions" class="btn btn-secondary">Back to topic</a>
+    <button *ngIf="question.id" (click)="deleteQuestion()" class="btn btn-outline-danger">
+        <i class="fas fa-times"></i>
+        Delete question
+    </button>
 </div>

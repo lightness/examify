@@ -66,6 +66,17 @@ export class QuestionService extends ServiceBase<Question> implements Service<Qu
         let questionWithoutAnswers: Partial<Question> = _.omit(question, "answers");
         await questionRepository.updateById(question.id, questionWithoutAnswers);
 
+        let existingQuestion: Question = await this.getById(question.id, { repository: questionRepository });
+        let existingAnswers: Answer[] = existingQuestion.answers;
+
+        let answersToDelete: Answer[] = _.differenceWith(existingQuestion.answers, question.answers, (existingAnswer: Answer, newAnswer: Answer) => {
+            return existingAnswer.id === newAnswer.id;
+        });
+
+        await Bluebird.map(answersToDelete, (answer: Answer) => {
+            return answerRepository.deleteById(answer.id);
+        });
+
         let answers = await Bluebird.map(question.answers, answer => {
             answer = _.extend(answer, { questionId: question.id });
 

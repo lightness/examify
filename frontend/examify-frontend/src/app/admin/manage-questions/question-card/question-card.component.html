@@ -1,10 +1,15 @@
 <div class="card">
+    <div class="card-header">Question №{{ question.id }}
+        <button (click)="onDeleteClick()" class="btn btn-outline-danger float-right">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
     <div class="card-body">
-        <h5 class="card-title">Question №{{ question.id }}</h5>
+
         <p class="card-text">{{ question.text }}</p>
 
         <ol>
-            <li *ngFor="let answer of question.answers" >
+            <li *ngFor="let answer of question.answers">
                 <label>
                     <input type="checkbox" [(ngModel)]="answer.isCorrect" disabled>
                     <span>{{ answer.text }}</span>
@@ -12,7 +17,10 @@
             </li>
         </ol>
 
-        <button (click)="onEditClick()" class="btn btn-success">Edit</button>
-        <button (click)="onDeleteClick()" class="btn btn-outline-danger float-right">Delete</button>
+        <button (click)="onEditClick()" class="btn btn-success">
+            <i class="fas fa-pencil-alt"></i>
+            Edit
+        </button>
+
     </div>
 </div>
