@@ -1,5 +1,5 @@
 import * as _ from "lodash";
-import * as crypto from "crypto";
+import * as bcrypt from "bcrypt";
 import { Component } from "@nestjs/common";
 import { Repository } from "typeorm";
 
@@ -37,8 +37,9 @@ export class UserService extends ServiceBase<User> implements Service<User> {
     }
 
     public async add(user: User): Promise<User> {
+        console.log(">>> service");
         if (user.password) {
-            user.password = this.encryptPassword(user.password);
+            user.password = await this.encryptPassword(user.password);
         }
 
         return super.add(user);
@@ -64,8 +65,9 @@ export class UserService extends ServiceBase<User> implements Service<User> {
 
         return user.roles;
     }
-    private encryptPassword(password): string {
-        return crypto.createHash("sha1").update(password).digest("hex");
+
+    private async encryptPassword(password): Promise<string> {
+        return bcrypt.hash(password, 10);
     }
 
 }

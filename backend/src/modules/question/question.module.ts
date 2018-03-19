@@ -1,5 +1,6 @@
 import { Module } from "@nestjs/common";
 
+import { BaseModule, PermissionMapping } from "../../common/base.module";
 import { AnswerModule } from "../answer/answer.module";
 import { DatabaseConfig } from "../database/database.config";
 import { DatabaseModule } from "../database/database.module";
@@ -17,6 +18,13 @@ import { QuestionController } from "./question.controller";
     ],
     exports: [QuestionService]
 })
-export class QuestionModule {
+export class QuestionModule extends BaseModule {
 
+    protected get controllers() {
+        return [QuestionController];
+    }
+
+    protected get permissionsMapping(): PermissionMapping[] {
+        return []; // TODO
+    }
 }

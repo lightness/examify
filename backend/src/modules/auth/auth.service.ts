@@ -7,11 +7,12 @@ import { ForbiddenException } from "@nestjs/common/exceptions";
 
 import { Role } from "../roles/role.entity";
 import { User } from "../users/user.entity";
+import { SECRET } from "./jwt.constants";
+import { JwtToken } from "./jwt.token";
 import { Permission } from "./permission.enum";
+import { UserService } from "../users/user.service";
 import { DatabaseService } from "../database/database.service";
 import { UserNotFoundException } from "../users/user.not-found.exception";
-import { JwtToken } from "./jwt.token";
-import { UserService } from "../users/user.service";
 import { BadCredentialsException } from "./bad-credentials.exception";
 
 
@@ -59,7 +60,6 @@ export class AuthService {
 
     public createToken(user: User): string {
         const EXPIRES_IN = 60 * 60;
-        const SECRET = "examify-secret";
         let payload: JwtToken = {
             user: {
                 id: user.id,
@@ -67,7 +67,7 @@ export class AuthService {
             }
         };
 
-        return jwt.sign(user, SECRET, { expiresIn: EXPIRES_IN });
+        return jwt.sign(payload, SECRET, { expiresIn: EXPIRES_IN });
     }
 
     public async login(name: string, password: string): Promise<{ permissions: Permission[], token: string }> {

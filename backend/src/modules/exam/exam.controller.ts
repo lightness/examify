@@ -17,7 +17,7 @@ export class ExamController {
     @Get("start")
     public async getExam( @Res() res: Response, @Query("topicId", new ParseIntPipe()) topicId: number) {
         let topic: Topic = await this.examService.getTopicExam(topicId);
-        
+
         res.status(HttpStatus.OK).json(topic);
     }
 

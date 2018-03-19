@@ -1,10 +1,12 @@
-import { Module } from "@nestjs/common";
+import { Module, MiddlewaresConsumer } from "@nestjs/common";
 
-import { ExamService } from './exam.service';
-import { DatabaseConfig } from '../database/database.config';
-import { DatabaseModule } from '../database/database.module';
-import { ExamController } from './exam.controller';
-import { DevDatabaseConfig } from '../database/dev.database.config';
+import { ExamService } from "./exam.service";
+import { DatabaseConfig } from "../database/database.config";
+import { DatabaseModule } from "../database/database.module";
+import { ExamController } from "./exam.controller";
+import { DevDatabaseConfig } from "../database/dev.database.config";
+import { AuthorizeMiddleware } from "../../middleware/authorize.middleware";
+import { BaseModule, PermissionMapping } from "../../common/base.module";
 
 
 @Module({
@@ -15,6 +17,13 @@ import { DevDatabaseConfig } from '../database/dev.database.config';
         { provide: DatabaseConfig, useClass: DevDatabaseConfig }
     ],
 })
-export class ExamModule {
+export class ExamModule extends BaseModule {
 
+    protected get controllers() {
+        return [ExamController];
+    }
+
+    protected get permissionsMapping(): PermissionMapping[] {
+        return []; // TODO
+    }
 }

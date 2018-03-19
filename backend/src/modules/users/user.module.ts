@@ -3,6 +3,7 @@ import { Module, MiddlewaresConsumer, RequestMethod } from "@nestjs/common";
 
 import { AuthModule } from "../auth/auth.module";
 import { Permission } from "../auth/permission.enum";
+import { BaseModule, PermissionMapping } from "../../common/base.module";
 import { UserService } from "./user.service";
 import { UserController } from "./user.controller";
 import { DatabaseConfig } from "../database/database.config";
@@ -21,25 +22,18 @@ import { AuthenticateMiddleware } from "../../middleware/authenticate.middleware
         { provide: DatabaseConfig, useClass: DevDatabaseConfig }
     ],
 })
-export class UserModule {
+export class UserModule extends BaseModule {
 
-    private permissionsMapping: { permissions: Permission[], route: any }[] = [
-        { permissions: [Permission.USER_CREATE], route: { path: "/users", method: RequestMethod.POST } },
-        { permissions: [Permission.USER_GET_ALL], route: { path: "/users", method: RequestMethod.GET } },
-        { permissions: [Permission.USER_GET_BY_ID], route: { path: "/users/:id", method: RequestMethod.GET } },
-        { permissions: [Permission.USER_GET_ROLES], route: { path: "/users/:id/roles", method: RequestMethod.GET } },
-    ];
+    protected get controllers(): any[] {
+        return [UserController];
+    }
 
-    public configure(consumer: MiddlewaresConsumer) {
-        consumer
-            .apply(AuthorizeMiddleware)
-            .forRoutes(UserController);
-
-        _.each(this.permissionsMapping, permissionMapping => {
-            consumer
-                .apply(AuthenticateMiddleware)
-                .with(permissionMapping.permissions)
-                .forRoutes(permissionMapping.route);
-        });
+    protected get permissionsMapping(): PermissionMapping[] {
+        return [
+            { permissions: [Permission.USER_CREATE], route: { path: "/users", method: RequestMethod.POST } },
+            { permissions: [Permission.USER_GET_ALL], route: { path: "/users", method: RequestMethod.GET } },
+            { permissions: [Permission.USER_GET_BY_ID], route: { path: "/users/:id", method: RequestMethod.GET } },
+            { permissions: [Permission.USER_GET_ROLES], route: { path: "/users/:id/roles", method: RequestMethod.GET } },
+        ];
     }
 }

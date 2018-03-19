@@ -5,6 +5,7 @@ import { HttpException } from "@nestjs/core";
 import { HttpStatus, Middleware, NestMiddleware, Next } from "@nestjs/common";
 import { ExtractJwt, StrategyOptions, Strategy as JwtStrategy } from "passport-jwt";
 
+import { JwtToken } from "../modules/auth/jwt.token";
 import { Permission } from "../modules/auth/permission.enum";
 import { AuthService } from "../modules/auth/auth.service";
 import { InsufficientPermissionsException } from "../modules/auth/insufficient-privileges.exception";
@@ -17,8 +18,8 @@ export class AuthenticateMiddleware implements NestMiddleware {
 
     public resolve(requiredPermissions: Permission[]): (req, res, next) => void {
         return async (req, res: Response, next) => {
-            let token = req["token"];
-            let userId = token.user; // test token = { user: 1 }
+            let token: JwtToken = req["token"];
+            let userId = token.user.id;
 
             let userPermissions: Permission[] = await this.authService.getUserPermissions(userId);
 

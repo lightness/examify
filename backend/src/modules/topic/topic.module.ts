@@ -1,11 +1,12 @@
 import { Module } from "@nestjs/common";
 
-import { TopicService } from './topic.service';
-import { DatabaseConfig } from '../database/database.config';
-import { DatabaseModule } from '../database/database.module';
-import { QuestionModule } from '../question/question.module';
-import { TopicController } from './topic.controller';
-import { DevDatabaseConfig } from '../database/dev.database.config';
+import { BaseModule, PermissionMapping } from "../../common/base.module";
+import { TopicService } from "./topic.service";
+import { DatabaseConfig } from "../database/database.config";
+import { DatabaseModule } from "../database/database.module";
+import { QuestionModule } from "../question/question.module";
+import { TopicController } from "./topic.controller";
+import { DevDatabaseConfig } from "../database/dev.database.config";
 
 
 @Module({
@@ -16,6 +17,13 @@ import { DevDatabaseConfig } from '../database/dev.database.config';
         { provide: DatabaseConfig, useClass: DevDatabaseConfig }
     ],
 })
-export class TopicModule {
+export class TopicModule extends BaseModule {
 
+    protected get controllers() {
+        return [TopicController];
+    }
+
+    protected get permissionsMapping(): PermissionMapping[] {
+        return []; // TODO
+    }
 }
