@@ -22,6 +22,20 @@ export class UserService extends ServiceBase<User> implements Service<User> {
         return this.databaseService.getRepository(User);
     }
 
+    public async getByName(name: string): Promise<User> {
+        if (!name) {
+            throw new UserNotFoundException();
+        }
+
+        let user: User = await this.repository.findOne({ name });
+
+        if (!user) {
+            throw new UserNotFoundException();
+        }
+
+        return user;
+    }
+
     public async add(user: User): Promise<User> {
         if (user.password) {
             user.password = this.encryptPassword(user.password);
@@ -37,7 +51,7 @@ export class UserService extends ServiceBase<User> implements Service<User> {
     }
 
     public async getRolesByUserId(userId: number): Promise<Role[]> {
-        let user: User = await (await this.repository)
+        let user: User = await this.repository
             .createQueryBuilder("user")
             .where("user.id=:userId")
             .leftJoinAndSelect("user.roles", "roles")

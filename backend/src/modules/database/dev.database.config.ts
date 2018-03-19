@@ -6,7 +6,6 @@ import { User } from "../users/user.entity";
 import { Topic } from "../topic/topic.entity";
 import { Answer } from "../answer/answer.entity";
 import { Question } from "../question/question.entity";
-import { Category } from "../categories/category.entity";
 import { DatabaseConfig } from "./database.config";
 import { RolePermission } from "../roles/role-permission.entity";
 
@@ -24,7 +23,6 @@ export class DevDatabaseConfig extends DatabaseConfig {
             database: "examify",
             entities: [
                 // any entity file under src/modules
-                Category,
                 User,
                 Role,
                 RolePermission,

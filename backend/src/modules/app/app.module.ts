@@ -7,13 +7,12 @@ import { UserModule } from "../users/user.module";
 import { TopicModule } from "../topic/topic.module";
 import { AnswerModule } from "../answer/answer.module";
 import { QuestionModule } from "../question/question.module";
-import { CategoryModule } from "../categories/category.module";
 
 
 @Module({
     modules: [
         UserModule,
-        CategoryModule,
+        AuthModule,
         RoleModule,
         TopicModule,
         ExamModule,
