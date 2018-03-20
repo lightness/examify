@@ -1,10 +1,19 @@
 import * as passport from "passport";
+import { Request, Response, NextFunction } from "express";
 import { Middleware, NestMiddleware, Next, ExpressMiddleware } from "@nestjs/common";
 
 
 @Middleware()
 export class AuthorizeMiddleware implements NestMiddleware {
     public resolve(): ExpressMiddleware {
-        return passport.authenticate("jwt", { assignProperty: "token", session: false });
+        return (req: Request, res: Response, next: NextFunction) => {
+            let isAuthHeaderExists: boolean = !!req.get("authorization");
+
+            if (!isAuthHeaderExists) {
+                return next();
+            }
+
+            return passport.authenticate("jwt", { assignProperty: "token", session: false })(req, res, next);
+        };
     }
 }

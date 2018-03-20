@@ -7,12 +7,16 @@ const appRoutes: Routes = [
         loadChildren: "./admin/admin.module#AdminModule",
     },
     {
+        path: "login",
+        loadChildren: "../common/login/login.module#LoginModule",
+    },
+    {
         path: "",
         loadChildren: "./public/public.module#PublicModule",
     },
     {
         path: "**",
-        redirectTo: "/"
+        redirectTo: "/login"
     }
 ];
 

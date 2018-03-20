@@ -1,10 +1,12 @@
-import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
-import { HttpClientModule } from "@angular/common/http";
+import { BrowserModule } from "@angular/platform-browser";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 
-import { ApiService } from "../common/api.service";
-import { AppComponent } from "./app.component";
 import { routing } from "./app.routing";
+import { ApiService } from "../common/api.service";
+import { AuthModule } from "../common/auth/auth.module";
+import { AppComponent } from "./app.component";
+import { AuthInterceptor } from "../common/auth/auth.interceptor";
 
 
 @NgModule({
@@ -14,10 +16,14 @@ import { routing } from "./app.routing";
   imports: [
     BrowserModule,
     HttpClientModule,
+    AuthModule,
     routing,
   ],
   providers: [
-    ApiService
+    ApiService,
+    [
+      { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    ]
   ],
   bootstrap: [AppComponent]
 })

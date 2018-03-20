@@ -4,8 +4,8 @@
   "description": "This first page",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 0",
-    "start": "gulp compile && gulp start"
+    "start": "gulp compile && gulp start",
+    "migrations:run": "ts-node ./node_modules/typeorm/cli.js migrations:run"
   },
   "author": "lightness",
   "license": "ISC",
@@ -43,6 +43,7 @@
     "pg": "^7.3.0",
     "reflect-metadata": "^0.1.10",
     "rxjs": "^5.4.3",
+    "ts-node": "^5.0.1",
     "typeorm": "^0.1.16"
   }
 }

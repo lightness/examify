@@ -1,12 +1,12 @@
 import { Module } from "@nestjs/common";
 
-import { BaseModule, PermissionMapping } from "../../common/base.module";
 import { AnswerModule } from "../answer/answer.module";
 import { DatabaseConfig } from "../database/database.config";
 import { DatabaseModule } from "../database/database.module";
 import { QuestionService } from "./question.service";
 import { DevDatabaseConfig } from "../database/dev.database.config";
 import { QuestionController } from "./question.controller";
+import { BaseModule, PermissionMapping } from "../../common/base.module";
 
 
 @Module({
