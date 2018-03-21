@@ -27,8 +27,8 @@ export class RoleModule extends BaseModule {
 
     protected get permissionsMapping(): PermissionMapping[] {
         return [
-            { permissions: [Permission.ROLE_CREATE], route: { path: "/roles", method: RequestMethod.POST } },
-            { permissions: [Permission.ROLE_GET_ALL], route: { path: "/roles", method: RequestMethod.GET } },
+            { permissions: [Permission.MANAGE_STUFF], route: { path: "/roles", method: RequestMethod.POST } },
+            { permissions: [Permission.MANAGE_STUFF], route: { path: "/roles", method: RequestMethod.GET } },
         ];
     }
 }

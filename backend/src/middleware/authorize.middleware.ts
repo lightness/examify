@@ -7,6 +7,7 @@ import { Middleware, NestMiddleware, Next, ExpressMiddleware } from "@nestjs/com
 export class AuthorizeMiddleware implements NestMiddleware {
     public resolve(): ExpressMiddleware {
         return (req: Request, res: Response, next: NextFunction) => {
+            console.log(">>> middleware");
             let isAuthHeaderExists: boolean = !!req.get("authorization");
 
             if (!isAuthHeaderExists) {

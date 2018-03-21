@@ -75,12 +75,16 @@ export class AuthService {
         let user: User = await userRepository.findOne({ name });
 
         if (!user) {
+            console.warn(">>> Wrong user name:", name);
+
             throw new BadCredentialsException();
         }
 
         let arePasswordsEqual: boolean = await bcrypt.compare(password, user.password);
 
         if (!arePasswordsEqual) {
+            console.warn(">>> Incorrect password:", password);
+
             throw new BadCredentialsException();
         }
 

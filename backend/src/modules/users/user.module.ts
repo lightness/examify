@@ -30,10 +30,10 @@ export class UserModule extends BaseModule {
 
     protected get permissionsMapping(): PermissionMapping[] {
         return [
-            { permissions: [Permission.USER_CREATE], route: { path: "/users", method: RequestMethod.POST } },
-            { permissions: [Permission.USER_GET_ALL], route: { path: "/users", method: RequestMethod.GET } },
-            { permissions: [Permission.USER_GET_BY_ID], route: { path: "/users/:id", method: RequestMethod.GET } },
-            { permissions: [Permission.USER_GET_ROLES], route: { path: "/users/:id/roles", method: RequestMethod.GET } },
+            { permissions: [Permission.MANAGE_STUFF], route: { path: "/users", method: RequestMethod.POST } },
+            { permissions: [Permission.MANAGE_STUFF], route: { path: "/users", method: RequestMethod.GET } },
+            { permissions: [Permission.MANAGE_STUFF], route: { path: "/users/:id", method: RequestMethod.GET } },
+            { permissions: [Permission.MANAGE_STUFF], route: { path: "/users/:id/roles", method: RequestMethod.GET } },
         ];
     }
 }

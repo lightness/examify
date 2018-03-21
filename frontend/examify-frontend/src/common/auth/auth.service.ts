@@ -1,7 +1,12 @@
 import * as _ from "lodash";
+import * as jwtDecode from "jwt-decode";
+import { Router } from "@angular/router";
+import { Subject } from "rxjs/Subject";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { Injectable } from "@angular/core";
 
 import { Permission } from "./permission.enum";
+import { Observable } from "rxjs/Observable";
 
 
 @Injectable()
@@ -10,12 +15,40 @@ export class AuthService {
     private TOKEN_KEY = "auth_token";
     private PERMISSIONS_KEY = "auth_permissions";
 
+    private currentUser$: Subject<string> = new BehaviorSubject<string>(null);
+
+    public constructor(private router: Router) {
+        let token: string = this.getToken();
+
+        if (token) {
+            this.emitCurrentUser(token);
+        } else {
+            this.router.navigate(["/login"]);
+        }
+    }
+
+    public get currentUser(): Observable<string> {
+        return this.currentUser$.asObservable();
+    }
+
+    public get isAuthenticated(): boolean {
+        return;
+    }
+
     public setToken(token: string): void {
         localStorage.setItem(this.TOKEN_KEY, token);
+        this.emitCurrentUser(token);
     }
 
     public getToken(): string {
         return localStorage.getItem(this.TOKEN_KEY) || null;
+    }
+
+    public signOut(): void {
+        this.removeToken();
+        this.removePermissions();
+        this.emitCurrentUser(null);
+        this.router.navigate(["/login"]);
     }
 
     public setPermissions(permissions: Permission[]): void {
@@ -27,11 +60,25 @@ export class AuthService {
         let absentPermissions: Permission[] = _.difference(requiredPermissions, allPermissions);
         let hasAbsentPermissions: boolean = !_.isEmpty(absentPermissions);
 
-        if (hasAbsentPermissions) {
-            console.error("Absent permissions: ", absentPermissions);
-        }
-
         return !hasAbsentPermissions;
     }
 
+    private emitCurrentUser(token: string): void {
+        if (!token) {
+            this.currentUser$.next(null);
+
+            return;
+        }
+
+        let payload = jwtDecode(token);
+        this.currentUser$.next(payload.user.name);
+    }
+
+    private removeToken(): void {
+        localStorage.removeItem(this.TOKEN_KEY);
+    }
+
+    private removePermissions(): void {
+        localStorage.removeItem(this.PERMISSIONS_KEY);
+    }
 }

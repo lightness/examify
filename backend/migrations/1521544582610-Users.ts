@@ -12,7 +12,7 @@ export class UserMigration1521544582610 implements MigrationInterface {
         { name: "admin", password: "password" },
         { name: "user", password: "password" },
         { name: "content-manager", password: "password" },
-        { name: "user-manager", password: "password" }
+        { name: "stuff-manager", password: "password" }
     ];
 
     public async up(queryRunner: QueryRunner): Promise<any> {
@@ -25,11 +25,7 @@ export class UserMigration1521544582610 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<any> {
-        let names: string[] = _.map(this.users, user => `"${user.name}"`);
-        let namesString: string = _.join(names, ", ");
-
-        await queryRunner.query(`DELETE FROM ${this.TABLE_USER} WHERE name in (${namesString});`);
-
+        return queryRunner.query(`DELETE FROM "${this.TABLE_USER}";`);
     }
 
 }

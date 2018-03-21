@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <span class="navbar-brand">Examify</span>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item" *ngIf="!isAuthenticated">
+                <a class="nav-link" [routerLink]="['/login']">Login</a>
+            </li>
+            <li class="nav-item" *ngIf="isAuthenticated && canManageContent">
+                <a class="nav-link" [routerLink]="['/admin']">Manage Content</a>
+            </li>
+            <li class="nav-item" *ngIf="isAuthenticated && canManageStuff">
+                <a class="nav-link" [routerLink]="['/admin']">Manage Stuff</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/']">Exam</a>
+            </li>
+        </ul>
+        <div class="my-2 my-lg-0">
+            <span>Hello, {{ currentUserName || "anonymous" }}</span>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item" *ngIf="isAuthenticated">
+                    <a class="nav-link" (click)="signOut()">Sign Out</a>
+                </li>
+                <li class="nav-item" *ngIf="isAuthenticated && canSeePersonalDashboard">
+                    <a class="nav-link" (click)="signOut()">My Dashboard</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

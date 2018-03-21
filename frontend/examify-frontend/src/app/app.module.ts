@@ -7,6 +7,7 @@ import { ApiService } from "../common/api.service";
 import { AuthModule } from "../common/auth/auth.module";
 import { AppComponent } from "./app.component";
 import { AuthInterceptor } from "../common/auth/auth.interceptor";
+import { MenuModule } from "./menu/menu.module";
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { AuthInterceptor } from "../common/auth/auth.interceptor";
     BrowserModule,
     HttpClientModule,
     AuthModule,
+    MenuModule,
     routing,
   ],
   providers: [
