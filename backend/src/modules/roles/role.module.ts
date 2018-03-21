@@ -6,9 +6,7 @@ import { Permission } from "../auth/permission.enum";
 import { BaseModule, PermissionMapping } from "../../common/base.module";
 import { RoleService } from "./role.service";
 import { RoleController } from "./role.controller";
-import { DatabaseConfig } from "../database/database.config";
 import { DatabaseModule } from "../database/database.module";
-import { DevDatabaseConfig } from "../database/dev.database.config";
 
 
 @Module({
@@ -16,7 +14,6 @@ import { DevDatabaseConfig } from "../database/dev.database.config";
     controllers: [RoleController],
     components: [
         RoleService,
-        { provide: DatabaseConfig, useClass: DevDatabaseConfig }
     ],
 })
 export class RoleModule extends BaseModule {

@@ -4,8 +4,6 @@ import { AuthService } from "./auth.service";
 import { JwtStrategy } from "./jwt.strategy";
 import { AuthController } from "./auth.controller";
 import { DatabaseModule } from "../database/database.module";
-import { DatabaseConfig } from "../database/database.config";
-import { DevDatabaseConfig } from "../database/dev.database.config";
 import { BaseModule, PermissionMapping } from "../../common/base.module";
 
 
@@ -14,7 +12,6 @@ import { BaseModule, PermissionMapping } from "../../common/base.module";
     components: [
         AuthService,
         JwtStrategy,
-        { provide: DatabaseConfig, useClass: DevDatabaseConfig }
     ],
     exports: [AuthService],
     controllers: [AuthController]

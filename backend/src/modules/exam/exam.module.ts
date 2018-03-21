@@ -1,10 +1,8 @@
 import { Module, MiddlewaresConsumer } from "@nestjs/common";
 
 import { ExamService } from "./exam.service";
-import { DatabaseConfig } from "../database/database.config";
 import { DatabaseModule } from "../database/database.module";
 import { ExamController } from "./exam.controller";
-import { DevDatabaseConfig } from "../database/dev.database.config";
 import { AuthorizeMiddleware } from "../../middleware/authorize.middleware";
 import { BaseModule, PermissionMapping } from "../../common/base.module";
 
@@ -13,8 +11,7 @@ import { BaseModule, PermissionMapping } from "../../common/base.module";
     imports: [DatabaseModule],
     controllers: [ExamController],
     components: [
-        ExamService,
-        { provide: DatabaseConfig, useClass: DevDatabaseConfig }
+        ExamService
     ],
 })
 export class ExamModule extends BaseModule {
