@@ -8,6 +8,7 @@ import { Answer } from "../answer/answer.entity";
 import { Question } from "../question/question.entity";
 import { DatabaseConfig } from "./database.config";
 import { RolePermission } from "../roles/role-permission.entity";
+import { Exam } from "../exam/exam.entity";
 
 
 @Component()
@@ -28,7 +29,8 @@ export class DevDatabaseConfig extends DatabaseConfig {
                 RolePermission,
                 Topic,
                 Question,
-                Answer
+                Answer,
+                Exam,
             ],
             synchronize: true,
             logger: "advanced-console",

@@ -5,7 +5,9 @@
     "username": "postgres",
     "password": "root",
     "database": "examify",
-   
+    "entities": [
+        "src/**/*.entity.ts"
+    ],
     "migrations": [
         "migrations/**/*.ts"
     ],

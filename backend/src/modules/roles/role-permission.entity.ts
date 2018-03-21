@@ -11,7 +11,7 @@ export class RolePermission extends EntityBase {
     @ManyToOne(type => Role, role => role.rolePermissions)
     public role: Role;
 
-    @Column({ enum: Permission })
+    @Column({ type: "varchar", enum: Permission })
     public permission: Permission;
 
 }

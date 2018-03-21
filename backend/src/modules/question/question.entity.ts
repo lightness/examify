@@ -3,6 +3,7 @@ import { Column, Entity, OneToMany, ManyToOne, JoinColumn, Index } from "typeorm
 import { Topic } from "../topic/topic.entity";
 import { Answer } from "../answer/answer.entity";
 import { EntityBase } from "../../common/base.entity";
+import { ExamQuestion } from "../exam/exam-question/exam-question.entity";
 
 
 @Entity()
@@ -21,5 +22,8 @@ export class Question extends EntityBase {
 
     @OneToMany(type => Answer, answer => answer.question)
     public answers: Answer[];
+
+    @OneToMany(type => ExamQuestion, examQuestion => examQuestion.question)
+    public examQuestions: ExamQuestion[];
 
 }
