@@ -1,7 +1,13 @@
-export type ExamData = { questionId: number, answerIds: number[] }[];
+// export interface ExamData {
+//     id: number;
+//     examQuestions: {
+//         question: { id: number },
+//         answers: { id: number }[]
+//     }[];
+// }
 
 export interface ExamResult {
-    totalQuestionsCount: number;
-    answeredQuestionsCount: number;
-    correctlyAnsweredQuestionsCount: number;
+    totalQuestionsAmount: number;
+    answeredQuestionsAmount: number;
+    correctlyAnsweredQuestionsAmount: number;
 }

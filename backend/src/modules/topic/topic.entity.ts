@@ -1,7 +1,7 @@
 import { Column, Entity, OneToMany } from "typeorm";
 
 import { Question } from "../question/question.entity";
-import { EntityBase } from "../../common/base.entity";
+import { EntityBase } from "../../common/base-entity";
 
 
 @Entity()

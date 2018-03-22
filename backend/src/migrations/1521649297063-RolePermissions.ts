@@ -2,7 +2,7 @@ import * as _ from "lodash";
 import * as Bluebird from "bluebird";
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { Permission } from "../src/modules/auth/permission.enum";
+import { Permission } from "../modules/auth/permission.enum";
 
 
 export class RolePermissions1521649297063 implements MigrationInterface {

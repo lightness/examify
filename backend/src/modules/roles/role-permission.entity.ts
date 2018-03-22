@@ -2,7 +2,7 @@ import { Entity, Column, JoinColumn, ManyToOne } from "typeorm";
 
 import { Role } from "./role.entity";
 import { Permission } from "../auth/permission.enum";
-import { EntityBase } from "../../common/base.entity";
+import { EntityBase } from "../../common/base-entity";
 
 
 @Entity()

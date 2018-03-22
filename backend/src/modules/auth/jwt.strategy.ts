@@ -23,7 +23,7 @@ export class JwtStrategy extends Strategy {
     public async verify(req, payload, done) {
         console.warn(">>> token", payload);
 
-        const isValid = await this.authService.validateJwtPayload(payload);
+        const isValid: boolean = await this.authService.validateJwtPayload(payload);
 
         if (!isValid) {
             return done("Unauthorized", false);

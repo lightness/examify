@@ -4,7 +4,7 @@ import { Body, Controller, Get, HttpStatus, Param, Post, Req, Res, Query } from 
 
 import { Topic } from "../topic/topic.entity";
 import { ExamService } from "./exam.service";
-import { ExamResult, ExamData } from "./exam.types";
+import { ExamResult } from "./exam.types";
 import { Exam } from "./exam.entity";
 
 
@@ -16,15 +16,19 @@ export class ExamController {
     }
 
     @Get("start")
-    public async getExam( @Res() req: Request, @Res() res: Response, @Query("topicId", new ParseIntPipe()) topicId: number) {
+    public async startExamByTopic( @Req() req: Request, @Res() res: Response, @Query("topicId", new ParseIntPipe()) topicId: number) {
         let exam: Exam = await this.examService.startExam(topicId, req["token"]);
+
+        console.warn(">>> exam", exam);
 
         res.status(HttpStatus.OK).json(exam);
     }
 
-    @Post("check")
-    public async checkExam( @Body() examData: ExamData, @Res() res: Response) {
-        let examResult: ExamResult = await this.examService.checkExam(examData);
+    @Post("finish")
+    public async checkExam( @Req() req: Request, @Body() exam: Exam, @Res() res: Response) {
+        let examResult: ExamResult = await this.examService.finishExam(exam, req["token"]);
+
+        console.warn(">>> examResult", examResult);
 
         res.status(HttpStatus.OK).json(examResult);
     }

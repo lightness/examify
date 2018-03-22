@@ -1,8 +1,8 @@
 import { Column, Entity, JoinTable, ManyToMany, OneToMany } from "typeorm";
 
 import { Role } from "../roles/role.entity";
-import { EntityBase } from "../../common/base.entity";
 import { Exam } from "../exam/exam.entity";
+import { EntityBase } from "../../common/base-entity";
 
 
 @Entity()

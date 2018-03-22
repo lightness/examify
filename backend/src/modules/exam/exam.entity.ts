@@ -1,8 +1,8 @@
 import { Entity, Column, OneToMany, JoinColumn, ManyToOne, ManyToMany, JoinTable } from "typeorm";
 
-import { EntityBase } from "../../common/base.entity";
 import { User } from "../users/user.entity";
 import { Question } from "../question/question.entity";
+import { EntityBase } from "../../common/base-entity";
 import { ExamQuestion } from "./exam-question/exam-question.entity";
 
 

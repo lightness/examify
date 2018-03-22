@@ -1,17 +1,19 @@
 import * as _ from "lodash";
-import { Component } from "@nestjs/common";
-import { Repository } from "typeorm";
+import * as Bluebird from "bluebird";
+import { Component, BadRequestException, NotFoundException } from "@nestjs/common";
+import { Repository, Transaction, TransactionRepository } from "typeorm";
 
-import { Topic } from "../topic/topic.entity";
-import { Answer } from "../answer/answer.entity";
-import { Question } from "../question/question.entity";
-import { DatabaseService } from "../database/database.service";
-import { ExamData, ExamResult } from "./exam.types";
-import { TopicNotFoundException } from "../topic/topic-not-found.exception";
-import { TopicWithoutQuestionsException } from "../topic/topic-without-questions.exception";
-import { JwtToken } from "../auth/jwt.token";
 import { Exam } from "./exam.entity";
 import { User } from "../users/user.entity";
+import { Topic } from "../topic/topic.entity";
+import { Answer } from "../answer/answer.entity";
+import { JwtToken } from "../auth/jwt.token";
+import { Question } from "../question/question.entity";
+import { ExamResult } from "./exam.types";
+import { ExamQuestion } from "./exam-question/exam-question.entity";
+import { DatabaseService } from "../database/database.service";
+import { TopicNotFoundException } from "../topic/topic-not-found.exception";
+import { TopicWithoutQuestionsException } from "../topic/topic-without-questions.exception";
 
 
 @Component()
@@ -39,42 +41,96 @@ export class ExamService {
 
         if (currentUser) {
             exam.user = currentUser;
-            return this.persistExam(exam);
+            exam = await this.persistExam(exam);
         }
+
+        // Avoiding circualr JSON structure
+        exam.examQuestions = _.map(exam.examQuestions, (examQuestion: ExamQuestion) => {
+            return _.omit(examQuestion, "exam") as ExamQuestion;
+        });
 
         return exam;
     }
 
-    public async checkExam(examData: ExamData): Promise<ExamResult> {
-        let answeredExamData: ExamData = _.filter(examData, examDataItem => !!examDataItem.answerIds.length);
-        let answeredQuestionIds: number[] = _.map(answeredExamData, examDataItem => examDataItem.questionId);
+    @Transaction()
+    public async finishExam(
+        userExam: Exam,
+        currentJwtToken: JwtToken,
+        @TransactionRepository(Exam) examRepository?: Repository<Exam>,
+        @TransactionRepository(ExamQuestion) examQuestionRepository?: Repository<ExamQuestion>,
+    ): Promise<Exam> {
+        let currentUser: User = await this.getCurrentUser(currentJwtToken);
+        let examResult: Partial<Exam>;
 
-        let totalQuestionsCount: number = examData.length;
-        let answeredQuestionsCount: number = answeredExamData.length;
-        let correctlyAnsweredQuestionsCount: number = 0;
+        if (!currentUser) {
+            examResult = await this.checkExam(userExam, userExam);
+
+            return examResult as Exam;
+        }
+
+        if (!userExam.id) {
+            throw new BadRequestException(`Wrong exam id: ${userExam.id}`);
+        }
+
+        let originalExam: Exam = await examRepository
+            .createQueryBuilder("exam")
+            .leftJoinAndSelect("exam.examQuestions", "examQuestion")
+            .whereInIds([userExam.id])
+            .getOne();
+
+        if (!originalExam) {
+            throw new NotFoundException(`Exam with id "${userExam.id}" is not found`);
+        }
+
+        if (originalExam.finishedAt) {
+            throw new BadRequestException(`Exam with id "${userExam.id}" was already finished`);
+        }
+
+        examResult = await this.checkExam(originalExam, userExam);
+
+        userExam.finishedAt = new Date();
+        userExam.answeredQuestionsAmount = examResult.answeredQuestionsAmount;
+        userExam.correctlyAnsweredQuestionsAmount = examResult.correctlyAnsweredQuestionsAmount;
+
+        await this.persistExam(userExam, { examRepository, examQuestionRepository });
+
+        let persistedExam: Exam = await examRepository.findOneById(userExam.id);
+
+        return persistedExam;
+    }
+
+    public async checkExam(originalExam: Exam, userExam: Exam): Promise<Partial<Exam>> {
+        let answeredExamQuestions: ExamQuestion[] = _.filter(userExam.examQuestions, (examQuestion: ExamQuestion) => {
+            return _.find(originalExam.examQuestions, { id: examQuestion.id }) && !_.isEmpty(examQuestion.answers);
+        });
+        let questionIds: number[] = _.map(answeredExamQuestions, (examQuestion: ExamQuestion) => examQuestion.question.id);
 
         let originalQuestions: Question[] = await this.questionRepository
             .createQueryBuilder("question")
             .leftJoinAndSelect("question.answers", "answer")
-            .whereInIds(answeredQuestionIds)
+            .whereInIds(questionIds)
             .getMany();
 
-        _.each(answeredExamData, examDataItem => {
-            let originalQuestion: Question = _.find(originalQuestions, q => q.id === examDataItem.questionId);
+        let correctlyAnsweredQuestionsAmount: number = 0;
+
+        _.each(answeredExamQuestions, (examQuestion: ExamQuestion) => {
+            let originalQuestion: Question = _.find(originalQuestions, q => q.id === examQuestion.question.id);
             let correctAnswerIds: number[] = _(originalQuestion.answers)
                 .filter(answer => answer.isCorrect)
                 .map(answer => answer.id)
                 .value();
 
-            if (_.isEqual(correctAnswerIds.sort(), examDataItem.answerIds.sort())) {
-                correctlyAnsweredQuestionsCount++;
+            let userAnswerIds: number[] = _.map(examQuestion.answers, answer => answer.id);
+
+            if (_.isEqual(correctAnswerIds.sort(), userAnswerIds.sort())) {
+                correctlyAnsweredQuestionsAmount++;
             }
         });
 
         return {
-            totalQuestionsCount,
-            answeredQuestionsCount,
-            correctlyAnsweredQuestionsCount
+            totalQuestionsAmount: originalExam.examQuestions.length,
+            answeredQuestionsAmount: answeredExamQuestions.length,
+            correctlyAnsweredQuestionsAmount
         };
     }
 
@@ -131,25 +187,32 @@ export class ExamService {
     private createNewExam(questions: Question[]): Exam {
         let exam: Exam = new Exam();
         exam.startedAt = new Date();
-        // TODO
+        exam.totalQuestionsAmount = questions.length;
 
-        // exam.examQuestions = _.map(questions, question => {
-        //     return {
-        //         question
-        //     };
-        // });
+        exam.examQuestions = _.map(questions, (question: Question) => {
+            let examQuestion: ExamQuestion = new ExamQuestion();
+            examQuestion.exam = exam;
+            examQuestion.question = question;
+
+            return examQuestion;
+        });
 
         return exam;
     }
 
-    //  examQuestionRepository?: Repository<ExamQuestion>
-    private async persistExam(exam: Exam, options?: { examRepository?: Repository<Exam>, }): Promise<Exam> {
+    private async persistExam(exam: Exam, options?: { examRepository?: Repository<Exam>, examQuestionRepository?: Repository<ExamQuestion> }): Promise<Exam> {
         let examRepository: Repository<Exam> = options && options.examRepository || this.databaseService.getRepository(Exam);
-        let examQuestionRepository = null; // : Repository<any>
+        let examQuestionRepository: Repository<ExamQuestion> = options && options.examQuestionRepository || this.databaseService.getRepository(ExamQuestion);
 
         let persistedExam: Exam = await examRepository.save(exam);
 
-        // await Bluebird.all(exam.)
+        let persistedExamQuestions: ExamQuestion[] = await Bluebird.map(exam.examQuestions, (examQuestion: ExamQuestion) => {
+            examQuestion.exam = persistedExam;
+
+            return examQuestionRepository.save(examQuestion);
+        });
+
+        persistedExam.examQuestions = persistedExamQuestions;
 
         return persistedExam;
     }

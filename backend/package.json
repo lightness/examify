@@ -4,7 +4,7 @@
   "description": "This first page",
   "main": "app.js",
   "scripts": {
-    "start": "gulp compile && gulp start",
+    "start": "gulp clean && gulp compile && gulp start",
     "schema:sync": "ts-node ./node_modules/typeorm/cli.js schema:sync",
     "migrations:run": "ts-node ./node_modules/typeorm/cli.js migrations:run",
     "migrations:revert:latest": "ts-node ./node_modules/typeorm/cli.js migrations:revert"

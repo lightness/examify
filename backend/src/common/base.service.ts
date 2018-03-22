@@ -1,7 +1,7 @@
 import { Repository } from "typeorm";
 
 import { Service } from "./service.interface";
-import { EntityBase } from "./base.entity";
+import { EntityBase } from "./base-entity";
 
 
 export abstract class ServiceBase<T extends EntityBase> implements Service<T> {

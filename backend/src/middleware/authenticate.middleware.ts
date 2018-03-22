@@ -18,6 +18,8 @@ export class AuthenticateMiddleware implements NestMiddleware {
 
     public resolve(requiredPermissions: Permission[]): (req, res, next) => void {
         return async (req, res: Response, next) => {
+            console.log(">>> Authenticate middleware");
+
             let token: JwtToken = req["token"];
             let userId = token.user.id;
 

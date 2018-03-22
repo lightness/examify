@@ -6,10 +6,10 @@
     "password": "root",
     "database": "examify",
     "entities": [
-        "src/**/*.entity.ts"
+        "built/**/*.entity.js"
     ],
     "migrations": [
-        "migrations/**/*.ts"
+        "built/migrations/**/*.js"
     ],
     "synchronize": true,
     "logger": "advanced-console",

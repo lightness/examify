@@ -24,7 +24,7 @@ export class QuestionService extends ServiceBase<Question> implements Service<Qu
     }
 
     protected get repository(): QuestionRepository {
-        return this.databaseService.getEntityManager().getCustomRepository(QuestionRepository);
+        return this.databaseService.getCustomRepository(QuestionRepository);
     }
 
     public async getById(id: number, options?: { repository: QuestionRepository }): Promise<Question> {

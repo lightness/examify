@@ -1,6 +1,6 @@
 import { Entity, Column, OneToMany, JoinColumn } from "typeorm";
 
-import { EntityBase } from "../../common/base.entity";
+import { EntityBase } from "../../common/base-entity";
 import { RolePermission } from "./role-permission.entity";
 
 
