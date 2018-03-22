@@ -1,28 +1,33 @@
-<div *ngIf="topic && !results">
+<div *ngIf="exam && !results">
 
-    <h3>Exam for topic "{{topic.title}}"</h3>
+    <h3>Exam #{{ exam.id }}</h3>
 
-    <div *ngFor="let question of topic.questions" class="question">
-        <p>{{question.text}}</p>
-        <div *ngFor="let answer of question.answers">
-            <input type="checkbox" id="chbx-answer-{{answer.id}}" [value]="answer.isChecked" (change)="toggleCheck(question.id, answer.id)">
-            <label for="chbx-answer-{{answer.id}}">{{answer.text}}</label>
+    <div *ngFor="let examQuestion of exam.examQuestions" class="question">
+        <p>{{ examQuestion.question.text }}</p>
+        <div *ngFor="let answer of examQuestion.question.answers">
+            <input type="checkbox" id="chbx-answer-{{ answer.id }}" [ngModel]="isAnswerChecked(examQuestion.id, answer.id)" (change)="toggleCheck(examQuestion.id, answer.id)">
+            <label for="chbx-answer-{{ answer.id }}">{{ answer.text }}</label>
         </div>
     </div>
 
     <button (click)="finish()">Finish</button>
+
+    <!-- {{ exam | json }} -->
 
 </div>
 
 <div *ngIf="results && !topic">
 
     <h3>Your results</h3>
-    <h4>Correctly answered questions: {{ results.correctlyAnsweredQuestionsCount / results.totalQuestionsCount | percent }} ({{results.correctlyAnsweredQuestionsCount}} of {{results.totalQuestionsCount}})</h4>
-    <h5>Wrong answered questions: {{ (results.answeredQuestionsCount - results.correctlyAnsweredQuestionsCount) / results.totalQuestionsCount | percent }} ({{results.answeredQuestionsCount - results.correctlyAnsweredQuestionsCount}} of {{results.totalQuestionsCount}})</h5>
-    <h5>Missed answers: {{ (results.totalQuestionsCount - results.answeredQuestionsCount) / results.totalQuestionsCount | percent }} ({{results.totalQuestionsCount - results.answeredQuestionsCount}} of {{results.totalQuestionsCount}})</h5>
-    
-    <button (click)="startExam()" >Try again</button>
+    <h4>Correctly answered questions: {{ results.correctlyAnsweredQuestionsCount / results.totalQuestionsCount | percent }} ({{results.correctlyAnsweredQuestionsCount}}
+        of {{results.totalQuestionsCount}})</h4>
+    <h5>Wrong answered questions: {{ (results.answeredQuestionsCount - results.correctlyAnsweredQuestionsCount) / results.totalQuestionsCount
+        | percent }} ({{results.answeredQuestionsCount - results.correctlyAnsweredQuestionsCount}} of {{results.totalQuestionsCount}})</h5>
+    <h5>Missed answers: {{ (results.totalQuestionsCount - results.answeredQuestionsCount) / results.totalQuestionsCount | percent
+        }} ({{results.totalQuestionsCount - results.answeredQuestionsCount}} of {{results.totalQuestionsCount}})</h5>
+
+    <button (click)="startExam()">Try again</button>
     <a href="/topic/{{topicId}}/theory">Back ot theory</a>
     <a href="/">Back to topics list</a>
 
-<div>
+</div>

@@ -5,8 +5,8 @@ import { Subject } from "rxjs/Subject";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { Injectable } from "@angular/core";
 
-import { Permission } from "./permission.enum";
 import { Observable } from "rxjs/Observable";
+import { Permission } from "../entity/permission.enum";
 
 
 @Injectable()

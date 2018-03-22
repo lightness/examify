@@ -4,7 +4,7 @@ import { Observable } from "rxjs/Observable";
 import { Injectable } from "@angular/core";
 
 import { ApiService } from "../api.service";
-import { Permission } from "../auth/permission.enum";
+import { Permission } from "../entity/permission.enum";
 import { AuthService } from "../auth/auth.service";
 
 
@@ -23,7 +23,8 @@ export class LoginService {
             tap((permissions: Permission[]) => {
                 this.authService.setPermissions(permissions);
 
-                if (this.authService.hasPermissions([Permission.MANAGE_TOPICS])) {
+                // TODO
+                if (this.authService.hasPermissions([Permission.MANAGE_CONTENT])) {
                     this.router.navigate(["/admin"]);
                 } else {
                     this.router.navigate(["/"]);

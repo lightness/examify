@@ -1,8 +1,8 @@
-import { Component } from "@angular/core";
-import { AuthService } from "../../common/auth/auth.service";
-import { OnInit } from "@angular/core/src/metadata/lifecycle_hooks";
+import { Component, OnInit } from "@angular/core";
 import { Observable } from "rxjs/Observable";
-import { Permission } from "../../common/auth/permission.enum";
+
+import { Permission } from "../../common/entity/permission.enum";
+import { AuthService } from "../../common/auth/auth.service";
 
 
 @Component({

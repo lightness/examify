@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/Observable";
 
-import { ApiService } from "../../common/api.service";
+import { Exam } from "../../common/entity/exam.entity";
 import { Topic } from "../../common/entity/topic.entity";
+import { ApiService } from "../../common/api.service";
 
 
 @Injectable()
@@ -18,12 +19,12 @@ export class PublicService {
         return this.apiService.get(`/topics/${topicId}`);
     }
 
-    public getExam(topicId: number): Observable<Topic> {
+    public startExamByTopic(topicId: number): Observable<Exam> {
         return this.apiService.get(`/exam/start`, { topicId });
     }
 
     public checkExam(results: any): Observable<any> {
-        return this.apiService.post(`/exam/check`, results);
+        return this.apiService.post(`/exam/finish`, results);
     }
 
 }
