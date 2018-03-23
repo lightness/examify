@@ -19,16 +19,12 @@ export class ExamController {
     public async startExamByTopic( @Req() req: Request, @Res() res: Response, @Query("topicId", new ParseIntPipe()) topicId: number) {
         let exam: Exam = await this.examService.startExam(topicId, req["token"]);
 
-        console.warn(">>> exam", exam);
-
         res.status(HttpStatus.OK).json(exam);
     }
 
     @Post("finish")
     public async checkExam( @Req() req: Request, @Body() exam: Exam, @Res() res: Response) {
         let examResult: ExamResult = await this.examService.finishExam(exam, req["token"]);
-
-        console.warn(">>> examResult", examResult);
 
         res.status(HttpStatus.OK).json(examResult);
     }

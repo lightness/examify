@@ -8,6 +8,7 @@ import { UserModule } from "../users/user.module";
 import { TopicModule } from "../topic/topic.module";
 import { AnswerModule } from "../answer/answer.module";
 import { QuestionModule } from "../question/question.module";
+import { DashboardModule } from "../dashboard/dashboard.module";
 
 
 @Module({
@@ -20,6 +21,7 @@ import { QuestionModule } from "../question/question.module";
         ExamModule,
         AnswerModule,
         QuestionModule,
+        DashboardModule,
     ],
 })
 export class ApplicationModule { }

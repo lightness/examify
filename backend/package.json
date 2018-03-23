@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "gulp clean && gulp compile && gulp start",
-    "schema:sync": "ts-node ./node_modules/typeorm/cli.js schema:sync",
+    "schema:sync": "gulp clean && gulp compile && ts-node ./node_modules/typeorm/cli.js schema:sync",
     "migrations:run": "ts-node ./node_modules/typeorm/cli.js migrations:run",
     "migrations:revert:latest": "ts-node ./node_modules/typeorm/cli.js migrations:revert"
   },
