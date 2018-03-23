@@ -19,10 +19,13 @@ export class ExamComponent implements OnInit {
     private topicId: number;
     private exam: Exam;
     private results: any;
+    private topic: Topic;
+    private examPhase: ExamPhase;
 
     constructor(
         private publicService: PublicService,
         private activatedRoute: ActivatedRoute) {
+        this.topic = this.activatedRoute.snapshot.data["topic"];
     }
 
     public ngOnInit() {
@@ -37,25 +40,16 @@ export class ExamComponent implements OnInit {
     public startExam() {
         return this.publicService.startExamByTopic(this.topicId)
             .subscribe((exam: Exam) => {
-                console.log(">>> Exam", exam);
-
                 this.exam = exam;
-                this.results = null;
+                this.examPhase = ExamPhase.EXAM;
             });
     }
 
     public finish() {
-        let result = _.map(this.topic.questions, question => {
-            return {
-                questionId: question.id,
-                answerIds: _(question.answers).filter(answer => answer.isChecked).map(answer => answer.id).value()
-            };
-        });
-
-        this.publicService.checkExam(result)
-            .subscribe(results => {
-                this.exam = null;
-                this.results = results;
+        this.publicService.checkExam(this.exam)
+            .subscribe((verifiedExam: Exam) => {
+                this.results = this.beautifyResults(verifiedExam);
+                this.examPhase = ExamPhase.RESULTS;
             });
     }
 
@@ -81,4 +75,30 @@ export class ExamComponent implements OnInit {
         return !!answer;
     }
 
+    private beautifyResults(exam: Exam) {
+        return {
+            ...exam,
+            answeredQuestionsRatio: exam.answeredQuestionsAmount / exam.totalQuestionsAmount,
+            missedQuestionsAmount: exam.totalQuestionsAmount - exam.answeredQuestionsAmount,
+            missedQuestionsRatio: (exam.totalQuestionsAmount - exam.answeredQuestionsAmount) / exam.totalQuestionsAmount,
+            correctlyAnsweredQuestionsRatio: exam.correctlyAnsweredQuestionsAmount / exam.totalQuestionsAmount,
+            wrongAnsweredQuestionsAmount: exam.answeredQuestionsAmount - exam.correctlyAnsweredQuestionsAmount,
+            wrongAnsweredQuestionsRatio: (exam.answeredQuestionsAmount - exam.correctlyAnsweredQuestionsAmount) / exam.totalQuestionsAmount
+        };
+    }
+
+}
+
+interface ExamResults extends Exam {
+    missedQuestionsAmount?: number;
+    missedQuestionsRatio?: number;
+    answeredQuestionsRatio?: number;
+    correctlyAnsweredQuestionsRatio?: number;
+    wrongAnsweredQuestionsAmount?: number;
+    wrongAnsweredQuestionsRatio?: number;
+}
+
+enum ExamPhase {
+    EXAM = "exam",
+    RESULTS = "results"
 }

@@ -1,6 +1,7 @@
-<div *ngIf="exam && !results">
+<div *ngIf="examPhase === 'exam'">
 
-    <h3>Exam #{{ exam.id }}</h3>
+    <p class="display-4 text-right">Exam #{{ exam.id }}</p>
+    <p class="lead text-right">Topic #{{ topic.id }} "{{ topic.title }}"</p>
 
     <div *ngFor="let examQuestion of exam.examQuestions" class="question">
         <p>{{ examQuestion.question.text }}</p>
@@ -16,18 +17,53 @@
 
 </div>
 
-<div *ngIf="results && !topic">
+<div *ngIf="examPhase === 'results'">
 
-    <h3>Your results</h3>
-    <h4>Correctly answered questions: {{ results.correctlyAnsweredQuestionsCount / results.totalQuestionsCount | percent }} ({{results.correctlyAnsweredQuestionsCount}}
-        of {{results.totalQuestionsCount}})</h4>
-    <h5>Wrong answered questions: {{ (results.answeredQuestionsCount - results.correctlyAnsweredQuestionsCount) / results.totalQuestionsCount
-        | percent }} ({{results.answeredQuestionsCount - results.correctlyAnsweredQuestionsCount}} of {{results.totalQuestionsCount}})</h5>
-    <h5>Missed answers: {{ (results.totalQuestionsCount - results.answeredQuestionsCount) / results.totalQuestionsCount | percent
-        }} ({{results.totalQuestionsCount - results.answeredQuestionsCount}} of {{results.totalQuestionsCount}})</h5>
+    <p class="display-4 text-right">Exam #{{ exam.id }}</p>
+    <p class="lead text-right">Topic #{{ topic.id }} "{{ topic.title }}"</p>
 
-    <button (click)="startExam()">Try again</button>
-    <a href="/topic/{{topicId}}/theory">Back ot theory</a>
-    <a href="/">Back to topics list</a>
+    <p class="">Your results</p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Metric</th>
+                <th>Value</th>
+                <th>Percent</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Total Questions</td>
+                <td>{{ results.totalQuestionsAmount }}</td>
+                <td> Not applicable </td>
+            </tr>
+            <tr>
+                <td>Answered Questions</td>
+                <td>{{ results.answeredQuestionsAmount }}</td>
+                <td>{{ results.answeredQuestionsRatio | percent }}</td>
+            </tr>
+            <tr>
+                <td>Correctly Answered Questions</td>
+                <td>{{ results.correctlyAnsweredQuestionsAmount }}</td>
+                <td>{{ results.correctlyAnsweredQuestionsRatio | percent }}</td>
+            </tr>
+            <tr>
+                <td>Wrong Answered Questions</td>
+                <td>{{ results.wrongAnsweredQuestionsAmount }}</td>
+                <td>{{ results.wrongAnsweredQuestionsRatio | percent }}</td>
+            </tr>
+            <tr>
+                <td>Missed Questions</td>
+                <td>{{ results.missedQuestionsAmount }}</td>
+                <td>{{ results.missedQuestionsRatio | percent }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button (click)="startExam()" class="btn btn-success float-right">Try again</button>
+
+    <p>You can continue <a href="/topic/{{topicId}}/theory">study</a> theory for "{{ topic.title }}"</p>
+    <p>You can <a href="/">select</a> another topic</p>
 
 </div>

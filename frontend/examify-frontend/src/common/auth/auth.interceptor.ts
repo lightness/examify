@@ -1,7 +1,7 @@
 import { tap } from "rxjs/operators";
 import { Observable } from "rxjs/Observable";
 import { Injectable } from "@angular/core";
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpResponse } from "@angular/common/http";
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpResponse, HttpErrorResponse } from "@angular/common/http";
 
 import { AuthService } from "./auth.service";
 
@@ -25,16 +25,22 @@ export class AuthInterceptor implements HttpInterceptor {
         }
 
         return next.handle(request)
-            .pipe(
-            tap(event => {
-                if (event instanceof HttpResponse) {
-                    let responseToken: string = (event as HttpResponse<any>).headers.get("Authorization");
+            .pipe(tap(this.handle.bind(this), this.handleError.bind(this)));
+    }
 
-                    if (responseToken) {
-                        this.authService.setToken(responseToken);
-                    }
-                }
-            })
-            );
+    private handle(event): void {
+        if (event instanceof HttpResponse) {
+            let responseToken: string = (event as HttpResponse<any>).headers.get("Authorization");
+
+            if (responseToken) {
+                this.authService.setToken(responseToken);
+            }
+        }
+    }
+
+    private handleError(error): void {
+        if (error instanceof HttpErrorResponse && error.status == 401) {
+            this.authService.signOut();
+        }
     }
 }

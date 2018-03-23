@@ -3,6 +3,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { ExamComponent } from "./exam/exam.component";
 import { PublicComponent } from "./public.component";
 import { TheoryComponent } from "./theory/theory.component";
+import { TopicResolver } from "./common/topic.resolver";
 
 
 const routes: Routes = [
@@ -12,10 +13,13 @@ const routes: Routes = [
     },
     {
         path: "topic/:topicId/exam",
-        component: ExamComponent
+        component: ExamComponent,
+        resolve: {
+            topic: TopicResolver
+        }
     },
-    { 
-        path: "", 
+    {
+        path: "",
         component: PublicComponent,
         pathMatch: "full"
     }
