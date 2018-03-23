@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import "rxjs/add/operator/mergeMap";
+import { mergeMap } from "rxjs/operators";
+import { ActivatedRoute } from "@angular/router";
+import { Component, OnInit } from "@angular/core";
 
 import { Topic } from "../../../common/entity/topic.entity";
 import { PublicService } from "../public.service";
 
 
 @Component({
-  selector: 'ex-theory',
-  templateUrl: './theory.component.html',
-  styleUrls: ['./theory.component.css']
+    selector: "ex-theory",
+    templateUrl: "./theory.component.html",
+    styleUrls: ["./theory.component.css"]
 })
 export class TheoryComponent implements OnInit {
 
@@ -22,11 +22,13 @@ export class TheoryComponent implements OnInit {
 
     public ngOnInit() {
         this.activatedRoute.params
-            .mergeMap(params => {
-                let topicId = +params["topicId"]; 
+            .pipe(
+            mergeMap(params => {
+                let topicId = +params["topicId"];
 
                 return this.publicService.getTopic(topicId);
             })
+            )
             .subscribe((topic: Topic) => {
                 this.topic = topic;
             });

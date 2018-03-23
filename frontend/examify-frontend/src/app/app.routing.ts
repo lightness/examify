@@ -11,6 +11,10 @@ const appRoutes: Routes = [
         loadChildren: "../common/login/login.module#LoginModule",
     },
     {
+        path: "dashboard",
+        loadChildren: "./dashboard/dashboard.module#DashboardModule",
+    },
+    {
         path: "",
         loadChildren: "./public/public.module#PublicModule",
     },

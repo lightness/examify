@@ -1,5 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+import { map } from "rxjs/operators";
 import { Observable } from "rxjs/Observable";
+import { Component, OnInit } from "@angular/core";
 
 import { Permission } from "../../common/entity/permission.enum";
 import { AuthService } from "../../common/auth/auth.service";
@@ -22,6 +23,9 @@ export class MenuComponent implements OnInit {
 
     public ngOnInit() {
         this.authService.currentUser
+            .pipe(
+                map(currentUser => currentUser && currentUser.name)
+            )
             .subscribe((currentUserName: string) => {
                 this.currentUserName = currentUserName;
                 this.isAuthenticated = !!currentUserName;

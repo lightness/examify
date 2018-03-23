@@ -27,6 +27,7 @@ export class DashboardService {
 
         let exams: Exam[] = await selectQueryBuilder
             .andWhere("exam.finishedAt is not null")
+            .orderBy("id", "ASC")
             .getMany();
 
         return { exams };

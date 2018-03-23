@@ -1,0 +1,128 @@
+<p class="display-4 text-right" *ngIf="isStatisticsMine">My statistics</p>
+<p class="display-4 text-right" *ngIf="!isStatisticsMine">Statistics of user #{{ userId }}</p>
+
+<chart [type]="chart.type" [data]="chart.data" [options]="chart.options" *ngIf="chart.data?.datasets?.length" ></chart>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th rowspan="2">Metric</th>
+            <th colspan="4">Amount</th>
+            <th colspan="4">Percent</th>
+        </tr>
+        <tr>
+            <th>Min</th>
+            <th>Average</th>
+            <th>Max</th>
+            <th>Total</th>
+            <th>Min</th>
+            <th>Average</th>
+            <th>Max</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>
+                Total questions
+                <button (click)="addChart('totalQuestionsAmount')" *ngIf="!isMetricShown('totalQuestionsAmount')"
+                    class="btn btn-sm btn-primary float-right">
+                    <i class="fas fa-plus"></i>
+                </button>
+                <button (click)="deleteChart('totalQuestionsAmount')" *ngIf="isMetricShown('totalQuestionsAmount')"
+                    class="btn btn-sm btn-primary float-right">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </td>
+            <td>{{ statistics.totalQuestionsAmount.min }}</td>
+            <td>{{ statistics.totalQuestionsAmount.avg }}</td>
+            <td>{{ statistics.totalQuestionsAmount.max }}</td>
+            <td>{{ statistics.totalQuestionsAmount.total }}</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>
+                Answered Questions
+                <button (click)="addChart('answeredQuestionsAmount')" *ngIf="!isMetricShown('answeredQuestionsAmount')"
+                    class="btn btn-sm btn-primary float-right">
+                    <i class="fas fa-plus"></i>
+                </button>
+                <button (click)="deleteChart('answeredQuestionsAmount')" *ngIf="isMetricShown('answeredQuestionsAmount')"
+                    class="btn btn-sm btn-primary float-right">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </td>
+            <td>{{ statistics.answeredQuestionsAmount.min }}</td>
+            <td>{{ statistics.answeredQuestionsAmount.avg }}</td>
+            <td>{{ statistics.answeredQuestionsAmount.max }}</td>
+            <td>{{ statistics.answeredQuestionsAmount.total }}</td>
+            <td>{{ statistics.answeredQuestionsRatio.min | percent }}</td>
+            <td>{{ statistics.answeredQuestionsRatio.avg | percent }}</td>
+            <td>{{ statistics.answeredQuestionsRatio.max | percent }}</td>
+            <td>{{ statistics.answeredQuestionsRatio.total | percent }}</td>
+        </tr>
+        <tr>
+            <td>
+                Correctly Answered Questions
+                <button (click)="addChart('correctlyAnsweredQuestionsAmount')" *ngIf="!isMetricShown('correctlyAnsweredQuestionsAmount')"
+                    class="btn btn-sm btn-primary float-right">
+                    <i class="fas fa-plus"></i>
+                </button>
+                <button (click)="deleteChart('correctlyAnsweredQuestionsAmount')" *ngIf="isMetricShown('correctlyAnsweredQuestionsAmount')"
+                    class="btn btn-sm btn-primary float-right">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </td>
+            <td>{{ statistics.correctlyAnsweredQuestionsAmount.min }}</td>
+            <td>{{ statistics.correctlyAnsweredQuestionsAmount.avg }}</td>
+            <td>{{ statistics.correctlyAnsweredQuestionsAmount.max }}</td>
+            <td>{{ statistics.correctlyAnsweredQuestionsAmount.total }}</td>
+            <td>{{ statistics.correctlyAnsweredQuestionsRatio.min | percent }}</td>
+            <td>{{ statistics.correctlyAnsweredQuestionsRatio.avg | percent }}</td>
+            <td>{{ statistics.correctlyAnsweredQuestionsRatio.max | percent }}</td>
+            <td>{{ statistics.correctlyAnsweredQuestionsRatio.total | percent }}</td>
+        </tr>
+        <tr>
+            <td>
+                Wrong Answered Questions
+                <button (click)="addChart('wrongAnsweredQuestionsAmount')" *ngIf="!isMetricShown('wrongAnsweredQuestionsAmount')" class="btn btn-sm btn-primary float-right">
+                    <i class="fas fa-plus"></i>
+                </button>
+                <button (click)="deleteChart('wrongAnsweredQuestionsAmount')" *ngIf="isMetricShown('wrongAnsweredQuestionsAmount')" class="btn btn-sm btn-primary float-right">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </td>
+            <td>{{ statistics.wrongAnsweredQuestionsAmount.min }}</td>
+            <td>{{ statistics.wrongAnsweredQuestionsAmount.avg }}</td>
+            <td>{{ statistics.wrongAnsweredQuestionsAmount.max }}</td>
+            <td>{{ statistics.wrongAnsweredQuestionsAmount.total }}</td>
+            <td>{{ statistics.wrongAnsweredQuestionsRatio.min | percent }}</td>
+            <td>{{ statistics.wrongAnsweredQuestionsRatio.avg | percent }}</td>
+            <td>{{ statistics.wrongAnsweredQuestionsRatio.max | percent }}</td>
+            <td>{{ statistics.wrongAnsweredQuestionsRatio.total | percent }}</td>
+        </tr>
+        <tr>
+            <td>
+                Missed Questions
+                <button (click)="addChart('missedQuestionsAmount')" *ngIf="!isMetricShown('missedQuestionsAmount')" class="btn btn-sm btn-primary float-right">
+                    <i class="fas fa-plus"></i>
+                </button>
+                <button (click)="deleteChart('missedQuestionsAmount')" *ngIf="isMetricShown('missedQuestionsAmount')" class="btn btn-sm btn-primary float-right">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </td>
+            <td>{{ statistics.missedQuestionsAmount.min }}</td>
+            <td>{{ statistics.missedQuestionsAmount.avg }}</td>
+            <td>{{ statistics.missedQuestionsAmount.max }}</td>
+            <td>{{ statistics.missedQuestionsAmount.total }}</td>
+            <td>{{ statistics.missedQuestionsRatio.min | percent }}</td>
+            <td>{{ statistics.missedQuestionsRatio.avg | percent }}</td>
+            <td>{{ statistics.missedQuestionsRatio.max | percent }}</td>
+            <td>{{ statistics.missedQuestionsRatio.total | percent }}</td>
+        </tr>
+    </tbody>
+</table>

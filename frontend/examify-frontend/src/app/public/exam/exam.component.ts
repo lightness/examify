@@ -3,10 +3,11 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 
 import { Topic } from "../../../common/entity/topic.entity";
-import { PublicService } from "../public.service";
 import { Exam } from "../../../common/entity/exam.entity";
-import { ExamQuestion } from "../../../common/entity/exam-question.entity";
 import { Answer } from "../../../common/entity/answer.entity";
+import { ExamQuestion } from "../../../common/entity/exam-question.entity";
+import { PublicService } from "../public.service";
+import { CalculationsService } from "../../../common/calculations.service";
 
 
 @Component({
@@ -24,7 +25,9 @@ export class ExamComponent implements OnInit {
 
     constructor(
         private publicService: PublicService,
-        private activatedRoute: ActivatedRoute) {
+        private activatedRoute: ActivatedRoute,
+        private calculationsService: CalculationsService
+    ) {
         this.topic = this.activatedRoute.snapshot.data["topic"];
     }
 
@@ -48,7 +51,7 @@ export class ExamComponent implements OnInit {
     public finish() {
         this.publicService.checkExam(this.exam)
             .subscribe((verifiedExam: Exam) => {
-                this.results = this.beautifyResults(verifiedExam);
+                this.results = this.calculationsService.calculateExamResult(verifiedExam);
                 this.examPhase = ExamPhase.RESULTS;
             });
     }
@@ -75,27 +78,6 @@ export class ExamComponent implements OnInit {
         return !!answer;
     }
 
-    private beautifyResults(exam: Exam) {
-        return {
-            ...exam,
-            answeredQuestionsRatio: exam.answeredQuestionsAmount / exam.totalQuestionsAmount,
-            missedQuestionsAmount: exam.totalQuestionsAmount - exam.answeredQuestionsAmount,
-            missedQuestionsRatio: (exam.totalQuestionsAmount - exam.answeredQuestionsAmount) / exam.totalQuestionsAmount,
-            correctlyAnsweredQuestionsRatio: exam.correctlyAnsweredQuestionsAmount / exam.totalQuestionsAmount,
-            wrongAnsweredQuestionsAmount: exam.answeredQuestionsAmount - exam.correctlyAnsweredQuestionsAmount,
-            wrongAnsweredQuestionsRatio: (exam.answeredQuestionsAmount - exam.correctlyAnsweredQuestionsAmount) / exam.totalQuestionsAmount
-        };
-    }
-
-}
-
-interface ExamResults extends Exam {
-    missedQuestionsAmount?: number;
-    missedQuestionsRatio?: number;
-    answeredQuestionsRatio?: number;
-    correctlyAnsweredQuestionsRatio?: number;
-    wrongAnsweredQuestionsAmount?: number;
-    wrongAnsweredQuestionsRatio?: number;
 }
 
 enum ExamPhase {

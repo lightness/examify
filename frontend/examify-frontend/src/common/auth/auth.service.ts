@@ -15,7 +15,7 @@ export class AuthService {
     private TOKEN_KEY = "auth_token";
     private PERMISSIONS_KEY = "auth_permissions";
 
-    private currentUser$: Subject<string> = new BehaviorSubject<string>(null);
+    private currentUser$: Subject<{ id: number, name: string }> = new BehaviorSubject<{ id: number, name: string }>(null);
 
     public constructor(private router: Router) {
         let token: string = this.getToken();
@@ -27,7 +27,7 @@ export class AuthService {
         }
     }
 
-    public get currentUser(): Observable<string> {
+    public get currentUser(): Observable<{ id: number, name: string }> {
         return this.currentUser$.asObservable();
     }
 
@@ -71,7 +71,7 @@ export class AuthService {
         }
 
         let payload = jwtDecode(token);
-        this.currentUser$.next(payload.user.name);
+        this.currentUser$.next(payload.user);
     }
 
     private removeToken(): void {

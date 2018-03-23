@@ -10,7 +10,7 @@ import { PublicService } from "../public.service";
 export class TopicResolver implements Resolve<Topic> {
 
     public constructor(
-        private adminService: PublicService
+        private publicService: PublicService
     ) {
     }
 
@@ -21,7 +21,7 @@ export class TopicResolver implements Resolve<Topic> {
             return;
         }
 
-        return this.adminService.getTopic(topicId);
+        return this.publicService.getTopic(topicId);
     }
 
 }
