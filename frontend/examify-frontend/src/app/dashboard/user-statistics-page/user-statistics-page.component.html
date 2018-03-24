@@ -1,7 +1,26 @@
 <p class="display-4 text-right" *ngIf="isStatisticsMine">My statistics</p>
 <p class="display-4 text-right" *ngIf="!isStatisticsMine">Statistics of user #{{ userId }}</p>
 
-<p class="lead text-right">Aggregates data for {{ statistics?.exams?.length }} exams for {{ topicIds?.length }} topics</p>
+<p class="lead text-right">Aggregated data for {{ relevantExams?.length }} exams</p>
 
+<div class="btn-group btn-group-toggle div-toggle-topic">
+    <button (click)="setTopicId(null)" class="btn btn-info" [class.active]="!topic">
+        All Topics
+        <span class="badge badge-pill badge-warning">{{ examsHistory.length }}</span>
+    </button>
+    <div class="btn-group" role="group">
+        <button id="btn-select-topic" type="button" class="btn btn-info dropdown-toggle" [class.active]="topic" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <span *ngIf="!topic">Select Topic</span>
+            <span *ngIf="topic">Topic "{{ topic.title }}"</span>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="btn-select-topic">
+            <a *ngFor="let topic of allTopics" class="dropdown-item" (click)="setTopicId(topic.id);">
+                {{ topic.title }}
+                <span class="badge badge-pill badge-warning">{{ examsCounts[topic.id + ""] || 0 }}</span>
+            </a>
+        </div>
+    </div>
+</div>
 
-<ex-user-statistics [statistics]="statistics" [userId]="userId" [topicId]="topicId"></ex-user-statistics>
+<ex-user-statistics [exams]="relevantExams"></ex-user-statistics>

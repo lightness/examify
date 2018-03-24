@@ -1,11 +1,12 @@
 import * as _ from "lodash";
-import { map } from "rxjs/operators";
+import { map, filter } from "rxjs/operators";
 import { ActivatedRoute } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 
 import { Exam } from "../../common/entity/exam.entity";
+import { Topic } from "../../common/entity/topic.entity";
 import { AuthService } from "../../common/auth/auth.service";
-import { ExamStatistics } from "../../common/calculations.service";
+import { CommonApiService } from "../../common/common-api.service";
 
 
 @Component({
@@ -15,35 +16,73 @@ import { ExamStatistics } from "../../common/calculations.service";
 })
 export class UserStatisticsPageComponent implements OnInit {
 
-    private topicId: number;
+    private topic: Topic;
     private userId: number;
-    private statistics: ExamStatistics;
-
+    private topicId: number;
+    private allTopics: Topic[];
+    private examsHistory: Exam[];
+    private relevantExams: Exam[];
     private isStatisticsMine: boolean;
-    private topicIds: number[];
+    private topicsWithFinishedExamsCount: number;
+    private examsCounts: { [topicId: string]: number } = {};
 
     public constructor(
         private activatedRoute: ActivatedRoute,
-        private authService: AuthService
+        private authService: AuthService,
+        private commonApiService: CommonApiService,
     ) {
-        this.statistics = this.activatedRoute.snapshot.data["statistics"];
+        this.examsHistory = this.activatedRoute.snapshot.data["examsHistory"];
         this.userId = +this.activatedRoute.snapshot.params["userId"];
-        this.topicId = this.activatedRoute.snapshot.queryParams["topicId"]
-            ? +this.activatedRoute.snapshot.queryParams["topicId"]
-            : null;
+        this.topicId = +this.activatedRoute.snapshot.queryParams["topicId"];
+        this.topic = this.activatedRoute.snapshot.data["topic"];
     }
 
     public ngOnInit() {
-        this.topicIds = _(this.statistics.exams)
+        this.recalculateStatistics();
+
+        this.examsCounts = _.countBy(this.examsHistory, exam => exam.topicId);
+
+        this.topicsWithFinishedExamsCount = _(this.examsHistory)
             .map((exam: Exam) => exam.topicId)
             .uniq()
-            .value();
+            .value()
+            .length;
+
+        this.commonApiService.getAllTopics()
+            .subscribe((topics: Topic[]) => {
+                this.allTopics = topics;
+            });
 
         this.authService.currentUser
-            .pipe(map(currentUser => currentUser.id))
+            .pipe(
+            filter(currentUser => !!currentUser),
+            map(currentUser => currentUser.id)
+            )
             .subscribe((currentUserId: number) => {
                 this.isStatisticsMine = (this.userId === currentUserId);
             });
     }
 
+    private setTopicId(topicId: number) {
+        this.topicId = topicId;
+        this.topic = _.find(this.allTopics, { id: topicId });
+        this.recalculateStatistics();
+    }
+
+    private recalculateStatistics() {
+        let criteria = this.getCriteria();
+        this.relevantExams = _.filter(this.examsHistory, criteria);
+    }
+
+    private getCriteria() {
+        let criteria: { userId: number, topicId?: number } = {
+            userId: this.userId
+        };
+
+        if (this.topicId) {
+            criteria.topicId = this.topicId;
+        }
+
+        return criteria;
+    }
 }

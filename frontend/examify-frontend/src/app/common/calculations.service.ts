@@ -50,9 +50,6 @@ export class CalculationsService {
             .max();
         let avg: number = examResults.length ? total / examResults.length : 0;
 
-        console.log(">>> examResults", examResults);
-        console.log(">>> { total, min, max, avg }", { total, min, max, avg });
-
         return { total, min, max, avg };
     }
 

@@ -15,7 +15,7 @@ export class TopicResolver implements Resolve<Topic> {
     }
 
     public resolve(route: ActivatedRouteSnapshot): Observable<Topic> {
-        let topicId: number = route.params["topicId"];
+        let topicId: number = route.params["topicId"] || route.queryParams["topicId"];
 
         if (!topicId) {
             return;

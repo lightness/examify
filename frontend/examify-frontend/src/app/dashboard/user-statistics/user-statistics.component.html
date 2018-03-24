@@ -23,11 +23,11 @@
         <tr>
             <td>
                 Total questions
-                <button (click)="addChart('totalQuestionsAmount')" *ngIf="!isMetricShown('totalQuestionsAmount')"
+                <button (click)="addMetric('totalQuestionsAmount')" *ngIf="!isMetricShown('totalQuestionsAmount')"
                     class="btn btn-sm btn-primary float-right">
                     <i class="fas fa-plus"></i>
                 </button>
-                <button (click)="deleteChart('totalQuestionsAmount')" *ngIf="isMetricShown('totalQuestionsAmount')"
+                <button (click)="deleteMetric('totalQuestionsAmount')" *ngIf="isMetricShown('totalQuestionsAmount')"
                     class="btn btn-sm btn-primary float-right">
                     <i class="fas fa-minus"></i>
                 </button>
@@ -44,11 +44,11 @@
         <tr>
             <td>
                 Answered Questions
-                <button (click)="addChart('answeredQuestionsAmount')" *ngIf="!isMetricShown('answeredQuestionsAmount')"
+                <button (click)="addMetric('answeredQuestionsAmount')" *ngIf="!isMetricShown('answeredQuestionsAmount')"
                     class="btn btn-sm btn-primary float-right">
                     <i class="fas fa-plus"></i>
                 </button>
-                <button (click)="deleteChart('answeredQuestionsAmount')" *ngIf="isMetricShown('answeredQuestionsAmount')"
+                <button (click)="deleteMetric('answeredQuestionsAmount')" *ngIf="isMetricShown('answeredQuestionsAmount')"
                     class="btn btn-sm btn-primary float-right">
                     <i class="fas fa-minus"></i>
                 </button>
@@ -65,11 +65,11 @@
         <tr>
             <td>
                 Correctly Answered Questions
-                <button (click)="addChart('correctlyAnsweredQuestionsAmount')" *ngIf="!isMetricShown('correctlyAnsweredQuestionsAmount')"
+                <button (click)="addMetric('correctlyAnsweredQuestionsAmount')" *ngIf="!isMetricShown('correctlyAnsweredQuestionsAmount')"
                     class="btn btn-sm btn-primary float-right">
                     <i class="fas fa-plus"></i>
                 </button>
-                <button (click)="deleteChart('correctlyAnsweredQuestionsAmount')" *ngIf="isMetricShown('correctlyAnsweredQuestionsAmount')"
+                <button (click)="deleteMetric('correctlyAnsweredQuestionsAmount')" *ngIf="isMetricShown('correctlyAnsweredQuestionsAmount')"
                     class="btn btn-sm btn-primary float-right">
                     <i class="fas fa-minus"></i>
                 </button>
@@ -86,10 +86,10 @@
         <tr>
             <td>
                 Wrong Answered Questions
-                <button (click)="addChart('wrongAnsweredQuestionsAmount')" *ngIf="!isMetricShown('wrongAnsweredQuestionsAmount')" class="btn btn-sm btn-primary float-right">
+                <button (click)="addMetric('wrongAnsweredQuestionsAmount')" *ngIf="!isMetricShown('wrongAnsweredQuestionsAmount')" class="btn btn-sm btn-primary float-right">
                     <i class="fas fa-plus"></i>
                 </button>
-                <button (click)="deleteChart('wrongAnsweredQuestionsAmount')" *ngIf="isMetricShown('wrongAnsweredQuestionsAmount')" class="btn btn-sm btn-primary float-right">
+                <button (click)="deleteMetric('wrongAnsweredQuestionsAmount')" *ngIf="isMetricShown('wrongAnsweredQuestionsAmount')" class="btn btn-sm btn-primary float-right">
                     <i class="fas fa-minus"></i>
                 </button>
             </td>
@@ -105,10 +105,10 @@
         <tr>
             <td>
                 Missed Questions
-                <button (click)="addChart('missedQuestionsAmount')" *ngIf="!isMetricShown('missedQuestionsAmount')" class="btn btn-sm btn-primary float-right">
+                <button (click)="addMetric('missedQuestionsAmount')" *ngIf="!isMetricShown('missedQuestionsAmount')" class="btn btn-sm btn-primary float-right">
                     <i class="fas fa-plus"></i>
                 </button>
-                <button (click)="deleteChart('missedQuestionsAmount')" *ngIf="isMetricShown('missedQuestionsAmount')" class="btn btn-sm btn-primary float-right">
+                <button (click)="deleteMetric('missedQuestionsAmount')" *ngIf="isMetricShown('missedQuestionsAmount')" class="btn btn-sm btn-primary float-right">
                     <i class="fas fa-minus"></i>
                 </button>
             </td>

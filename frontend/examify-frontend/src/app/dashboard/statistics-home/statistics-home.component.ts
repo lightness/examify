@@ -1,6 +1,6 @@
-import { map, tap } from "rxjs/operators";
 import { Router } from "@angular/router";
 import { Component } from "@angular/core";
+import { map, tap, filter } from "rxjs/operators";
 
 import { AuthService } from "../../common/auth/auth.service";
 
@@ -21,6 +21,7 @@ export class StatisticsHomeComponent {
     public goToMyStatistics() {
         this.authService.currentUser
             .pipe(
+                filter(currentUser => !!currentUser),
                 tap(currentUser => console.log(">>> currentUser!", currentUser)),
                 map(currentUser => currentUser && currentUser.id)
             )

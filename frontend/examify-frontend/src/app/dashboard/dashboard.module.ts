@@ -4,8 +4,7 @@ import { ChartModule } from "angular2-chartjs";
 import { CommonModule } from "@angular/common";
 
 import { routing } from "./dashboard.routing";
-import { DashboardService } from "./dashboard.service";
-import { UserStatisticsResolver } from "./user-statistics/user-statistics.resolver";
+import { ExamsHistoryResolver } from "./exams-history.resolver";
 import { UserStatisticsComponent } from "./user-statistics/user-statistics.component";
 import { StatisticsHomeComponent } from "./statistics-home/statistics-home.component";
 import { UserStatisticsPageComponent } from "./user-statistics-page/user-statistics-page.component";
@@ -24,8 +23,7 @@ import { UserStatisticsPageComponent } from "./user-statistics-page/user-statist
         UserStatisticsPageComponent,
     ],
     providers: [
-        DashboardService,
-        UserStatisticsResolver,
+        ExamsHistoryResolver,
     ]
 })
 export class DashboardModule { }

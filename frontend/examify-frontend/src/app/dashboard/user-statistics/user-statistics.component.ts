@@ -1,11 +1,11 @@
 import * as _ from "lodash";
 import { map } from "rxjs/operators";
 import { Chart } from "chart.js";
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from "@angular/core";
 
 import { Exam } from "../../common/entity/exam.entity";
 import { AuthService } from "../../common/auth/auth.service";
-import { ExamStatistics, ExamResult } from "../../common/calculations.service";
+import { ExamStatistics, ExamResult, CalculationsService } from "../../common/calculations.service";
 
 
 @Component({
@@ -13,33 +13,36 @@ import { ExamStatistics, ExamResult } from "../../common/calculations.service";
     templateUrl: "./user-statistics.component.html",
     styleUrls: ["./user-statistics.component.css"]
 })
-export class UserStatisticsComponent implements OnInit {
+export class UserStatisticsComponent implements OnInit, OnChanges {
 
     @Input()
-    private userId: number;
+    private exams: Exam[];
 
-    @Input()
-    private topicId: number;
-
-    @Input()
     private statistics: ExamStatistics;
-
     private chart: { type, data, options };
+    private chartState: ChartStateItem[] = [];
 
     public constructor(
-        private authService: AuthService
+        private authService: AuthService,
+        private calculationsService: CalculationsService
     ) {
     }
 
     public ngOnInit() {
-        this.chart = this.createChart();
+        // this.repaintChart();
+    }
+
+    public ngOnChanges(changes: SimpleChanges) {
+        this.statistics = this.calculationsService.calculateExamStatistics(changes.exams.currentValue);
+
+        this.repaintChart();
     }
 
     private createChart() {
         let labels = _.map(this.statistics.exams, exam => `Exam #${exam.id}`);
 
         return {
-            type: "line",
+            type: "bar",
             data: {
                 labels,
                 datasets: []
@@ -65,21 +68,42 @@ export class UserStatisticsComponent implements OnInit {
         };
     }
 
-    private deleteChart(metricName: string) {
-        let label: string = MEASURE_TITLES[metricName];
-        this.chart.data = {
-            ...this.chart.data,
-            datasets: _.filter(this.chart.data.datasets, dataset => dataset.label !== label)
-        };
+    private addMetric(metric: string) {
+        this.chartState.push({
+            metric,
+            color: this.getColor()
+        });
+
+        this.repaintChart();
     }
 
-    private addChart(metricName: string) {
+    private deleteMetric(metric: string) {
+        this.chartState = _.filter(this.chartState, chartStateItem => chartStateItem.metric !== metric);
+
+        this.repaintChart();
+    }
+
+    private repaintChart() {
+        this.chart = this.createChart();
+
+        // Apply state
+        _.each(this.chartState, chartStateItem => {
+            this.addGraph(chartStateItem.metric, chartStateItem.color);
+        });
+    }
+
+    // private deleteChart(metricName: string) {
+    //     let label: string = MEASURE_TITLES[metricName];
+    //     this.chart.data = {
+    //         ...this.chart.data,
+    //         datasets: _.filter(this.chart.data.datasets, dataset => dataset.label !== label)
+    //     };
+    // }
+
+    private addGraph(metricName: string, color: string) {
         let label: string = MEASURE_TITLES[metricName];
         let usedColors: string[] = _.map(this.chart.data.datasets, dataset => dataset.backgroundColor);
-        let color: string = _(COLORS)
-            .values()
-            .difference(usedColors)
-            .sample();
+
         let data: number[] = _.map(this.statistics.examResults, examResult => examResult[metricName]);
 
         this.chart.data = {
@@ -97,15 +121,24 @@ export class UserStatisticsComponent implements OnInit {
         };
     }
 
-    private isMetricShown(metricName: string): boolean {
-        let label: string = MEASURE_TITLES[metricName];
-        let existingDataset: Object = _.find(this.chart.data.datasets, { label });
+    private getColor(): string {
+        let color: string = _(COLORS)
+            .values()
+            .sample();
 
-        return !!existingDataset;
+        return color;
+    }
+
+    private isMetricShown(metric: string): boolean {
+        let existingMetricState: ChartStateItem = _.find(this.chartState, chartStateItem => chartStateItem.metric === metric);
+
+        return !!existingMetricState;
     }
 }
 
 type MeasureTitleMapping = {[p in keyof ExamResult]?: string };
+
+type ChartStateItem = { metric: string, color: string };
 
 const COLORS = {
     BLUE: "rgb(54, 162, 235)",
@@ -123,3 +156,4 @@ const MEASURE_TITLES: MeasureTitleMapping = {
     wrongAnsweredQuestionsAmount: "Wrong Answered Questions Amount",
     missedQuestionsAmount: "Missed Questions Amount",
 };
+

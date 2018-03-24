@@ -1,5 +1,6 @@
-import { Injectable } from "@angular/core";
+import { map } from "rxjs/operators";
 import { Observable } from "rxjs/Observable";
+import { Injectable } from "@angular/core";
 
 import { Exam } from "../common/entity/exam.entity";
 import { Topic } from "../common/entity/topic.entity";
@@ -65,18 +66,21 @@ export class CommonApiService {
         return this.apiService.post("/auth/login", { name, password });
     }
 
-    public getUserStatistics(userId: number, topicId?: number): Observable<UserStatisticsDto> {
+    public getUsersExamsHistory(userId: number, topicId?: number): Observable<Exam[]> {
         let url = `/dashboard/history/user/${userId}`;
 
         if (topicId) {
             url += `?topicId=${topicId}`;
         }
 
-        return this.apiService.get(url);
+        return this.apiService.get(url)
+            .pipe(
+                map((dto: UserExamHistoryDto) => dto.exams)
+            );
     }
 
 }
 
-export interface UserStatisticsDto {
+export interface UserExamHistoryDto {
     exams: Exam[];
 }
