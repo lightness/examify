@@ -8,6 +8,7 @@ import { DashboardService } from "./dashboard.service";
 import { UserStatisticsResolver } from "./user-statistics/user-statistics.resolver";
 import { UserStatisticsComponent } from "./user-statistics/user-statistics.component";
 import { StatisticsHomeComponent } from "./statistics-home/statistics-home.component";
+import { UserStatisticsPageComponent } from "./user-statistics-page/user-statistics-page.component";
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { StatisticsHomeComponent } from "./statistics-home/statistics-home.compo
     ],
     declarations: [
         StatisticsHomeComponent,
-        UserStatisticsComponent
+        UserStatisticsComponent,
+        UserStatisticsPageComponent,
     ],
     providers: [
         DashboardService,

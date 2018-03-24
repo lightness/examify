@@ -1,6 +1,3 @@
-<p class="display-4 text-right" *ngIf="isStatisticsMine">My statistics</p>
-<p class="display-4 text-right" *ngIf="!isStatisticsMine">Statistics of user #{{ userId }}</p>
-
 <chart [type]="chart.type" [data]="chart.data" [options]="chart.options" *ngIf="chart.data?.datasets?.length" ></chart>
 
 <table class="table">

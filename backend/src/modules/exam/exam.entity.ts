@@ -14,9 +14,15 @@ export class Exam extends EntityBase {
     @JoinColumn({ name: "userId" })
     public user: User;
 
+    @Column()
+    public userId: number;
+
     @ManyToOne(type => Topic, topic => topic.exams, { onDelete: "CASCADE" })
     @JoinColumn({ name: "topicId" })
     public topic: Topic;
+
+    @Column()
+    public topicId: number;
 
     @OneToMany(type => ExamQuestion, examQuestion => examQuestion.exam)
     public examQuestions: ExamQuestion[];

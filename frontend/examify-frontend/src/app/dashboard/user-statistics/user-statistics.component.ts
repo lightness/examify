@@ -1,11 +1,11 @@
 import * as _ from "lodash";
 import { map } from "rxjs/operators";
 import { Chart } from "chart.js";
-import { ActivatedRoute } from "@angular/router";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 
-import { ExamStatistics, ExamResult } from "../../../common/calculations.service";
+import { Exam } from "../../../common/entity/exam.entity";
 import { AuthService } from "../../../common/auth/auth.service";
+import { ExamStatistics, ExamResult } from "../../../common/calculations.service";
 
 
 @Component({
@@ -15,45 +15,24 @@ import { AuthService } from "../../../common/auth/auth.service";
 })
 export class UserStatisticsComponent implements OnInit {
 
-    private COLORS = {
-        BLUE: "rgb(54, 162, 235)",
-        GREEN: "rgb(75, 192, 192)",
-        ORANGE: "rgb(255, 159, 64)",
-        PURPLE: "rgb(153, 102, 255)",
-        RED: "rgb(255, 99, 132)",
-        YELLOW: "rgb(255, 205, 86)",
-    };
-
-    private MEASURE_TITLES: MeasureTitleMapping = {
-        totalQuestionsAmount: "Total Questions Amount",
-        answeredQuestionsAmount: "Answered Questions Amount",
-        correctlyAnsweredQuestionsAmount: "Correctly Answered Questions Amount",
-        wrongAnsweredQuestionsAmount: "Wrong Answered Questions Amount",
-        missedQuestionsAmount: "Missed Questions Amount",
-    };
-
-    private statistics: ExamStatistics;
-    private chart: { type, data, options };
+    @Input()
     private userId: number;
-    private isStatisticsMine: boolean;
+
+    @Input()
+    private topicId: number;
+
+    @Input()
+    private statistics: ExamStatistics;
+
+    private chart: { type, data, options };
 
     public constructor(
-        private activatedRoute: ActivatedRoute,
         private authService: AuthService
     ) {
-        this.statistics = this.activatedRoute.snapshot.data["statistics"];
-        this.userId = +this.activatedRoute.snapshot.params["userId"];
     }
 
     public ngOnInit() {
         this.chart = this.createChart();
-        this.authService.currentUser
-            .pipe(
-                map(currentUser => currentUser.id)
-            )
-            .subscribe((currentUserId: number) => {
-                this.isStatisticsMine = (this.userId === currentUserId);
-            });
     }
 
     private createChart() {
@@ -87,7 +66,7 @@ export class UserStatisticsComponent implements OnInit {
     }
 
     private deleteChart(metricName: string) {
-        let label: string = this.MEASURE_TITLES[metricName];
+        let label: string = MEASURE_TITLES[metricName];
         this.chart.data = {
             ...this.chart.data,
             datasets: _.filter(this.chart.data.datasets, dataset => dataset.label !== label)
@@ -95,9 +74,9 @@ export class UserStatisticsComponent implements OnInit {
     }
 
     private addChart(metricName: string) {
-        let label: string = this.MEASURE_TITLES[metricName];
+        let label: string = MEASURE_TITLES[metricName];
         let usedColors: string[] = _.map(this.chart.data.datasets, dataset => dataset.backgroundColor);
-        let color: string = _(this.COLORS)
+        let color: string = _(COLORS)
             .values()
             .difference(usedColors)
             .sample();
@@ -119,7 +98,7 @@ export class UserStatisticsComponent implements OnInit {
     }
 
     private isMetricShown(metricName: string): boolean {
-        let label: string = this.MEASURE_TITLES[metricName];
+        let label: string = MEASURE_TITLES[metricName];
         let existingDataset: Object = _.find(this.chart.data.datasets, { label });
 
         return !!existingDataset;
@@ -127,3 +106,20 @@ export class UserStatisticsComponent implements OnInit {
 }
 
 type MeasureTitleMapping = {[p in keyof ExamResult]?: string };
+
+const COLORS = {
+    BLUE: "rgb(54, 162, 235)",
+    GREEN: "rgb(75, 192, 192)",
+    ORANGE: "rgb(255, 159, 64)",
+    PURPLE: "rgb(153, 102, 255)",
+    RED: "rgb(255, 99, 132)",
+    YELLOW: "rgb(255, 205, 86)",
+};
+
+const MEASURE_TITLES: MeasureTitleMapping = {
+    totalQuestionsAmount: "Total Questions Amount",
+    answeredQuestionsAmount: "Answered Questions Amount",
+    correctlyAnsweredQuestionsAmount: "Correctly Answered Questions Amount",
+    wrongAnsweredQuestionsAmount: "Wrong Answered Questions Amount",
+    missedQuestionsAmount: "Missed Questions Amount",
+};

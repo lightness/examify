@@ -1,0 +1,7 @@
+<p class="display-4 text-right" *ngIf="isStatisticsMine">My statistics</p>
+<p class="display-4 text-right" *ngIf="!isStatisticsMine">Statistics of user #{{ userId }}</p>
+
+<p class="lead text-right">Aggregates data for {{ statistics?.exams?.length }} exams for {{ topicIds?.length }} topics</p>
+
+
+<ex-user-statistics [statistics]="statistics" [userId]="userId" [topicId]="topicId"></ex-user-statistics>
