@@ -2,9 +2,9 @@ import { switchMap } from "rxjs/operators";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 
-import { Topic } from "../../../common/entity/topic.entity";
-import { Question } from "../../../common/entity/question.entity";
-import { AdminService } from "../admin.service";
+import { Topic } from "../../common/entity/topic.entity";
+import { Question } from "../../common/entity/question.entity";
+import { CommonApiService } from "../../common/common-api.service";
 
 
 @Component({
@@ -18,7 +18,7 @@ export class ManageQuestionsComponent implements OnInit {
     private questions: Question[];
 
     constructor(
-        private adminService: AdminService,
+        private commonApiService: CommonApiService,
         private activatedRoute: ActivatedRoute,
         private router: Router
     ) { }
@@ -30,9 +30,9 @@ export class ManageQuestionsComponent implements OnInit {
 
     public onDelete(question) {
         if (confirm(`Doy you really want to delete question №${question.id}?`)) {
-            this.adminService.deleteQuestion(question.id)
+            this.commonApiService.deleteQuestion(question.id)
                 .pipe(
-                    switchMap(() => this.adminService.getQuestionsByTopic(this.topic.id)),
+                    switchMap(() => this.commonApiService.getQuestionsByTopic(this.topic.id)),
                 )
                 .subscribe((questions: Question[]) => {
                     this.questions = questions;

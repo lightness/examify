@@ -1,13 +1,15 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/Observable";
 
-import { ApiService } from "../../common/api.service";
-import { Topic } from "../../common/entity/topic.entity";
-import { Question } from "../../common/entity/question.entity";
+import { Exam } from "../common/entity/exam.entity";
+import { Topic } from "../common/entity/topic.entity";
+import { Question } from "../common/entity/question.entity";
+import { ApiService } from "../common/api.service";
+import { Permission } from "./entity/permission.enum";
 
 
 @Injectable()
-export class AdminService {
+export class CommonApiService {
 
     constructor(private apiService: ApiService) { }
 
@@ -51,4 +53,30 @@ export class AdminService {
         return this.apiService.post(`/questions`, question);
     }
 
+    public startExamByTopic(topicId: number): Observable<Exam> {
+        return this.apiService.get(`/exam/start`, { topicId });
+    }
+
+    public checkExam(results: any): Observable<any> {
+        return this.apiService.post(`/exam/finish`, results);
+    }
+
+    public login(name: string, password: string): Observable<Permission[]> {
+        return this.apiService.post("/auth/login", { name, password });
+    }
+
+    public getUserStatistics(userId: number, topicId?: number): Observable<UserStatisticsDto> {
+        let url = `/dashboard/history/user/${userId}`;
+
+        if (topicId) {
+            url += `?topicId=${topicId}`;
+        }
+
+        return this.apiService.get(url);
+    }
+
+}
+
+export interface UserStatisticsDto {
+    exams: Exam[];
 }

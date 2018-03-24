@@ -8,7 +8,7 @@ const appRoutes: Routes = [
     },
     {
         path: "login",
-        loadChildren: "../common/login/login.module#LoginModule",
+        loadChildren: "./login/login.module#LoginModule",
     },
     {
         path: "dashboard",

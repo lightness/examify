@@ -3,9 +3,9 @@ import { map } from "rxjs/operators";
 import { Chart } from "chart.js";
 import { Component, OnInit, Input } from "@angular/core";
 
-import { Exam } from "../../../common/entity/exam.entity";
-import { AuthService } from "../../../common/auth/auth.service";
-import { ExamStatistics, ExamResult } from "../../../common/calculations.service";
+import { Exam } from "../../common/entity/exam.entity";
+import { AuthService } from "../../common/auth/auth.service";
+import { ExamStatistics, ExamResult } from "../../common/calculations.service";
 
 
 @Component({

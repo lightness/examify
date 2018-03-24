@@ -3,12 +3,17 @@ import { BrowserModule } from "@angular/platform-browser";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 
 import { routing } from "./app.routing";
-import { ApiService } from "../common/api.service";
-import { AuthModule } from "../common/auth/auth.module";
+import { ApiService } from "./common/api.service";
+import { AuthModule } from "./common/auth/auth.module";
 import { MenuModule } from "./menu/menu.module";
 import { AppComponent } from "./app.component";
-import { AuthInterceptor } from "../common/auth/auth.interceptor";
-import { CalculationsService } from "../common/calculations.service";
+import { TopicResolver } from "./common/resolvers/topic.resolver";
+import { AuthInterceptor } from "./common/auth/auth.interceptor";
+import { CommonApiService } from "./common/common-api.service";
+import { QuestionResolver } from "./common/resolvers/question.resolver";
+import { AllTopicsResolver } from "./common/resolvers/all-topics.resolver";
+import { CalculationsService } from "./common/calculations.service";
+import { QuestionsByTopicResolver } from "./common/resolvers/questions-by-topic.resolver";
 
 
 @NgModule({
@@ -24,10 +29,18 @@ import { CalculationsService } from "../common/calculations.service";
     ],
     providers: [
         ApiService,
+        CommonApiService,
         CalculationsService,
         [
             { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
-        ]
+        ],
+
+        // Resolvers
+        AllTopicsResolver,
+        QuestionResolver,
+        QuestionsByTopicResolver,
+        TopicResolver
+
     ],
     bootstrap: [AppComponent]
 })

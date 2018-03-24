@@ -2,15 +2,15 @@ import { Observable } from "rxjs/Observable";
 import { Injectable } from "@angular/core";
 import { Resolve, ActivatedRouteSnapshot } from "@angular/router";
 
-import { Topic } from "../../../common/entity/topic.entity";
-import { AdminService } from "../admin.service";
+import { Topic } from "../../common/entity/topic.entity";
+import { CommonApiService } from "../common-api.service";
 
 
 @Injectable()
 export class TopicResolver implements Resolve<Topic> {
 
     public constructor(
-        private adminService: AdminService
+        private commonApiService: CommonApiService
     ) {
     }
 
@@ -21,7 +21,7 @@ export class TopicResolver implements Resolve<Topic> {
             return;
         }
 
-        return this.adminService.getTopic(topicId);
+        return this.commonApiService.getTopic(topicId);
     }
 
 }

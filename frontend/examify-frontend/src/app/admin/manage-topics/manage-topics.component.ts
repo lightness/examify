@@ -1,9 +1,9 @@
 import { Subject } from "rxjs/Subject";
-import { ActivatedRoute, Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 
-import { Topic } from "../../../common/entity/topic.entity";
-import { AdminService } from "../admin.service";
+import { Topic } from "../../common/entity/topic.entity";
+import { CommonApiService } from "../../common/common-api.service";
 
 
 @Component({
@@ -17,7 +17,7 @@ export class ManageTopicsComponent implements OnInit {
 
     constructor(
         private router: Router,
-        private adminService: AdminService,
+        private commonApiService: CommonApiService,
         private activatedRoute: ActivatedRoute
     ) {
     }
@@ -27,14 +27,14 @@ export class ManageTopicsComponent implements OnInit {
     }
 
     public onDelete(topic: Topic) {
-        this.adminService.deleteTopic(topic.id)
+        this.commonApiService.deleteTopic(topic.id)
             .subscribe(() => {
                 this.fetchTopics();
             });
     }
 
     public fetchTopics() {
-        this.adminService.getAllTopics()
+        this.commonApiService.getAllTopics()
             .subscribe(topics => {
                 this.topics = topics;
             });

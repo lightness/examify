@@ -2,10 +2,10 @@ import * as _ from "lodash";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 
-import { Topic } from "../../../common/entity/topic.entity";
-import { Question } from "../../../common/entity/question.entity";
-import { AdminService } from "../admin.service";
-import { Answer } from "../../../common/entity/answer.entity";
+import { Topic } from "../../common/entity/topic.entity";
+import { Answer } from "../../common/entity/answer.entity";
+import { Question } from "../../common/entity/question.entity";
+import { CommonApiService } from "../../common/common-api.service";
 
 
 @Component({
@@ -19,7 +19,7 @@ export class EditQuestionComponent implements OnInit {
     private question: Question;
 
     constructor(
-        private adminService: AdminService,
+        private commonApiService: CommonApiService,
         private router: Router,
         private activatedRoute: ActivatedRoute
     ) { }
@@ -33,9 +33,9 @@ export class EditQuestionComponent implements OnInit {
         let result;
 
         if (this.question.id) {
-            result = this.adminService.updateQuestion({ ...this.question, id: this.question.id });
+            result = this.commonApiService.updateQuestion({ ...this.question, id: this.question.id });
         } else {
-            result = this.adminService.createQuestion({ ...this.question, topicId: this.topic.id });
+            result = this.commonApiService.createQuestion({ ...this.question, topicId: this.topic.id });
         }
 
         result.subscribe(newTopic => {
@@ -45,7 +45,7 @@ export class EditQuestionComponent implements OnInit {
 
     public deleteQuestion() {
         if (confirm(`Do you really want to remove this question?`)) {
-            this.adminService.deleteQuestion(this.question.id)
+            this.commonApiService.deleteQuestion(this.question.id)
                 .subscribe(() => {
                     this.router.navigate(["/admin", "topic", this.topic.id, "questions"]);
                 });

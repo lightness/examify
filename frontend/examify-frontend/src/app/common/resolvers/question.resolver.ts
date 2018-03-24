@@ -2,15 +2,15 @@ import { Observable } from "rxjs/Observable";
 import { Injectable } from "@angular/core";
 import { Resolve, ActivatedRouteSnapshot } from "@angular/router";
 
-import { Question } from "../../../common/entity/question.entity";
-import { AdminService } from "../admin.service";
+import { Question } from "../../common/entity/question.entity";
+import { CommonApiService } from "../common-api.service";
 
 
 @Injectable()
 export class QuestionResolver implements Resolve<Question> {
 
     public constructor(
-        private adminService: AdminService
+        private commonApiService: CommonApiService
     ) {
     }
 
@@ -21,7 +21,7 @@ export class QuestionResolver implements Resolve<Question> {
             return;
         }
 
-        return this.adminService.getQuestion(questionId);
+        return this.commonApiService.getQuestion(questionId);
     }
 
 }

@@ -3,22 +3,22 @@ import { Router } from "@angular/router";
 import { Observable } from "rxjs/Observable";
 import { Injectable } from "@angular/core";
 
-import { ApiService } from "../api.service";
-import { Permission } from "../entity/permission.enum";
-import { AuthService } from "../auth/auth.service";
+import { Permission } from "../common/entity/permission.enum";
+import { AuthService } from "../common/auth/auth.service";
+import { CommonApiService } from "../common/common-api.service";
 
 
 @Injectable()
 export class LoginService {
 
     constructor(
-        private apiService: ApiService,
+        private commonApiService: CommonApiService,
         private authService: AuthService,
         private router: Router
     ) { }
 
     public login(username: string, password: string): Observable<any> {
-        return this.loginRequest(username, password)
+        return this.commonApiService.login(username, password)
             .pipe(
             tap((permissions: Permission[]) => {
                 this.authService.setPermissions(permissions);
@@ -33,8 +33,5 @@ export class LoginService {
             );
     }
 
-    private loginRequest(name: string, password: string): Observable<Permission[]> {
-        return this.apiService.post("/auth/login", { name, password });
-    }
 
 }

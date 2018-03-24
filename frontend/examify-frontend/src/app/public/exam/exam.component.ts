@@ -2,12 +2,12 @@ import * as _ from "lodash";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 
-import { Topic } from "../../../common/entity/topic.entity";
-import { Exam } from "../../../common/entity/exam.entity";
-import { Answer } from "../../../common/entity/answer.entity";
-import { ExamQuestion } from "../../../common/entity/exam-question.entity";
-import { PublicService } from "../public.service";
-import { CalculationsService } from "../../../common/calculations.service";
+import { Topic } from "../../common/entity/topic.entity";
+import { Exam } from "../../common/entity/exam.entity";
+import { Answer } from "../../common/entity/answer.entity";
+import { ExamQuestion } from "../../common/entity/exam-question.entity";
+import { CalculationsService } from "../../common/calculations.service";
+import { CommonApiService } from "../../common/common-api.service";
 
 
 @Component({
@@ -24,7 +24,7 @@ export class ExamComponent implements OnInit {
     private examPhase: ExamPhase;
 
     constructor(
-        private publicService: PublicService,
+        private commonApiService: CommonApiService,
         private activatedRoute: ActivatedRoute,
         private calculationsService: CalculationsService
     ) {
@@ -41,7 +41,7 @@ export class ExamComponent implements OnInit {
     }
 
     public startExam() {
-        return this.publicService.startExamByTopic(this.topicId)
+        return this.commonApiService.startExamByTopic(this.topicId)
             .subscribe((exam: Exam) => {
                 this.exam = exam;
                 this.examPhase = ExamPhase.EXAM;
@@ -49,7 +49,7 @@ export class ExamComponent implements OnInit {
     }
 
     public finish() {
-        this.publicService.checkExam(this.exam)
+        this.commonApiService.checkExam(this.exam)
             .subscribe((verifiedExam: Exam) => {
                 this.results = this.calculationsService.calculateExamResult(verifiedExam);
                 this.examPhase = ExamPhase.RESULTS;

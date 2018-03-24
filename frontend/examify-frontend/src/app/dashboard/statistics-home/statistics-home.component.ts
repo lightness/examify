@@ -2,7 +2,7 @@ import { map, tap } from "rxjs/operators";
 import { Router } from "@angular/router";
 import { Component } from "@angular/core";
 
-import { AuthService } from "../../../common/auth/auth.service";
+import { AuthService } from "../../common/auth/auth.service";
 
 
 @Component({

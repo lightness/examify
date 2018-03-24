@@ -1,6 +1,6 @@
 import { Input, Output, Component, EventEmitter } from "@angular/core";
 
-import { Topic } from "../../../../common/entity/topic.entity";
+import { Topic } from "../../../common/entity/topic.entity";
 
 
 @Component({

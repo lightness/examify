@@ -5,10 +5,10 @@ import { EditTopicComponent } from "./edit-topic/edit-topic.component";
 import { EditQuestionComponent } from "./edit-question/edit-question.component";
 import { ManageTopicsComponent } from "./manage-topics/manage-topics.component";
 import { ManageQuestionsComponent } from "./manage-questions/manage-questions.component";
-import { AllTopicsResolver } from "./common/all-topics.resolver";
-import { TopicResolver } from "./common/topic.resolver";
-import { QuestionsByTopicResolver } from "./common/questions-by-topic.resolver";
-import { QuestionResolver } from "./common/question.resolver";
+import { AllTopicsResolver } from "../common/resolvers/all-topics.resolver";
+import { TopicResolver } from "../common/resolvers/topic.resolver";
+import { QuestionsByTopicResolver } from "../common/resolvers/questions-by-topic.resolver";
+import { QuestionResolver } from "../common/resolvers/question.resolver";
 
 
 const routes: Routes = [

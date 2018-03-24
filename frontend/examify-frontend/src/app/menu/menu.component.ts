@@ -2,8 +2,8 @@ import { map } from "rxjs/operators";
 import { Observable } from "rxjs/Observable";
 import { Component, OnInit } from "@angular/core";
 
-import { Permission } from "../../common/entity/permission.enum";
-import { AuthService } from "../../common/auth/auth.service";
+import { Permission } from "../common/entity/permission.enum";
+import { AuthService } from "../common/auth/auth.service";
 
 
 @Component({

@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { Resolve, ActivatedRouteSnapshot } from "@angular/router";
 
 import { DashboardService } from "../dashboard.service";
-import { ExamStatistics } from "../../../common/calculations.service";
+import { ExamStatistics } from "../../common/calculations.service";
 
 
 @Injectable()

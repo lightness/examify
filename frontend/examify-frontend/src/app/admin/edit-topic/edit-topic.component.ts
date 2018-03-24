@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 
-import { Topic } from "../../../common/entity/topic.entity";
-import { Question } from "../../../common/entity/question.entity";
-import { AdminService } from "../admin.service";
+import { Topic } from "../../common/entity/topic.entity";
+import { Question } from "../../common/entity/question.entity";
+import { CommonApiService } from "../../common/common-api.service";
 
 
 @Component({
@@ -18,7 +18,7 @@ export class EditTopicComponent implements OnInit {
     private questions: Question[];
 
     constructor(
-        private adminService: AdminService,
+        private commonApiService: CommonApiService,
         private router: Router,
         private activatedRoute: ActivatedRoute
     ) { }
@@ -34,11 +34,11 @@ export class EditTopicComponent implements OnInit {
 
     public fetchTopic() {
         if (this.topicId) {
-            this.adminService.getTopic(this.topicId)
+            this.commonApiService.getTopic(this.topicId)
                 .subscribe(topic => {
                     this.topic = topic;
                 });
-            this.adminService.getQuestionsByTopic(this.topicId)
+            this.commonApiService.getQuestionsByTopic(this.topicId)
                 .subscribe((questions) => {
                     this.questions = questions;
                 });
@@ -52,9 +52,9 @@ export class EditTopicComponent implements OnInit {
         let result;
 
         if (this.topicId) {
-            result = this.adminService.updateTopic({ ...this.topic, id: this.topicId });
+            result = this.commonApiService.updateTopic({ ...this.topic, id: this.topicId });
         } else {
-            result = this.adminService.createTopic(this.topic);
+            result = this.commonApiService.createTopic(this.topic);
         }
 
         result.subscribe(newTopic => {
@@ -71,7 +71,7 @@ export class EditTopicComponent implements OnInit {
 
     public deleteTopic() {
         if (confirm(`Do you really want to delete "${this.topic.title}" topic?`)) {
-            this.adminService.deleteTopic(this.topicId)
+            this.commonApiService.deleteTopic(this.topicId)
                 .subscribe(() => {
                     this.router.navigate(["/admin", "topics"]);
                 });

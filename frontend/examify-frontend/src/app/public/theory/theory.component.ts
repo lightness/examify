@@ -2,8 +2,8 @@ import { mergeMap } from "rxjs/operators";
 import { ActivatedRoute } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 
-import { Topic } from "../../../common/entity/topic.entity";
-import { PublicService } from "../public.service";
+import { Topic } from "../../common/entity/topic.entity";
+import { CommonApiService } from "../../common/common-api.service";
 
 
 @Component({
@@ -16,7 +16,7 @@ export class TheoryComponent implements OnInit {
     private topic: Topic;
 
     constructor(
-        private publicService: PublicService,
+        private commonApiService: CommonApiService,
         private activatedRoute: ActivatedRoute) {
     }
 
@@ -26,7 +26,7 @@ export class TheoryComponent implements OnInit {
             mergeMap(params => {
                 let topicId = +params["topicId"];
 
-                return this.publicService.getTopic(topicId);
+                return this.commonApiService.getTopic(topicId);
             })
             )
             .subscribe((topic: Topic) => {

@@ -1,9 +1,9 @@
 import { Routes, RouterModule } from "@angular/router";
 
 import { ExamComponent } from "./exam/exam.component";
+import { TopicResolver } from "../common/resolvers/topic.resolver";
 import { PublicComponent } from "./public.component";
 import { TheoryComponent } from "./theory/theory.component";
-import { TopicResolver } from "./common/topic.resolver";
 
 
 const routes: Routes = [
