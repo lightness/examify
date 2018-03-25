@@ -12,7 +12,7 @@ import { CommonApiService } from "../../common/common-api.service";
 @Component({
     selector: "ex-user-statistics-page",
     templateUrl: "./user-statistics-page.component.html",
-    styleUrls: ["./user-statistics-page.component.css"]
+    styleUrls: ["./user-statistics-page.component.scss"]
 })
 export class UserStatisticsPageComponent implements OnInit {
 

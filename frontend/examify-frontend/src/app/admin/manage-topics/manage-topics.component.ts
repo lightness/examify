@@ -9,7 +9,7 @@ import { CommonApiService } from "../../common/common-api.service";
 @Component({
     selector: "ex-manage-topics",
     templateUrl: "./manage-topics.component.html",
-    styleUrls: ["./manage-topics.component.css"]
+    styleUrls: ["./manage-topics.component.scss"]
 })
 export class ManageTopicsComponent implements OnInit {
 

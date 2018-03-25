@@ -6,7 +6,7 @@ import { Topic } from "../../../common/entity/topic.entity";
 @Component({
     selector: "ex-topic-card",
     templateUrl: "./topic-card.component.html",
-    styleUrls: ["./topic-card.component.css"]
+    styleUrls: ["./topic-card.component.scss"]
 })
 export class TopicCardComponent {
 

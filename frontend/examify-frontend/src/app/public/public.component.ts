@@ -7,7 +7,7 @@ import { CommonApiService } from "../common/common-api.service";
 @Component({
     selector: "ex-public",
     templateUrl: "./public.component.html",
-    styleUrls: ["./public.component.css"]
+    styleUrls: ["./public.component.scss"]
 })
 export class PublicComponent implements OnInit {
 

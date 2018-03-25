@@ -11,7 +11,7 @@ import { CommonApiService } from "../../common/common-api.service";
 @Component({
     selector: "ex-edit-question",
     templateUrl: "./edit-question.component.html",
-    styleUrls: ["./edit-question.component.css"]
+    styleUrls: ["./edit-question.component.scss"]
 })
 export class EditQuestionComponent implements OnInit {
 

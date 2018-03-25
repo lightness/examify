@@ -11,7 +11,7 @@ import { ExamStatistics, ExamResult, CalculationsService } from "../../common/ca
 @Component({
     selector: "ex-user-statistics",
     templateUrl: "./user-statistics.component.html",
-    styleUrls: ["./user-statistics.component.css"]
+    styleUrls: ["./user-statistics.component.scss"]
 })
 export class UserStatisticsComponent implements OnInit, OnChanges {
 

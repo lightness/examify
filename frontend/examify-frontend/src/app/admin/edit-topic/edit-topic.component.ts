@@ -9,7 +9,7 @@ import { CommonApiService } from "../../common/common-api.service";
 @Component({
     selector: "ex-edit-topic",
     templateUrl: "./edit-topic.component.html",
-    styleUrls: ["./edit-topic.component.css"]
+    styleUrls: ["./edit-topic.component.scss"]
 })
 export class EditTopicComponent implements OnInit {
 

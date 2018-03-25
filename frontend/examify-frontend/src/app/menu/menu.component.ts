@@ -9,7 +9,7 @@ import { AuthService } from "../common/auth/auth.service";
 @Component({
     selector: "ex-menu",
     templateUrl: "./menu.component.html",
-    styleUrls: ["./menu.component.css"]
+    styleUrls: ["./menu.component.scss"]
 })
 export class MenuComponent implements OnInit {
 
