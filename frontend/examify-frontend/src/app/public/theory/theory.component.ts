@@ -9,7 +9,7 @@ import { CommonApiService } from "../../common/common-api.service";
 @Component({
     selector: "ex-theory",
     templateUrl: "./theory.component.html",
-    styleUrls: ["./theory.component.css"]
+    styleUrls: ["./theory.component.scss"]
 })
 export class TheoryComponent implements OnInit {
 

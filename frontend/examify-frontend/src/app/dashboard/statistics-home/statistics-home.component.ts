@@ -8,7 +8,7 @@ import { AuthService } from "../../common/auth/auth.service";
 @Component({
     selector: "ex-statistics-home",
     templateUrl: "./statistics-home.component.html",
-    styleUrls: ["./statistics-home.component.css"]
+    styleUrls: ["./statistics-home.component.scss"]
 })
 export class StatisticsHomeComponent {
 

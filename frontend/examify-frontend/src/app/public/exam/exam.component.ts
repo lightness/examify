@@ -13,7 +13,7 @@ import { CommonApiService } from "../../common/common-api.service";
 @Component({
     selector: "ex-exam",
     templateUrl: "./exam.component.html",
-    styleUrls: ["./exam.component.css"]
+    styleUrls: ["./exam.component.scss"]
 })
 export class ExamComponent {
 

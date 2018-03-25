@@ -6,7 +6,7 @@ import { Question } from "../../../common/entity/question.entity";
 @Component({
     selector: "ex-question-card",
     templateUrl: "./question-card.component.html",
-    styleUrls: ["./question-card.component.css"]
+    styleUrls: ["./question-card.component.scss"]
 })
 export class QuestionCardComponent {
 
