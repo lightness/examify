@@ -17,7 +17,8 @@ export class TheoryComponent implements OnInit {
 
     constructor(
         private commonApiService: CommonApiService,
-        private activatedRoute: ActivatedRoute) {
+        private activatedRoute: ActivatedRoute
+    ) {
     }
 
     public ngOnInit() {

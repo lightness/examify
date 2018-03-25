@@ -21,8 +21,9 @@ export class ExamService {
 
     private readonly QUESTIONS_IN_TEST = 10; // TODO: move to db settings
 
-    public constructor(private databaseService: DatabaseService) {
-
+    public constructor(
+        private databaseService: DatabaseService
+    ) {
     }
 
     protected get topicRepository(): Repository<Topic> {
@@ -102,7 +103,10 @@ export class ExamService {
 
     public async checkExam(originalExam: Exam, userExam: Exam): Promise<Partial<Exam>> {
         let answeredExamQuestions: ExamQuestion[] = _.filter(userExam.examQuestions, (examQuestion: ExamQuestion) => {
-            return _.find(originalExam.examQuestions, { id: examQuestion.id }) && !_.isEmpty(examQuestion.answers);
+            let isExamQuestionWithAnswers: boolean = !_.isEmpty(examQuestion.answers);
+            let isExamQuestionFromOriginalExam: boolean = !!_.find(originalExam.examQuestions, originalExamQuestion => originalExamQuestion.questionId === examQuestion.questionId);
+
+            return isExamQuestionFromOriginalExam && isExamQuestionWithAnswers;
         });
         let questionIds: number[] = _.map(answeredExamQuestions, (examQuestion: ExamQuestion) => examQuestion.question.id);
 
@@ -194,6 +198,7 @@ export class ExamService {
             let examQuestion: ExamQuestion = new ExamQuestion();
             examQuestion.exam = exam;
             examQuestion.question = question;
+            examQuestion.questionId = question.id;
 
             return examQuestion;
         });

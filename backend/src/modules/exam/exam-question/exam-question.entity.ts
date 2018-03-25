@@ -1,4 +1,4 @@
-import { Entity, JoinColumn, JoinTable, ManyToOne, ManyToMany } from "typeorm";
+import { Entity, JoinColumn, JoinTable, ManyToOne, ManyToMany, Column } from "typeorm";
 
 import { Exam } from "../exam.entity";
 import { Answer } from "../../answer/answer.entity";
@@ -13,9 +13,15 @@ export class ExamQuestion extends EntityBase {
     @JoinColumn({ name: "examId" })
     public exam: Exam;
 
+    @Column({ nullable: false })
+    public examId: number;
+
     @ManyToOne(type => Question, question => question.examQuestions, { onDelete: "CASCADE" })
     @JoinColumn({ name: "questionId" })
     public question: Question;
+
+    @Column({ nullable: false })
+    public questionId: number;
 
     @ManyToMany(type => Answer)
     @JoinTable({ name: "exam_question_answer" })

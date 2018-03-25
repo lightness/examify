@@ -1,5 +1,5 @@
 import * as _ from "lodash";
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 
 import { Topic } from "../../common/entity/topic.entity";
@@ -15,13 +15,13 @@ import { CommonApiService } from "../../common/common-api.service";
     templateUrl: "./exam.component.html",
     styleUrls: ["./exam.component.css"]
 })
-export class ExamComponent implements OnInit {
+export class ExamComponent {
 
     private topicId: number;
     private exam: Exam;
     private results: any;
     private topic: Topic;
-    private examPhase: ExamPhase;
+    private examPhase: ExamPhase = ExamPhase.INTRO;
 
     constructor(
         private commonApiService: CommonApiService,
@@ -29,26 +29,18 @@ export class ExamComponent implements OnInit {
         private calculationsService: CalculationsService
     ) {
         this.topic = this.activatedRoute.snapshot.data["topic"];
-    }
-
-    public ngOnInit() {
-        this.activatedRoute.params
-            .subscribe(params => {
-                this.topicId = +params["topicId"];
-
-                this.startExam();
-            });
+        this.topicId = this.activatedRoute.snapshot.params["topicId"];
     }
 
     public startExam() {
-        return this.commonApiService.startExamByTopic(this.topicId)
+        this.commonApiService.startExamByTopic(this.topicId)
             .subscribe((exam: Exam) => {
                 this.exam = exam;
                 this.examPhase = ExamPhase.EXAM;
             });
     }
 
-    public finish() {
+    public finishExam() {
         this.commonApiService.checkExam(this.exam)
             .subscribe((verifiedExam: Exam) => {
                 this.results = this.calculationsService.calculateExamResult(verifiedExam);
@@ -56,8 +48,8 @@ export class ExamComponent implements OnInit {
             });
     }
 
-    public toggleCheck(examQuestionId: number, answerId: number) {
-        let examQuestion: ExamQuestion = _.find(this.exam.examQuestions, { id: examQuestionId });
+    public toggleCheck(questionId: number, answerId: number) {
+        let examQuestion: ExamQuestion = _.find(this.exam.examQuestions, (exQ: ExamQuestion) => exQ.question.id === questionId);
         let answer: Answer = _.find(examQuestion.answers, { id: answerId });
 
         if (answer) {
@@ -71,8 +63,8 @@ export class ExamComponent implements OnInit {
         }
     }
 
-    public isAnswerChecked(examQuestionId: number, answerId: number) {
-        let examQuestion: ExamQuestion = _.find(this.exam.examQuestions, { id: examQuestionId });
+    public isAnswerChecked(questionId: number, answerId: number) {
+        let examQuestion: ExamQuestion = _.find(this.exam.examQuestions, (exQ: ExamQuestion) => exQ.question.id === questionId);
         let answer: Answer = _.find(examQuestion.answers, { id: answerId });
 
         return !!answer;
@@ -81,6 +73,7 @@ export class ExamComponent implements OnInit {
 }
 
 enum ExamPhase {
+    INTRO = "intro",
     EXAM = "exam",
     RESULTS = "results"
 }

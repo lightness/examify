@@ -3,4 +3,4 @@
 <pre *ngIf="topic">{{topic?.theory}}<pre>
 
 <a href="/">To topic list</a>
-<a *ngIf="topic?.hasQuestions" href="/topic/{{topic?.id}}/exam">Exam</a>
+<a *ngIf="topic?.hasQuestions" [routerLink]="['/topic', topic.id, 'exam']">Exam</a>

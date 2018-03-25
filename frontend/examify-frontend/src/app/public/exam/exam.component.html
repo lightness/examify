@@ -1,26 +1,30 @@
-<div *ngIf="examPhase === 'exam'">
+<p class="display-4 text-right">
+    <span *ngIf="!exam">New Exam</span>
+    <span *ngIf="exam">Exam #{{ exam.id }}</span>
+</p>
+<p class="lead text-right">Topic #{{ topic.id }} "{{ topic.title }}"</p>
 
-    <p class="display-4 text-right">Exam #{{ exam.id }}</p>
-    <p class="lead text-right">Topic #{{ topic.id }} "{{ topic.title }}"</p>
+<div *ngIf="examPhase === 'intro'">
+    <button class="btn btn-success" (click)="startExam()">Start exam</button>
+</div>
+
+<div *ngIf="examPhase === 'exam'">
 
     <div *ngFor="let examQuestion of exam.examQuestions" class="question">
         <p>{{ examQuestion.question.text }}</p>
         <div *ngFor="let answer of examQuestion.question.answers">
-            <input type="checkbox" id="chbx-answer-{{ answer.id }}" [ngModel]="isAnswerChecked(examQuestion.id, answer.id)" (change)="toggleCheck(examQuestion.id, answer.id)">
+            <input type="checkbox" id="chbx-answer-{{ answer.id }}" [ngModel]="isAnswerChecked(examQuestion.question.id, answer.id)" (change)="toggleCheck(examQuestion.question.id, answer.id)">
             <label for="chbx-answer-{{ answer.id }}">{{ answer.text }}</label>
         </div>
     </div>
 
-    <button (click)="finish()">Finish</button>
+    <button (click)="finishExam()">Finish</button>
 
-    <!-- {{ exam | json }} -->
+    {{ exam | json }}
 
 </div>
 
 <div *ngIf="examPhase === 'results'">
-
-    <p class="display-4 text-right">Exam #{{ exam.id }}</p>
-    <p class="lead text-right">Topic #{{ topic.id }} "{{ topic.title }}"</p>
 
     <p class="">Your results</p>
 
@@ -61,9 +65,11 @@
         </tbody>
     </table>
 
-    <button (click)="startExam()" class="btn btn-success float-right">Try again</button>
+    <button (click)="examPhase = 'intro'" class="btn btn-success float-right">Try again</button>
 
-    <p>You can continue <a href="/topic/{{topicId}}/theory">study</a> theory for "{{ topic.title }}"</p>
-    <p>You can <a href="/">select</a> another topic</p>
+    <p>You can continue
+        <a href="/topic/{{topicId}}/theory">study</a> theory for "{{ topic.title }}"</p>
+    <p>You can
+        <a href="/">select</a> another topic</p>
 
 </div>
