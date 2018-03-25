@@ -1,7 +1,8 @@
 import * as _ from "lodash";
+import { Location } from "@angular/common";
 import { map, filter } from "rxjs/operators";
-import { ActivatedRoute } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 
 import { Exam } from "../../common/entity/exam.entity";
 import { Topic } from "../../common/entity/topic.entity";
@@ -27,6 +28,8 @@ export class UserStatisticsPageComponent implements OnInit {
     private examsCounts: { [topicId: string]: number } = {};
 
     public constructor(
+        private location: Location,
+        private router: Router,
         private activatedRoute: ActivatedRoute,
         private authService: AuthService,
         private commonApiService: CommonApiService,
@@ -67,6 +70,7 @@ export class UserStatisticsPageComponent implements OnInit {
         this.topicId = topicId;
         this.topic = _.find(this.allTopics, { id: topicId });
         this.recalculateStatistics();
+        this.overrideUrl(topicId);
     }
 
     private recalculateStatistics() {
@@ -84,5 +88,15 @@ export class UserStatisticsPageComponent implements OnInit {
         }
 
         return criteria;
+    }
+
+    private overrideUrl(topicId: number) {
+        let url: string = this.router.url.split("?")[0];
+
+        if (topicId) {
+            this.location.replaceState(url, `?topicId=${topicId}`);
+        } else {
+            this.location.replaceState(url);
+        }
     }
 }

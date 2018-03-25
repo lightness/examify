@@ -34,13 +34,14 @@ export class ExamService {
     }
 
     public async startExam(topicId: number, currentJwtToken: JwtToken): Promise<Exam> {
-        let currentUser: User = await this.getCurrentUser(currentJwtToken);
         let questions: Question[] = await this.getExamQuestionsByTopic(topicId);
 
         let exam: Exam = this.createNewExam(questions);
+        exam.topicId = topicId;
 
-        if (currentUser) {
-            exam.user = currentUser;
+        if (currentJwtToken) {
+            exam.userId = currentJwtToken.user.id;
+
             exam = await this.persistExam(exam);
         }
 

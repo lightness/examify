@@ -92,14 +92,6 @@ export class UserStatisticsComponent implements OnInit, OnChanges {
         });
     }
 
-    // private deleteChart(metricName: string) {
-    //     let label: string = MEASURE_TITLES[metricName];
-    //     this.chart.data = {
-    //         ...this.chart.data,
-    //         datasets: _.filter(this.chart.data.datasets, dataset => dataset.label !== label)
-    //     };
-    // }
-
     private addGraph(metricName: string, color: string) {
         let label: string = MEASURE_TITLES[metricName];
         let usedColors: string[] = _.map(this.chart.data.datasets, dataset => dataset.backgroundColor);
@@ -122,8 +114,11 @@ export class UserStatisticsComponent implements OnInit, OnChanges {
     }
 
     private getColor(): string {
+        let usedColors: string[] = _.map(this.chartState, (chartStateItem: ChartStateItem) => chartStateItem.color);
+
         let color: string = _(COLORS)
             .values()
+            .difference(usedColors)
             .sample();
 
         return color;

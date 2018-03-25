@@ -32,10 +32,10 @@
                     <i class="fas fa-minus"></i>
                 </button>
             </td>
-            <td>{{ statistics.totalQuestionsAmount.min }}</td>
-            <td>{{ statistics.totalQuestionsAmount.avg }}</td>
-            <td>{{ statistics.totalQuestionsAmount.max }}</td>
-            <td>{{ statistics.totalQuestionsAmount.total }}</td>
+            <td>{{ statistics.totalQuestionsAmount.min | number : '1.0-2' }}</td>
+            <td>{{ statistics.totalQuestionsAmount.avg | number : '1.0-2' }}</td>
+            <td>{{ statistics.totalQuestionsAmount.max| number : '1.0-2' }}</td>
+            <td>{{ statistics.totalQuestionsAmount.total | number : '1.0-2' }}</td>
             <td>-</td>
             <td>-</td>
             <td>-</td>
@@ -53,10 +53,10 @@
                     <i class="fas fa-minus"></i>
                 </button>
             </td>
-            <td>{{ statistics.answeredQuestionsAmount.min }}</td>
-            <td>{{ statistics.answeredQuestionsAmount.avg }}</td>
-            <td>{{ statistics.answeredQuestionsAmount.max }}</td>
-            <td>{{ statistics.answeredQuestionsAmount.total }}</td>
+            <td>{{ statistics.answeredQuestionsAmount.min | number : '1.0-2' }}</td>
+            <td>{{ statistics.answeredQuestionsAmount.avg | number : '1.0-2' }}</td>
+            <td>{{ statistics.answeredQuestionsAmount.max| number : '1.0-2' }}</td>
+            <td>{{ statistics.answeredQuestionsAmount.total | number : '1.0-2' }}</td>
             <td>{{ statistics.answeredQuestionsRatio.min | percent }}</td>
             <td>{{ statistics.answeredQuestionsRatio.avg | percent }}</td>
             <td>{{ statistics.answeredQuestionsRatio.max | percent }}</td>
@@ -74,10 +74,10 @@
                     <i class="fas fa-minus"></i>
                 </button>
             </td>
-            <td>{{ statistics.correctlyAnsweredQuestionsAmount.min }}</td>
-            <td>{{ statistics.correctlyAnsweredQuestionsAmount.avg }}</td>
-            <td>{{ statistics.correctlyAnsweredQuestionsAmount.max }}</td>
-            <td>{{ statistics.correctlyAnsweredQuestionsAmount.total }}</td>
+            <td>{{ statistics.correctlyAnsweredQuestionsAmount.min | number : '1.0-2' }}</td>
+            <td>{{ statistics.correctlyAnsweredQuestionsAmount.avg | number : '1.0-2' }}</td>
+            <td>{{ statistics.correctlyAnsweredQuestionsAmount.max| number : '1.0-2' }}</td>
+            <td>{{ statistics.correctlyAnsweredQuestionsAmount.total | number : '1.0-2' }}</td>
             <td>{{ statistics.correctlyAnsweredQuestionsRatio.min | percent }}</td>
             <td>{{ statistics.correctlyAnsweredQuestionsRatio.avg | percent }}</td>
             <td>{{ statistics.correctlyAnsweredQuestionsRatio.max | percent }}</td>
@@ -93,10 +93,10 @@
                     <i class="fas fa-minus"></i>
                 </button>
             </td>
-            <td>{{ statistics.wrongAnsweredQuestionsAmount.min }}</td>
-            <td>{{ statistics.wrongAnsweredQuestionsAmount.avg }}</td>
-            <td>{{ statistics.wrongAnsweredQuestionsAmount.max }}</td>
-            <td>{{ statistics.wrongAnsweredQuestionsAmount.total }}</td>
+            <td>{{ statistics.wrongAnsweredQuestionsAmount.min | number : '1.0-2' }}</td>
+            <td>{{ statistics.wrongAnsweredQuestionsAmount.avg | number : '1.0-2' }}</td>
+            <td>{{ statistics.wrongAnsweredQuestionsAmount.max| number : '1.0-2' }}</td>
+            <td>{{ statistics.wrongAnsweredQuestionsAmount.total | number : '1.0-2' }}</td>
             <td>{{ statistics.wrongAnsweredQuestionsRatio.min | percent }}</td>
             <td>{{ statistics.wrongAnsweredQuestionsRatio.avg | percent }}</td>
             <td>{{ statistics.wrongAnsweredQuestionsRatio.max | percent }}</td>
@@ -112,10 +112,10 @@
                     <i class="fas fa-minus"></i>
                 </button>
             </td>
-            <td>{{ statistics.missedQuestionsAmount.min }}</td>
-            <td>{{ statistics.missedQuestionsAmount.avg }}</td>
-            <td>{{ statistics.missedQuestionsAmount.max }}</td>
-            <td>{{ statistics.missedQuestionsAmount.total }}</td>
+            <td>{{ statistics.missedQuestionsAmount.min | number : '1.0-2' }}</td>
+            <td>{{ statistics.missedQuestionsAmount.avg | number : '1.0-2' }}</td>
+            <td>{{ statistics.missedQuestionsAmount.max| number : '1.0-2' }}</td>
+            <td>{{ statistics.missedQuestionsAmount.total | number : '1.0-2' }}</td>
             <td>{{ statistics.missedQuestionsRatio.min | percent }}</td>
             <td>{{ statistics.missedQuestionsRatio.avg | percent }}</td>
             <td>{{ statistics.missedQuestionsRatio.max | percent }}</td>
