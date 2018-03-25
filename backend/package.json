@@ -7,8 +7,9 @@
     "start": "gulp clean && gulp compile && gulp start",
     "schema:sync": "gulp clean && gulp compile && ts-node ./node_modules/typeorm/cli.js schema:sync",
     "schema:drop": "gulp clean && gulp compile && ts-node ./node_modules/typeorm/cli.js schema:drop",
-    "migrations:run": "ts-node ./node_modules/typeorm/cli.js migrations:run",
-    "migrations:revert:latest": "ts-node ./node_modules/typeorm/cli.js migrations:revert"
+    "migrations:run": "gulp clean && gulp compile && ts-node ./node_modules/typeorm/cli.js migrations:run",
+    "migrations:revert:latest": "ts-node ./node_modules/typeorm/cli.js migrations:revert",
+    "migrations:create": "ts-node ./node_modules/typeorm/cli.js migrations:create"
   },
   "author": "lightness",
   "license": "ISC",

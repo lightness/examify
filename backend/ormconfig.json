@@ -15,6 +15,6 @@
     "logger": "advanced-console",
     "logging": "all",
     "cli": {
-        "migrationsDir": "migrations"
+        "migrationsDir": "src/migrations"
     }
 }
