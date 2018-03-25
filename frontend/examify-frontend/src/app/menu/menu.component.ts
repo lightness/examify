@@ -45,7 +45,7 @@ export class MenuComponent implements OnInit {
     }
 
     private get canSeePersonalDashboard() {
-        return this.authService.hasPermissions([Permission.SEE_PERSONAL_DASHBOARD]);
+        return this.authService.hasPermissions([Permission.VIEW_DASHBOARD]);
     }
 
 }

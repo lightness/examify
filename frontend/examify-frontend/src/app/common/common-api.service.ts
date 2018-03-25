@@ -7,6 +7,7 @@ import { Topic } from "../common/entity/topic.entity";
 import { Question } from "../common/entity/question.entity";
 import { ApiService } from "../common/api.service";
 import { Permission } from "./entity/permission.enum";
+import { User } from "./entity/user.entity";
 
 
 @Injectable()
@@ -77,6 +78,10 @@ export class CommonApiService {
             .pipe(
                 map((dto: UserExamHistoryDto) => dto.exams)
             );
+    }
+
+    public getAllUsers(): Observable<User[]> {
+        return this.apiService.get(`/users`);
     }
 
 }

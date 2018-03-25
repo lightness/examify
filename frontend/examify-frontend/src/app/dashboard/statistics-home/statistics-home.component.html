@@ -1,3 +1,16 @@
 <p class="display-4 text-right">Dashboard</p>
 
+<p>Every user can show own statistics.</p>
+<p>WARNING! Statistics aggregates data only for finished exams</p>
+
 <button class="btn btn-primary" (click)="goToMyStatistics()">My statistics</button>
+
+<div *ngIf="canManageStuff">
+    <p>In according with permissions, you can view statistics of any user</p>
+
+    <select [(ngModel)]="selectedUserId">
+        <option *ngFor="let user of allUsers" [value]="user.id">{{ user.name }}</option>
+    </select>
+
+    <button class="btn btn-primary" (click)="goToUserStatistics()">View statistics</button>
+</div>
