@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-header">
-            {{ topic.title }}
-        
+        {{ topic.title }}
+
         <a (click)="onDeleteClick()" class="btn btn-outline-danger float-right">
             <i class="fas fa-times"></i>
         </a>
@@ -12,11 +12,11 @@
         <p class="card-text">{{ topic.description }}</p>
 
 
-        <a href="/admin/topic/{{topic.id}}" class="btn btn-success">
+        <a [routerLink]="topicEditPageRoute" class="btn btn-success">
             <i class="fas fa-pencil-alt"></i>
             Edit
         </a>
-        <a href="/admin/topic/{{topic.id}}/questions" class="btn btn-primary">
+        <a [routerLink]="questionsManagePageRoute" class="btn btn-primary">
             <i class="fas fa-list"></i>
             Manage Questions
         </a>

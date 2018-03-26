@@ -15,6 +15,7 @@ import { AllUsersResolver } from "./common/resolvers/all-users.resolver";
 import { AllTopicsResolver } from "./common/resolvers/all-topics.resolver";
 import { CalculationsService } from "./common/calculations.service";
 import { QuestionsByTopicResolver } from "./common/resolvers/questions-by-topic.resolver";
+import { RoutingService } from "./common/routing.service";
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { QuestionsByTopicResolver } from "./common/resolvers/questions-by-topic.
     ],
     providers: [
         ApiService,
+        RoutingService,
         CommonApiService,
         CalculationsService,
         [

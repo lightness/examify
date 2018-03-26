@@ -49,7 +49,7 @@
 </button>
 
 <div class="float-right">
-    <a href="/admin/topic/{{ topic.id }}/questions" class="btn btn-secondary">Back to topic</a>
+    <a [routerLink]="questionsManagePageRoute" class="btn btn-secondary">Back to Questions List</a>
     <button *ngIf="question.id" (click)="deleteQuestion()" class="btn btn-outline-danger">
         <i class="fas fa-times"></i>
         Delete question

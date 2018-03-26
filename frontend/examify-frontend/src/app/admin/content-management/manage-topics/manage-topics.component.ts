@@ -2,8 +2,9 @@ import { Subject } from "rxjs/Subject";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 
-import { Topic } from "../../common/entity/topic.entity";
-import { CommonApiService } from "../../common/common-api.service";
+import { Topic } from "../../../common/entity/topic.entity";
+import { CommonApiService } from "../../../common/common-api.service";
+import { RoutingService } from "../../../common/routing.service";
 
 
 @Component({
@@ -18,12 +19,17 @@ export class ManageTopicsComponent implements OnInit {
     constructor(
         private router: Router,
         private commonApiService: CommonApiService,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        private routingService: RoutingService
     ) {
     }
 
     public ngOnInit() {
         this.topics = this.activatedRoute.snapshot.data["topics"];
+    }
+
+    private get topicAddPageRoute() {
+        return this.routingService.getTopicAddPage();
     }
 
     public onDelete(topic: Topic) {

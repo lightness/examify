@@ -8,6 +8,7 @@ import { Answer } from "../../common/entity/answer.entity";
 import { ExamQuestion } from "../../common/entity/exam-question.entity";
 import { CalculationsService } from "../../common/calculations.service";
 import { CommonApiService } from "../../common/common-api.service";
+import { RoutingService } from "../../common/routing.service";
 
 
 @Component({
@@ -26,10 +27,19 @@ export class ExamComponent {
     constructor(
         private commonApiService: CommonApiService,
         private activatedRoute: ActivatedRoute,
-        private calculationsService: CalculationsService
+        private calculationsService: CalculationsService,
+        private routingService: RoutingService
     ) {
         this.topic = this.activatedRoute.snapshot.data["topic"];
         this.topicId = this.activatedRoute.snapshot.params["topicId"];
+    }
+
+    private get examSelectPageRoute() {
+        return this.routingService.getExamSelectPage();
+    }
+
+    private get theoryPageRoute() {
+        return this.routingService.getTheoryPage(this.topic.id);
     }
 
     public startExam() {

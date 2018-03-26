@@ -2,9 +2,10 @@ import { switchMap } from "rxjs/operators";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 
-import { Topic } from "../../common/entity/topic.entity";
-import { Question } from "../../common/entity/question.entity";
-import { CommonApiService } from "../../common/common-api.service";
+import { Topic } from "../../../common/entity/topic.entity";
+import { Question } from "../../../common/entity/question.entity";
+import { CommonApiService } from "../../../common/common-api.service";
+import { RoutingService } from "../../../common/routing.service";
 
 
 @Component({
@@ -20,12 +21,25 @@ export class ManageQuestionsComponent implements OnInit {
     constructor(
         private commonApiService: CommonApiService,
         private activatedRoute: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        private routingService: RoutingService
     ) { }
 
     public ngOnInit() {
         this.topic = this.activatedRoute.snapshot.data["topic"];
         this.questions = this.activatedRoute.snapshot.data["questions"];
+    }
+
+    private get questionAddPageRoute() {
+        return this.routingService.getQuestionAddPage(this.topic.id);
+    }
+
+    private get topicEditPageRoute() {
+        return this.routingService.getTopicEditPage(this.topic.id);
+    }
+
+    private get topicsPageRoute() {
+        return this.routingService.getTopicsManagePage();
     }
 
     public onDelete(question) {
@@ -41,7 +55,9 @@ export class ManageQuestionsComponent implements OnInit {
     }
 
     public onEdit(question) {
-        this.router.navigate(["/admin", "topic", this.topic.id, "question", question.id]);
+        let route = this.routingService.getQuestionEditPage(this.topic.id, question.id);
+
+        this.router.navigate(route);
     }
 
 }

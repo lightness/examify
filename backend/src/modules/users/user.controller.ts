@@ -26,7 +26,6 @@ export class UserController {
 
     @Post()
     public async create( @Res() res: Response, @Body() user: User) {
-        console.log(">>> controller");
         let createdUser: User = await this.userService.add(user);
         res.status(HttpStatus.OK).json(createdUser);
     }

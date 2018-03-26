@@ -10,13 +10,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item" *ngIf="isAuthenticated && canManageContent">
-                    <a class="nav-link" [routerLink]="['/admin']">Manage Content</a>
+                    <a class="nav-link" [routerLink]="topicsManagePageRoute">Manage Content</a>
                 </li>
                 <li class="nav-item" *ngIf="isAuthenticated && canManageStuff">
-                    <a class="nav-link" [routerLink]="['/admin']">Manage Stuff</a>
+                    <a class="nav-link" [routerLink]="usersManagePageRoute">Manage Stuff</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['/']">Exam</a>
+                    <a class="nav-link" [routerLink]="examSelectPageRoute">Exam</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto mt-2 mt-md-0">
@@ -26,10 +26,10 @@
                         <i class="fa fa-user"></i> {{ currentUserName || "anonymous" }}
                     </a>
                     <div ngbDropdownMenu aria-labelledby="dropdownBasicLogin">
-                        <a class="dropdown-item" *ngIf="isAuthenticated && canSeePersonalDashboard" [routerLink]="['/dashboard', 'statistics']" title="My Dashboard">
+                        <a class="dropdown-item" *ngIf="isAuthenticated && canSeePersonalDashboard" [routerLink]="statisticsRootPageRoute" title="My Dashboard">
                             <i class="fa fa-fw fa-tachometer"></i> Dashboard
                         </a>
-                        <a class="dropdown-item" *ngIf="!isAuthenticated" [routerLink]="['/login']" title="Login">
+                        <a class="dropdown-item" *ngIf="!isAuthenticated" [routerLink]="loginPageRoute" title="Login">
                             <i class="fa fa-fw fa-sign-in"></i> Login
                         </a>
                         <a href="javascript://" class="dropdown-item" (click)="signOut()" *ngIf="isAuthenticated" title="Sign Out">

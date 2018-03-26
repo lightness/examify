@@ -6,6 +6,7 @@ import { Injectable } from "@angular/core";
 import { Permission } from "../common/entity/permission.enum";
 import { AuthService } from "../common/auth/auth.service";
 import { CommonApiService } from "../common/common-api.service";
+import { RoutingService } from "../common/routing.service";
 
 
 @Injectable()
@@ -14,7 +15,8 @@ export class LoginService {
     constructor(
         private commonApiService: CommonApiService,
         private authService: AuthService,
-        private router: Router
+        private router: Router,
+        private routingService: RoutingService
     ) { }
 
     public login(username: string, password: string): Observable<any> {
@@ -23,15 +25,23 @@ export class LoginService {
             tap((permissions: Permission[]) => {
                 this.authService.setPermissions(permissions);
 
-                // TODO
-                if (this.authService.hasPermissions([Permission.MANAGE_CONTENT])) {
-                    this.router.navigate(["/admin"]);
-                } else {
-                    this.router.navigate(["/"]);
-                }
+                this.navigateAfterLogin();
             })
             );
     }
 
+    private navigateAfterLogin() {
+        let route;
+
+        if (this.authService.hasPermissions([Permission.MANAGE_CONTENT])) {
+            route = this.routingService.getTopicsManagePage();
+        } else if (this.authService.hasPermissions([Permission.MANAGE_STUFF])) {
+            route = this.routingService.getTopicsManagePage(); // TODO getUsersManagePage
+        } else {
+            route = this.routingService.getExamSelectPage();
+        }
+
+        this.router.navigate(route);
+    }
 
 }
