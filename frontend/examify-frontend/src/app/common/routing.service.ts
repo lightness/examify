@@ -33,6 +33,14 @@ export class RoutingService {
         return ["/admin", "content-management", "topic", topicId, "question", questionId];
     }
 
+    public getUsersManagePage() {
+        return ["/admin", "stuff-management", "users"];
+    }
+
+    public getUserEditPage(userId: number) {
+        return ["/admin", "stuff-management", "user", userId];
+    }
+
     public getStatisticsRootPage() {
         return ["/dashboard", "statistics"];
     }

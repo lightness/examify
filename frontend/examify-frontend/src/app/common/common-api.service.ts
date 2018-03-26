@@ -84,6 +84,13 @@ export class CommonApiService {
         return this.apiService.get(`/users`);
     }
 
+    public getAllUsersWithRoles(): Observable<User[]> {
+        return this.apiService.get(`/users?withRoles=true`);
+    }
+
+    public deleteUser(userId: number): Observable<void> {
+        return this.apiService.delete(`/users/${userId}`);
+    }
 }
 
 export interface UserExamHistoryDto {

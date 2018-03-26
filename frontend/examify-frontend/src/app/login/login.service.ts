@@ -36,7 +36,7 @@ export class LoginService {
         if (this.authService.hasPermissions([Permission.MANAGE_CONTENT])) {
             route = this.routingService.getTopicsManagePage();
         } else if (this.authService.hasPermissions([Permission.MANAGE_STUFF])) {
-            route = this.routingService.getTopicsManagePage(); // TODO getUsersManagePage
+            route = this.routingService.getUsersManagePage();
         } else {
             route = this.routingService.getExamSelectPage();
         }
