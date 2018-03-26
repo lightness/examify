@@ -1,75 +1,98 @@
-<p class="display-4 text-right">
-    <span *ngIf="!exam">New Exam</span>
-    <span *ngIf="exam">Exam #{{ exam.id }}</span>
-</p>
-<p class="lead text-right">Topic #{{ topic.id }} "{{ topic.title }}"</p>
-
-<div *ngIf="examPhase === 'intro'">
-    <button class="btn btn-success" (click)="startExam()">Start exam</button>
+<div class="row justify-content-md-center">
+    <div class="col-md-10">
+        <p class="display-4 text-right">
+            <span *ngIf="!exam">New Exam</span>
+            <span *ngIf="exam">Exam #{{ exam.id }}</span>
+        </p>
+        <p class="lead text-right">Topic #{{ topic.id }} "{{ topic.title }}"</p>
+    </div>
 </div>
-
-<div *ngIf="examPhase === 'exam'">
-
-    <div *ngFor="let examQuestion of exam.examQuestions" class="question">
-        <p>{{ examQuestion.question.text }}</p>
-        <div *ngFor="let answer of examQuestion.question.answers">
-            <input type="checkbox" id="chbx-answer-{{ answer.id }}" [ngModel]="isAnswerChecked(examQuestion.question.id, answer.id)" (change)="toggleCheck(examQuestion.question.id, answer.id)">
-            <label for="chbx-answer-{{ answer.id }}">{{ answer.text }}</label>
+<div class="row justify-content-md-center" *ngIf="examPhase === 'intro'">
+    <div class="col-md-10">
+        <div class="jumbotron">
+            <h1 class="display-5">Hello, student!</h1>
+            <p class="lead">You can pass the exam.</p>
+            <hr class="my-4">
+            <p>To do this, click the button below.</p>
+            <p class="lead">
+                <button class="btn btn-success" (click)="startExam()">Start exam</button>
+            </p>
         </div>
     </div>
-
-    <button (click)="finishExam()">Finish</button>
-
-    {{ exam | json }}
-
+</div>
+<div class="row" *ngIf="examPhase === 'exam'">
+    <div class="col-md-6 mt-3" *ngFor="let examQuestion of exam.examQuestions, index as i">
+        <div class="h-100 rounded border">
+            <div class="card-header">
+                Question #{{i+1}}
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{ examQuestion.question.text }}</h5>
+                <div class="form-check" *ngFor="let answer of examQuestion.question.answers">
+                    <input type="checkbox" id="chbx-answer-{{ answer.id }}" [ngModel]="isAnswerChecked(examQuestion.question.id, answer.id)" (change)="toggleCheck(examQuestion.question.id, answer.id)">
+                    <label for="chbx-answer-{{ answer.id }}">{{ answer.text }}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row justify-content-md-center" *ngIf="examPhase === 'exam'">
+    <div class="col-md-10 mt-3">
+        <button class="btn btn-outline-success" (click)="finishExam()">Finish</button>
+    </div>
 </div>
 
-<div *ngIf="examPhase === 'results'">
-
-    <p class="">Your results</p>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Metric</th>
-                <th>Value</th>
-                <th>Percent</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Total Questions</td>
-                <td>{{ results.totalQuestionsAmount }}</td>
-                <td> Not applicable </td>
-            </tr>
-            <tr>
-                <td>Answered Questions</td>
-                <td>{{ results.answeredQuestionsAmount }}</td>
-                <td>{{ results.answeredQuestionsRatio | percent }}</td>
-            </tr>
-            <tr>
-                <td>Correctly Answered Questions</td>
-                <td>{{ results.correctlyAnsweredQuestionsAmount }}</td>
-                <td>{{ results.correctlyAnsweredQuestionsRatio | percent }}</td>
-            </tr>
-            <tr>
-                <td>Wrong Answered Questions</td>
-                <td>{{ results.wrongAnsweredQuestionsAmount }}</td>
-                <td>{{ results.wrongAnsweredQuestionsRatio | percent }}</td>
-            </tr>
-            <tr>
-                <td>Missed Questions</td>
-                <td>{{ results.missedQuestionsAmount }}</td>
-                <td>{{ results.missedQuestionsRatio | percent }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <button (click)="examPhase = 'intro'" class="btn btn-success float-right">Try again</button>
-
-    <p>You can continue
-        <a [routerLink]="theoryPageRoute">study</a> theory for "{{ topic.title }}"</p>
-    <p>You can
-        <a [routerLink]="examSelectPageRoute">select</a> another topic</p>
-
+<div class="row justify-content-md-center" *ngIf=" examPhase==='results' ">
+    <div class="col-md-10 mt-3">
+        <div class="row">
+            <p class="display-4">Your results</p>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Value</th>
+                        <th>Percent</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Total Questions</td>
+                        <td>{{ results.totalQuestionsAmount }}</td>
+                        <td> Not applicable </td>
+                    </tr>
+                    <tr>
+                        <td>Answered Questions</td>
+                        <td>{{ results.answeredQuestionsAmount }}</td>
+                        <td>{{ results.answeredQuestionsRatio | percent }}</td>
+                    </tr>
+                    <tr>
+                        <td>Correctly Answered Questions</td>
+                        <td>{{ results.correctlyAnsweredQuestionsAmount }}</td>
+                        <td>{{ results.correctlyAnsweredQuestionsRatio | percent }}</td>
+                    </tr>
+                    <tr>
+                        <td>Wrong Answered Questions</td>
+                        <td>{{ results.wrongAnsweredQuestionsAmount }}</td>
+                        <td>{{ results.wrongAnsweredQuestionsRatio | percent }}</td>
+                    </tr>
+                    <tr>
+                        <td>Missed Questions</td>
+                        <td>{{ results.missedQuestionsAmount }}</td>
+                        <td>{{ results.missedQuestionsRatio | percent }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row mt-2">
+            <button (click)="examPhase='intro' " class="btn btn-success">Try again</button>
+        </div>
+        <div class="row mt-2">
+            <p>You can continue
+                <a [routerLink]="theoryPageRoute ">study</a> theory for "{{ topic.title }} "</p>
+        </div>
+        <div class="row mt-2">
+            <p>You can
+                <a [routerLink]="examSelectPageRoute ">select</a> another topic</p>
+        </div>
+    </div>
 </div>
