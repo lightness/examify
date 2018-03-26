@@ -16,6 +16,10 @@ const routes: Routes = [
         loadChildren: "./content-management/content-management.module#ContentManagementModule"
     },
     {
+        path: "stuff-management",
+        loadChildren: "./stuff-management/stuff-management.module#StuffManagementModule"
+    },
+    {
         path: "",
         pathMatch: "full",
         redirectTo: "/admin/content-management"

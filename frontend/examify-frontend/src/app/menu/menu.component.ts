@@ -67,7 +67,7 @@ export class MenuComponent implements OnInit {
     }
 
     private get usersManagePageRoute() {
-        return this.routingService.getTopicsManagePage(); // TODO: getUsersManagePage
+        return this.routingService.getUsersManagePage();
     }
 
 }

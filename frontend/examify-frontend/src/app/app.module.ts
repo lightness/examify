@@ -16,6 +16,7 @@ import { AllTopicsResolver } from "./common/resolvers/all-topics.resolver";
 import { CalculationsService } from "./common/calculations.service";
 import { QuestionsByTopicResolver } from "./common/resolvers/questions-by-topic.resolver";
 import { RoutingService } from "./common/routing.service";
+import { AllUsersWithRolesResolver } from "./common/resolvers/all-users-with-roles.resolver";
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { RoutingService } from "./common/routing.service";
         // Resolvers
         AllTopicsResolver,
         AllUsersResolver,
+        AllUsersWithRolesResolver,
         QuestionResolver,
         QuestionsByTopicResolver,
         TopicResolver

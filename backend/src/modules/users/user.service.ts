@@ -37,7 +37,6 @@ export class UserService extends ServiceBase<User> implements Service<User> {
     }
 
     public async add(user: User): Promise<User> {
-        console.log(">>> service");
         if (user.password) {
             user.password = await this.encryptPassword(user.password);
         }
@@ -47,6 +46,14 @@ export class UserService extends ServiceBase<User> implements Service<User> {
 
     public async getAll(): Promise<User[]> {
         let users: User[] = await super.getAll();
+
+        return _.map(users, user => _.omit(user, ["password"]) as User);
+    }
+
+    public async getAllWithRoles(): Promise<User[]> {
+        let users: User[] = await this.repository.createQueryBuilder("user")
+            .leftJoinAndSelect("user.roles", "role")
+            .getMany();
 
         return _.map(users, user => _.omit(user, ["password"]) as User);
     }
