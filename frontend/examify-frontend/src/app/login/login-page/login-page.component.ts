@@ -39,7 +39,7 @@ export class LoginPageComponent extends BaseFormComponent implements OnInit {
         this.loginService.login(this.formGroup.get("username").value, this.formGroup.get("password").value)
             .pipe(
                 catchError(err => {
-                    this.formGroup.setErrors({ errorAyth: err.error.message });
+                    this.formGroup.setErrors({ errorAuth: err.error.message });
 
                     return Observable.empty();
                 })

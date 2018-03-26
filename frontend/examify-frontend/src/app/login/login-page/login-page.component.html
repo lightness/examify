@@ -2,9 +2,9 @@
     <div class="col-md-6">
         <p class="display-4 text-right">Examify</p>
         <form [formGroup]="formGroup" (submit)="login()">
-            <div class="form-group" *ngIf="formGroup.hasError('errorAyth')">
+            <div class="form-group" *ngIf="formGroup.hasError('errorAuth')">
                 <div class="alert alert-danger" role="alert">
-                    {{ formGroup.getError("errorAyth") }}
+                    {{ formGroup.getError("errorAuth") }}
                 </div>
             </div>
             <div class="form-group">
