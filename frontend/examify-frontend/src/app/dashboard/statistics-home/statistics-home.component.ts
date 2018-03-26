@@ -1,6 +1,6 @@
-import { Router } from "@angular/router";
+import { Component } from "@angular/core";
 import { map, tap, filter } from "rxjs/operators";
-import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 
 import { User } from "../../common/entity/user.entity";
 import { Permission } from "../../common/entity/permission.enum";
@@ -13,7 +13,7 @@ import { CommonApiService } from "../../common/common-api.service";
     templateUrl: "./statistics-home.component.html",
     styleUrls: ["./statistics-home.component.scss"]
 })
-export class StatisticsHomeComponent implements OnInit {
+export class StatisticsHomeComponent {
 
     private allUsers: User[];
     private selectedUserId: number;
@@ -21,19 +21,11 @@ export class StatisticsHomeComponent implements OnInit {
     public constructor(
         private authService: AuthService,
         private router: Router,
-        private commonApiService: CommonApiService
+        private commonApiService: CommonApiService,
+        private activatedRoute: ActivatedRoute
     ) {
+        this.allUsers = this.activatedRoute.snapshot.data["allUsers"];
     }
-
-    public ngOnInit() {
-        if (this.canManageStuff) {
-            this.commonApiService.getAllUsers()
-                .subscribe((users: User[]) => {
-                    this.allUsers = users;
-                });
-        }
-    }
-
     public goToMyStatistics() {
         this.authService.currentUser
             .pipe(
@@ -44,6 +36,10 @@ export class StatisticsHomeComponent implements OnInit {
             .subscribe(currentUserId => {
                 this.router.navigate(["/dashboard", "statistics", "user", currentUserId]);
             });
+    }
+
+    public goToUserStatistics() {
+        this.router.navigate(["/dashboard", "statistics", "user", this.selectedUserId]);
     }
 
     private get canManageStuff() {

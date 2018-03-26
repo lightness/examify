@@ -11,6 +11,7 @@ import { TopicResolver } from "./common/resolvers/topic.resolver";
 import { AuthInterceptor } from "./common/auth/auth.interceptor";
 import { CommonApiService } from "./common/common-api.service";
 import { QuestionResolver } from "./common/resolvers/question.resolver";
+import { AllUsersResolver } from "./common/resolvers/all-users.resolver";
 import { AllTopicsResolver } from "./common/resolvers/all-topics.resolver";
 import { CalculationsService } from "./common/calculations.service";
 import { QuestionsByTopicResolver } from "./common/resolvers/questions-by-topic.resolver";
@@ -37,6 +38,7 @@ import { QuestionsByTopicResolver } from "./common/resolvers/questions-by-topic.
 
         // Resolvers
         AllTopicsResolver,
+        AllUsersResolver,
         QuestionResolver,
         QuestionsByTopicResolver,
         TopicResolver
