@@ -1,1 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
+
+form {
+    .invalid {
+        label {
+            color: #dc3545;
+        }
+        .form-control {
+            border-color: #dc3545;
+            box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, .25);
+        }
+        small.form-text {
+            display: block;
+        }
+    }
+    .valid {
+        label {
+            color: #28a745;
+        }
+        .form-control {
+            border-color: #28a745;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, .25);
+        }
+    }
+    small.form-text {
+        display: none;
+    }
+}

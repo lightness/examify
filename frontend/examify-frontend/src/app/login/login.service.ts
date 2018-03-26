@@ -19,7 +19,7 @@ export class LoginService {
         private routingService: RoutingService
     ) { }
 
-    public login(username: string, password: string): Observable<any> {
+    public login(username?: string, password?: string): Observable<any> {
         return this.commonApiService.login(username, password)
             .pipe(
             tap((permissions: Permission[]) => {

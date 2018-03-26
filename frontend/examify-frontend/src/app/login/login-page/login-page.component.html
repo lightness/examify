@@ -1,18 +1,25 @@
-<div class="row login-form">
-    <div class="col-4"></div>
-    <div class="col-4">
+<div class="row justify-content-md-center">
+    <div class="col-md-6">
         <p class="display-4 text-right">Examify</p>
-
-        <div class="form-group">
-            <label for="input-name">User Name</label>
-            <input type="text" id="input-name" [(ngModel)]="username" placeholder="User" class="form-control">
-        </div>
-
-        <div class="form-group">
-            <label for="input-password">Password</label>
-            <input type="password" id="input-password" [(ngModel)]="password" placeholder="Secret" class="form-control">
-        </div>
-
-        <button (click)="login()" class="btn btn-primary">Login</button>
+        <form [formGroup]="formGroup" (submit)="login()">
+            <div class="form-group" *ngIf="formGroup.hasError('errorAuth')">
+                <div class="alert alert-danger" role="alert">
+                    {{ formGroup.getError("errorAuth") }}
+                </div>
+            </div>
+            <div class="form-group">
+                <app-form-control-wrapper [errors]="errors.username" [control]="formGroup.controls['username']">
+                    <label for="input-name" input-label>User Name</label>
+                    <input class="form-control" placeholder="User" formControlName="username" type="text" input-control #usernameField>
+                </app-form-control-wrapper>
+            </div>
+            <div class="form-group">
+                <app-form-control-wrapper [errors]="errors.password" [control]="formGroup.controls['password']">
+                    <label for="input-password" input-label>Password</label>
+                    <input class="form-control" placeholder="Password" formControlName="password" type="password" input-control #passwordField>
+                </app-form-control-wrapper>
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="formGroup.invalid">Sign In</button>
+        </form>
     </div>
 </div>

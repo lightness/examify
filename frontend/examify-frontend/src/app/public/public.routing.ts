@@ -4,6 +4,7 @@ import { ExamComponent } from "./exam/exam.component";
 import { TopicResolver } from "../common/resolvers/topic.resolver";
 import { PublicComponent } from "./public.component";
 import { TheoryComponent } from "./theory/theory.component";
+import { AllTopicsResolver } from "../common/resolvers/all-topics.resolver";
 
 
 const routes: Routes = [
@@ -21,6 +22,9 @@ const routes: Routes = [
     {
         path: "",
         component: PublicComponent,
+        resolve: {
+            topics: AllTopicsResolver
+        },
         pathMatch: "full"
     }
 ];
