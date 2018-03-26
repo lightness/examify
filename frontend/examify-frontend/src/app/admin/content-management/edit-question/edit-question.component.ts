@@ -2,10 +2,11 @@ import * as _ from "lodash";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 
-import { Topic } from "../../common/entity/topic.entity";
-import { Answer } from "../../common/entity/answer.entity";
-import { Question } from "../../common/entity/question.entity";
-import { CommonApiService } from "../../common/common-api.service";
+import { Topic } from "../../../common/entity/topic.entity";
+import { Answer } from "../../../common/entity/answer.entity";
+import { Question } from "../../../common/entity/question.entity";
+import { CommonApiService } from "../../../common/common-api.service";
+import { RoutingService } from "../../../common/routing.service";
 
 
 @Component({
@@ -21,12 +22,17 @@ export class EditQuestionComponent implements OnInit {
     constructor(
         private commonApiService: CommonApiService,
         private router: Router,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        private routingService: RoutingService
     ) { }
 
     public ngOnInit() {
         this.question = this.activatedRoute.snapshot.data["question"] || {};
         this.topic = this.activatedRoute.snapshot.data["topic"];
+    }
+
+    private get questionsManagePageRoute() {
+        return this.routingService.getQuestionsManagePage(this.topic.id);
     }
 
     public save() {
@@ -39,7 +45,7 @@ export class EditQuestionComponent implements OnInit {
         }
 
         result.subscribe(newTopic => {
-            this.router.navigate(["/admin", "topic", this.topic.id, "questions"]);
+            this.router.navigate(this.questionsManagePageRoute);
         });
     }
 
@@ -47,7 +53,7 @@ export class EditQuestionComponent implements OnInit {
         if (confirm(`Do you really want to remove this question?`)) {
             this.commonApiService.deleteQuestion(this.question.id)
                 .subscribe(() => {
-                    this.router.navigate(["/admin", "topic", this.topic.id, "questions"]);
+                    this.router.navigate(this.questionsManagePageRoute);
                 });
         }
     }

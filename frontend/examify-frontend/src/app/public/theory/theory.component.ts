@@ -4,6 +4,7 @@ import { Component, OnInit } from "@angular/core";
 
 import { Topic } from "../../common/entity/topic.entity";
 import { CommonApiService } from "../../common/common-api.service";
+import { RoutingService } from "../../common/routing.service";
 
 
 @Component({
@@ -17,8 +18,17 @@ export class TheoryComponent implements OnInit {
 
     constructor(
         private commonApiService: CommonApiService,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        private routingService: RoutingService
     ) {
+    }
+
+    private get examSelectPageRoute() {
+        return this.routingService.getExamSelectPage();
+    }
+
+    private get examPageRoute() {
+        return this.routingService.getExamPage(this.topic.id);
     }
 
     public ngOnInit() {

@@ -68,8 +68,8 @@
     <button (click)="examPhase = 'intro'" class="btn btn-success float-right">Try again</button>
 
     <p>You can continue
-        <a href="/topic/{{topicId}}/theory">study</a> theory for "{{ topic.title }}"</p>
+        <a [routerLink]="theoryPageRoute">study</a> theory for "{{ topic.title }}"</p>
     <p>You can
-        <a href="/">select</a> another topic</p>
+        <a [routerLink]="examSelectPageRoute">select</a> another topic</p>
 
 </div>

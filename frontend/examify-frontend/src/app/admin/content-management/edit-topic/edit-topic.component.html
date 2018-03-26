@@ -19,7 +19,7 @@
             <i class="fas fa-save"></i>
             {{ topic.id ? "Update" : "Create" }}
         </button>
-        <a href="/admin/topic/{{topicId}}/questions" class="btn btn-primary">
+        <a [routerLink]="questionsManagePageRoute" class="btn btn-primary">
             <i class="fas fa-list"></i>
             Manage Questions
         </a>
@@ -29,7 +29,7 @@
                 <i class="fas fa-times"></i>
                 Delete Topic
             </button>
-            <a href="/admin/topics" class="btn btn-link">To Topic List</a>
+            <a [routerLink]="topicsPageRoute" class="btn btn-link">To Topic List</a>
         </div>
 
     </form>

@@ -1,6 +1,6 @@
-<h3 *ngIf="topic" >{{topic?.title}}</h3>
+<h3 *ngIf="topic">{{ topic?.title }}</h3>
 
-<pre *ngIf="topic">{{topic?.theory}}<pre>
+<pre *ngIf="topic">{{ topic?.theory }}<pre>
 
-<a href="/">To topic list</a>
-<a *ngIf="topic?.hasQuestions" [routerLink]="['/topic', topic.id, 'exam']">Exam</a>
+<a [routerLink]="examSelectPageRoute">To Topics List</a>
+<a *ngIf="topic?.hasQuestions" [routerLink]="examPageRoute">Exam</a>

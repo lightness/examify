@@ -6,6 +6,7 @@ import { User } from "../../common/entity/user.entity";
 import { Permission } from "../../common/entity/permission.enum";
 import { AuthService } from "../../common/auth/auth.service";
 import { CommonApiService } from "../../common/common-api.service";
+import { RoutingService } from "../../common/routing.service";
 
 
 @Component({
@@ -22,10 +23,12 @@ export class StatisticsHomeComponent {
         private authService: AuthService,
         private router: Router,
         private commonApiService: CommonApiService,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        private routingService: RoutingService
     ) {
         this.allUsers = this.activatedRoute.snapshot.data["allUsers"];
     }
+
     public goToMyStatistics() {
         this.authService.currentUser
             .pipe(
@@ -34,12 +37,16 @@ export class StatisticsHomeComponent {
             map(currentUser => currentUser && currentUser.id)
             )
             .subscribe(currentUserId => {
-                this.router.navigate(["/dashboard", "statistics", "user", currentUserId]);
+                let route = this.routingService.getUserStatisticsPage(currentUserId);
+
+                this.router.navigate(route);
             });
     }
 
     public goToUserStatistics() {
-        this.router.navigate(["/dashboard", "statistics", "user", this.selectedUserId]);
+        let route = this.routingService.getUserStatisticsPage(this.selectedUserId);
+
+        this.router.navigate(route);
     }
 
     private get canManageStuff() {

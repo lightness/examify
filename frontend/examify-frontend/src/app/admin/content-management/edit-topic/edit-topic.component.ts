@@ -1,9 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 
-import { Topic } from "../../common/entity/topic.entity";
-import { Question } from "../../common/entity/question.entity";
-import { CommonApiService } from "../../common/common-api.service";
+import { Topic } from "../../../common/entity/topic.entity";
+import { Question } from "../../../common/entity/question.entity";
+import { CommonApiService } from "../../../common/common-api.service";
+import { RoutingService } from "../../../common/routing.service";
 
 
 @Component({
@@ -20,7 +21,8 @@ export class EditTopicComponent implements OnInit {
     constructor(
         private commonApiService: CommonApiService,
         private router: Router,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        private routingService: RoutingService
     ) { }
 
     public ngOnInit() {
@@ -30,6 +32,14 @@ export class EditTopicComponent implements OnInit {
 
                 this.fetchTopic();
             });
+    }
+
+    private get topicsPageRoute() {
+        return this.routingService.getTopicsManagePage();
+    }
+
+    private get questionsManagePageRoute() {
+        return this.routingService.getQuestionsManagePage(this.topicId);
     }
 
     public fetchTopic() {
@@ -58,22 +68,15 @@ export class EditTopicComponent implements OnInit {
         }
 
         result.subscribe(newTopic => {
-            this.router.navigate(["/admin", "topics"]);
+            this.router.navigate(this.topicsPageRoute);
         });
     }
-
-    // public deleteQuestion(questionId: number) {
-    //     this.adminService.deleteQuestion(questionId)
-    //         .subscribe(() => {
-    //             this.fetchTopic();
-    //         });
-    // }
 
     public deleteTopic() {
         if (confirm(`Do you really want to delete "${this.topic.title}" topic?`)) {
             this.commonApiService.deleteTopic(this.topicId)
                 .subscribe(() => {
-                    this.router.navigate(["/admin", "topics"]);
+                    this.router.navigate(this.topicsPageRoute);
                 });
         }
     }
