@@ -1,0 +1,7 @@
+<div class="control-wrapper-outer" [class.invalid]="(control?.touched || control?.dirty) && control?.invalid" [class.valid]="(control?.touched || control?.dirty) && control?.valid">
+    <ng-content select="[input-label]"></ng-content>
+    <div class="control-wrapper">
+        <ng-content select="[input-control]"></ng-content>
+        <app-form-validation-messages [control]="control" [errors]="errors"></app-form-validation-messages>
+    </div>
+</div>
