@@ -1,4 +1,7 @@
 import * as _ from "lodash";
+import "rxjs/add/observable/empty";
+import { Observable } from "rxjs/Observable";
+import { catchError } from "rxjs/operators";
 import { AbstractControl, FormControl, Validators, FormBuilder } from "@angular/forms";
 import { Component, OnInit, Inject } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -30,26 +33,33 @@ export class LoginPageComponent extends BaseFormComponent implements OnInit {
     public ngOnInit() {
         this.formModel = this.createFormControls();
         this.formGroup = this.formBuilder.group(this.formModel);
-
     }
 
     public login() {
         this.loginService.login(this.formGroup.get("username").value, this.formGroup.get("password").value)
-            .subscribe(
-                (data) => {
-                    console.log(data);
-                },
-                (err) => {
-                    this.formGroup.get("username").setErrors({ badCredentials: true });
-                    this.formGroup.get("password").setErrors({ badCredentials: true });
-                }
-            );
+            .pipe(
+                catchError(err => {
+                    this.formGroup.setErrors({ errorAyth: err.error.message });
+
+                    return Observable.empty();
+                })
+            )
+            .subscribe();
     }
 
     protected createFormControls(): { [key: string]: AbstractControl; } {
         return {
-            username: new FormControl("", Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(50)])),
-            password: new FormControl("", Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(50), checkSpaces()])),
+            username: new FormControl("", Validators.compose([
+                Validators.required,
+                Validators.minLength(4),
+                Validators.maxLength(50)]
+            )),
+            password: new FormControl("", Validators.compose([
+                Validators.required,
+                Validators.minLength(4),
+                Validators.maxLength(50),
+                checkSpaces()]
+            ))
         };
     }
 
@@ -58,15 +68,13 @@ export class LoginPageComponent extends BaseFormComponent implements OnInit {
             username: {
                 required: ERRORS.validations.required,
                 minlength: ERRORS.validations.minlength,
-                maxlength: ERRORS.validations.maxlength,
-                badCredentials: ERRORS.validations.badCredentials
+                maxlength: ERRORS.validations.maxlength
             },
             password: {
                 required: ERRORS.validations.required,
                 minlength: ERRORS.validations.minlength,
                 maxlength: ERRORS.validations.maxlength,
-                hasSpaces: ERRORS.validations.hasSpaces,
-                badCredentials: ERRORS.validations.badCredentials
+                hasSpaces: ERRORS.validations.hasSpaces
             }
         };
     }

@@ -6,7 +6,6 @@ export const ERRORS = {
         maxlength: "The field should be less or equal to <%= requiredLength %> symbols.",
         min: "The field value should be more or equal to <%= min %>.",
         max: "The field value should be less or equal to <%= max %>.",
-        hasSpaces: "Spaces are not allowed.",
-        badCredentials: "Bad credentials."
+        hasSpaces: "Spaces are not allowed."
     }
 };
