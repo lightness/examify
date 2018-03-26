@@ -1,22 +1,22 @@
 <div class="row justify-content-md-center">
-  <div class="col-md-8">
-    <div class="row">
-      <span class="display-4 text-right d-inline-block w-100 mb-5">Topics</span>
-    </div>
-    <div class="row">
-      <div class="card w-100">
-        <div class="card-body">
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item" *ngFor="let topic of topics">
-              <h3>{{ topic.title }}</h3>
-              <div class="mt-3 mb-3">
-                <a [routerLink]="['/topic', topic.id, 'theory']" class="btn btn-outline-info" title="Learn">Learn</a>
-                <a *ngIf="topic.hasQuestions" [routerLink]="['/topic', topic.id, 'exam']" class="btn btn-outline-success" title="Exam">Exam</a>
-              </div>
-            </li>
-          </ul>
+    <div class="col-md-8">
+        <div class="row">
+            <span class="display-4 text-right d-inline-block w-100 mb-5">Topics</span>
         </div>
-      </div>
+        <div class="row">
+            <div class="card w-100">
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" *ngFor="let topic of topics">
+                            <h3>{{ topic.title }}</h3>
+                            <div class="mt-3 mb-3">
+                                <a [routerLink]="getTheoryPageRoute(topic.id)" class="btn btn-outline-info" title="Learn">Learn</a>
+                                <a *ngIf="topic.hasQuestions" [routerLink]="getExamPageRoute(topic.id)" class="btn btn-outline-success" title="Exam">Exam</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
