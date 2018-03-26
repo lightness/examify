@@ -22,8 +22,6 @@ export class AuthService {
 
         if (token) {
             this.emitCurrentUser(token);
-        } else {
-            this.router.navigate(["/login"]);
         }
     }
 
