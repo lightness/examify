@@ -9,7 +9,7 @@
     <p>In according with permissions, you can view statistics of any user</p>
 
     <select [(ngModel)]="selectedUserId">
-        <option *ngFor="let user of allUsers" [value]="user.id">{{ user.name }}</option>
+        <option *ngFor="let user of allUsers" [value]="user.id">(ID: {{ user.id }}) {{ user.name }}</option>
     </select>
 
     <button class="btn btn-primary" (click)="goToUserStatistics()">View statistics</button>
