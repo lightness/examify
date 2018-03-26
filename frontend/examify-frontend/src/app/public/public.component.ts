@@ -1,3 +1,4 @@
+import { ActivatedRoute } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 
 import { Topic } from "../common/entity/topic.entity";
@@ -14,15 +15,12 @@ export class PublicComponent implements OnInit {
     private topics: Topic[];
 
     constructor(
-        private commonApiService: CommonApiService
+        private activatedRoute: ActivatedRoute
     ) {
     }
 
     public ngOnInit() {
-        this.commonApiService.getAllTopics()
-            .subscribe((topics: Topic[]) => {
-                this.topics = topics;
-            });
+        this.topics = this.activatedRoute.snapshot.data["topics"];
     }
 
 }
