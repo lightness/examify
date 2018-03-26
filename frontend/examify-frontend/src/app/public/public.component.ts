@@ -2,7 +2,6 @@ import { ActivatedRoute } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 
 import { Topic } from "../common/entity/topic.entity";
-import { CommonApiService } from "../common/common-api.service";
 
 
 @Component({
