@@ -13,7 +13,21 @@
                     <a class="nav-link" [routerLink]="topicsManagePageRoute">Manage Content</a>
                 </li>
                 <li class="nav-item" *ngIf="isAuthenticated && canManageStuff">
-                    <a class="nav-link" [routerLink]="usersManagePageRoute">Manage Stuff</a>
+                    <ul class="navbar-nav ml-auto mt-2 mt-md-0">
+                        <li ngbDropdown class="nav-item dropdown d-inline-block">
+                            <span href="javascript://" title="Manage Stuff" class="nav-link d-inline-block" ngbDropdownToggle id="dropdownBasicLogin">
+                                Manage Stuff
+                            </span>
+                            <div ngbDropdownMenu aria-labelledby="dropdownBasicLogin">
+                                <a class="dropdown-item" [routerLink]="usersManagePageRoute" title="Manage users">
+                                    Manage users
+                                </a>
+                                <a class="dropdown-item" [routerLink]="rolesManagePageRoute" title="Manage roles">
+                                    Manage roles
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" [routerLink]="examSelectPageRoute">Exam</a>
