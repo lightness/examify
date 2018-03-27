@@ -1,0 +1,35 @@
+<h3 *ngIf="!user.id" class="display-4 text-right">New User</h3>
+<h3 *ngIf="user.id" class="display-4 text-right">User ID #{{ user.id }}</h3>
+
+<form>
+    <div class="form-group">
+        <label for="input-name">Name</label>
+        <input id="input-name" type="text" [(ngModel)]="user.name" name="name" class="form-control" placeholder="Username" />
+    </div>
+
+    <div class="form-group" *ngIf="!user.id">
+        <label for="input-password">Password</label>
+        <input id="input-password" type="password" [(ngModel)]="user.password" name="password" class="form-control" placeholder="Secret" />
+    </div>
+
+    <div class="form-group">
+        <label for="multiselect-roles">Roles</label>
+        <ss-multiselect-dropdown id="multiselect-roles" name="roles" [options]="allRoles" [(ngModel)]="roleIds" [settings]="multiselectSettings"
+            (ngModelChange)="onRolesChange($event)">
+        </ss-multiselect-dropdown>
+    </div>
+
+    <button (click)="save()" class="btn btn-success">
+        <i class="fa fa-save"></i>
+        {{ user.id ? "Update" : "Create" }}
+    </button>
+
+    <div class="float-right">
+        <button *ngIf="user.id" (click)="deleteUser()" class="btn btn-outline-danger">
+            <i class="fa fa-times"></i>
+            Delete user
+        </button>
+        <a [routerLink]="usersManagePageRoute" class="btn btn-link">To Users List</a>
+    </div>
+
+</form>

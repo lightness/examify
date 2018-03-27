@@ -1,5 +1,12 @@
 <h3 class="display-4 text-right">Users</h3>
 
+<div class="add-user-btn">
+    <a [routerLink]="userAddPageRoute" class="btn btn-success">
+        <i class="fas fa-plus"></i>
+        Add User
+    </a>
+</div>
+
 <table class="table">
     <thead>
         <tr>
@@ -26,5 +33,3 @@
         </tr>
     </tbody>
 </table>
-
-{{ users | json }}

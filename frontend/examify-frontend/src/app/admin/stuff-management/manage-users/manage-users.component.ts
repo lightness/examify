@@ -25,8 +25,12 @@ export class ManageUsersComponent {
         this.users = this.activatedRoute.snapshot.data["users"];
     }
 
+    private get userAddPageRoute() {
+        return this.routingService.getUserAddPage();
+    }
+
     private getUserEditPageRoute(userId: number) {
-        this.routingService.getUserEditPage(userId);
+        return this.routingService.getUserEditPage(userId);
     }
 
     private beautifyRoles(roles: Role[]): string {
@@ -45,7 +49,7 @@ export class ManageUsersComponent {
     }
 
     private fetchUsers() {
-        this.commonApiService.getAllUsersWithRoles()
+        this.commonApiService.getAllUsers()
             .subscribe(users => {
                 this.users = users;
             });

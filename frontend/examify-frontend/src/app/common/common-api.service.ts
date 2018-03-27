@@ -8,6 +8,7 @@ import { Question } from "../common/entity/question.entity";
 import { ApiService } from "../common/api.service";
 import { Permission } from "./entity/permission.enum";
 import { User } from "./entity/user.entity";
+import { Role } from "./entity/role.entity";
 
 
 @Injectable()
@@ -80,16 +81,28 @@ export class CommonApiService {
             );
     }
 
+    public getUser(userId: number): Observable<User> {
+        return this.apiService.get(`/users/${userId}`);
+    }
+
     public getAllUsers(): Observable<User[]> {
         return this.apiService.get(`/users`);
     }
 
-    public getAllUsersWithRoles(): Observable<User[]> {
-        return this.apiService.get(`/users?withRoles=true`);
+    public createUser(user: User): Observable<User> {
+        return this.apiService.post(`/users`, user);
+    }
+
+    public updateUser(user: User): Observable<User> {
+        return this.apiService.put(`/users/${user.id}`, user);
     }
 
     public deleteUser(userId: number): Observable<void> {
         return this.apiService.delete(`/users/${userId}`);
+    }
+
+    public getAllRoles(): Observable<Role[]> {
+        return this.apiService.get(`/roles`);
     }
 }
 

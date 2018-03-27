@@ -1,5 +1,5 @@
 import { Response, Request } from "express";
-import { Body, Controller, Get, HttpStatus, Param, Post, Req, Res, Query, Delete, ParseIntPipe } from "@nestjs/common";
+import { Body, Controller, Get, HttpStatus, Param, Post, Req, Res, Query, Delete, ParseIntPipe, Put } from "@nestjs/common";
 
 import { User } from "./user.entity";
 import { UserService } from "./user.service";
@@ -9,21 +9,20 @@ import { UserService } from "./user.service";
 export class UserController {
 
     public constructor(
-        protected userService: UserService) {
+        protected userService: UserService
+    ) {
     }
 
     @Get()
-    public async getAll( @Res() res: Response, @Query("withRoles") withRoles) {
-        let users: User[] = withRoles
-            ? await this.userService.getAllWithRoles()
-            : await this.userService.getAll();
+    public async getAll( @Res() res: Response) {
+        let users: User[] = await this.userService.getAll();
 
         res.status(HttpStatus.OK).json(users);
     }
 
     @Get("/:id")
-    public async getById( @Res() res: Response, @Param("id") id: string) {
-        let user: User = await this.userService.getById(+id);
+    public async getById( @Res() res: Response, @Param("id", new ParseIntPipe()) id: number) {
+        let user: User = await this.userService.getById(id);
 
         res.status(HttpStatus.OK).json(user);
     }
@@ -33,6 +32,13 @@ export class UserController {
         let createdUser: User = await this.userService.add(user);
 
         res.status(HttpStatus.OK).json(createdUser);
+    }
+
+    @Put("/:id")
+    public async update( @Res() res: Response, @Body() user: User) {
+        let updatedUser: User = await this.userService.update(user);
+
+        res.status(HttpStatus.OK).json(updatedUser);
     }
 
     @Get("/:id/roles")

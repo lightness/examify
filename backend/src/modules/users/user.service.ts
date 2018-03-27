@@ -1,7 +1,8 @@
 import * as _ from "lodash";
 import * as bcrypt from "bcrypt";
+import * as Bluebird from "bluebird";
 import { Component } from "@nestjs/common";
-import { Repository } from "typeorm";
+import { Repository, Transaction, TransactionRepository } from "typeorm";
 
 import { User } from "./user.entity";
 import { Role } from "../roles/role.entity";
@@ -42,6 +43,20 @@ export class UserService extends ServiceBase<User> implements Service<User> {
         }
 
         return super.add(user);
+    }
+
+    public async update(user: User): Promise<User> {
+        return this.repository.save(user);
+    }
+
+    public async getById(id: number, options?: { repository: Repository<User> }): Promise<User> {
+        let repository: Repository<User> = options && options.repository || this.repository;
+
+        let user: User = await repository.findOneById(id);
+
+        user = _.omit(user, "password") as User;
+
+        return user;
     }
 
     public async getAll(): Promise<User[]> {

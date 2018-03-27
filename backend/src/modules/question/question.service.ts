@@ -67,7 +67,6 @@ export class QuestionService extends ServiceBase<Question> implements Service<Qu
         await questionRepository.updateById(question.id, questionWithoutAnswers);
 
         let existingQuestion: Question = await this.getById(question.id, { repository: questionRepository });
-        let existingAnswers: Answer[] = existingQuestion.answers;
 
         let answersToDelete: Answer[] = _.differenceWith(existingQuestion.answers, question.answers, (existingAnswer: Answer, newAnswer: Answer) => {
             return existingAnswer.id === newAnswer.id;

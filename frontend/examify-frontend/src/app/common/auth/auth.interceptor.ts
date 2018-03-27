@@ -39,8 +39,10 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     private handleError(error): void {
-        if (error instanceof HttpErrorResponse && error.status == 401) {
-            this.authService.signOut();
+        if (error instanceof HttpErrorResponse) {
+            if (error.status == 401 || error.status == 403) {
+                this.authService.signOut();
+            }
         }
     }
 }

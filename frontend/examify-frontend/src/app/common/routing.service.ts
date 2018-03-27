@@ -37,6 +37,10 @@ export class RoutingService {
         return ["/admin", "stuff-management", "users"];
     }
 
+    public getUserAddPage() {
+        return ["/admin", "stuff-management", "user", "new"];
+    }
+
     public getUserEditPage(userId: number) {
         return ["/admin", "stuff-management", "user", userId];
     }

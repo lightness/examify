@@ -3,14 +3,14 @@ import { Observable } from "rxjs/Observable";
 import { Injectable } from "@angular/core";
 import { Resolve, ActivatedRouteSnapshot } from "@angular/router";
 
-import { User } from "../entity/user.entity";
+import { Role } from "../entity/role.entity";
 import { AuthService } from "../auth/auth.service";
 import { CommonApiService } from "../common-api.service";
 import { Permission } from "../entity/permission.enum";
 
 
 @Injectable()
-export class AllUsersWithRolesResolver implements Resolve<User[]> {
+export class AllRolesResolver implements Resolve<Role[]> {
 
     public constructor(
         private authService: AuthService,
@@ -18,12 +18,12 @@ export class AllUsersWithRolesResolver implements Resolve<User[]> {
     ) {
     }
 
-    public resolve(route: ActivatedRouteSnapshot): Observable<User[]> {
+    public resolve(route: ActivatedRouteSnapshot): Observable<Role[]> {
         if (!this.authService.hasPermissions([Permission.MANAGE_STUFF])) {
             return Observable.of(null);
         }
 
-        return this.commonApiService.getAllUsersWithRoles();
+        return this.commonApiService.getAllRoles();
     }
 
 }

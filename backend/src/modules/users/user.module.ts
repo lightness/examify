@@ -3,13 +3,13 @@ import { Module, MiddlewaresConsumer, RequestMethod } from "@nestjs/common";
 
 import { AuthModule } from "../auth/auth.module";
 import { Permission } from "../auth/permission.enum";
-import { BaseModule, PermissionMapping } from "../../common/base.module";
 import { UserService } from "./user.service";
 import { UserController } from "./user.controller";
 import { DatabaseModule } from "../database/database.module";
 import { LoggingMiddleware } from "../../middleware/logging.middleware";
 import { AuthorizeMiddleware } from "../../middleware/authorize.middleware";
 import { AuthenticateMiddleware } from "../../middleware/authenticate.middleware";
+import { BaseModule, PermissionMapping } from "../../common/base.module";
 
 
 @Module({
