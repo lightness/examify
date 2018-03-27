@@ -104,6 +104,22 @@ export class CommonApiService {
     public getAllRoles(): Observable<Role[]> {
         return this.apiService.get(`/roles`);
     }
+
+    public getRole(roleId: number): Observable<Role> {
+        return this.apiService.get(`/roles/${roleId}`);
+    }
+
+    public createRole(role: Role): Observable<Role[]> {
+        return this.apiService.post(`/roles`, role);
+    }
+
+    public updateRole(role: Role): Observable<Role[]> {
+        return this.apiService.put(`/roles/${role.id}`, role);
+    }
+
+    public deleteRole(roleId: number): Observable<void> {
+        return this.apiService.delete(`/roles/${roleId}`);
+    }
 }
 
 export interface UserExamHistoryDto {

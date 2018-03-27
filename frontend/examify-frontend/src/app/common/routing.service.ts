@@ -45,6 +45,18 @@ export class RoutingService {
         return ["/admin", "stuff-management", "user", userId];
     }
 
+    public getRolesManagePage() {
+        return ["/admin", "stuff-management", "roles"];
+    }
+
+    public getRoleAddPage() {
+        return ["/admin", "stuff-management", "role", "new"];
+    }
+
+    public getRoleEditPage(roleId: number) {
+        return ["/admin", "stuff-management", "role", roleId];
+    }
+
     public getStatisticsRootPage() {
         return ["/dashboard", "statistics"];
     }

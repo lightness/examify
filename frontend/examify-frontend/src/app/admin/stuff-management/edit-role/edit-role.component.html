@@ -1,0 +1,35 @@
+<h3 *ngIf="!role.id" class="display-4 text-right">New Role</h3>
+<h3 *ngIf="role.id" class="display-4 text-right">Role "{{ role.name }}"</h3>
+
+<form>
+    <div class="form-group">
+        <label for="input-name">Name</label>
+        <input id="input-name" type="text" [(ngModel)]="role.name" name="name" class="form-control" placeholder="Some Role" />
+    </div>
+
+    <div class="form-group">
+        <label for="input-code">Code</label>
+        <input id="input-code" type="text" [(ngModel)]="role.code" name="code" class="form-control" placeholder="some-role" />
+    </div>
+
+    <div class="form-group">
+        <label for="multiselect-permissions">Permissions</label>
+        <ss-multiselect-dropdown id="multiselect-permissions" name="permissions" [options]="allPermissions" [(ngModel)]="selectedPermissions" [settings]="multiselectSettings"
+            (ngModelChange)="onPermissionsChange($event)">
+        </ss-multiselect-dropdown>
+    </div>
+
+    <button (click)="save()" class="btn btn-success">
+        <i class="fa fa-save"></i>
+        {{ role.id ? "Update" : "Create" }}
+    </button>
+
+    <div class="float-right">
+        <button *ngIf="role.id" (click)="deleteRole()" class="btn btn-outline-danger">
+            <i class="fa fa-times"></i>
+            Delete role
+        </button>
+        <a [routerLink]="rolesManagePageRoute" class="btn btn-link">To Roles List</a>
+    </div>
+
+</form>

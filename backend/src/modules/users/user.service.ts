@@ -45,10 +45,6 @@ export class UserService extends ServiceBase<User> implements Service<User> {
         return super.add(user);
     }
 
-    public async update(user: User): Promise<User> {
-        return this.repository.save(user);
-    }
-
     public async getById(id: number, options?: { repository: Repository<User> }): Promise<User> {
         let repository: Repository<User> = options && options.repository || this.repository;
 

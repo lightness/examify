@@ -14,7 +14,7 @@ export class User extends EntityBase {
     @Column()
     public password: string;
 
-    @ManyToMany(type => Role, { cascadeInsert: true, cascadeUpdate: true, eager: true })
+    @ManyToMany(type => Role, role => role.users, { cascadeInsert: true, cascadeUpdate: true, eager: true })
     @JoinTable({ name: "user_role" })
     public roles: Role[];
 

@@ -8,7 +8,8 @@ import { EntityBase } from "../../common/base-entity";
 @Entity()
 export class RolePermission extends EntityBase {
 
-    @ManyToOne(type => Role, role => role.rolePermissions)
+    @ManyToOne(type => Role, role => role.rolePermissions, { onDelete: "CASCADE" })
+    @JoinColumn({ name: "roleId" })
     public role: Role;
 
     @Column({ type: "varchar", enum: Permission })

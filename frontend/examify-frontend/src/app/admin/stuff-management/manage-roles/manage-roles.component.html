@@ -1,0 +1,37 @@
+<h3 class="display-4 text-right">Roles</h3>
+
+<div class="add-role-btn">
+    <a [routerLink]="roleAddPageRoute" class="btn btn-success">
+        <i class="fas fa-plus"></i>
+        Add Role
+    </a>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Code</th>
+            <th>Permissions</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let role of roles">
+            <td>{{ role.id }}</td>
+            <td>{{ role.name }}</td>
+            <td>{{ role.code }}</td>
+            <td>{{ beautifyPermissions(role.rolePermissions) }}</td>
+            <td>
+                <a class="btn btn-sm btn-warning" [routerLink]="getRoleEditPageRoute(role.id)"> 
+                    <i class="fa fa-pencil"></i>
+                </a>
+
+                <button class="btn btn-sm btn-danger" (click)="deleteRole(role.id)">
+                    <i class="fa fa-times"></i>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -49,7 +49,7 @@ export class ManageUsersComponent {
     }
 
     private fetchUsers() {
-        this.commonApiService.getAllUsers()
+        this.commonApiService.getAllRoles()
             .subscribe(users => {
                 this.users = users;
             });

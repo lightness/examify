@@ -18,6 +18,7 @@ import { AllRolesResolver } from "./common/resolvers/all-roles.resolver";
 import { AllTopicsResolver } from "./common/resolvers/all-topics.resolver";
 import { CalculationsService } from "./common/calculations.service";
 import { QuestionsByTopicResolver } from "./common/resolvers/questions-by-topic.resolver";
+import { RoleResolver } from "./common/resolvers/role.resolver";
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { QuestionsByTopicResolver } from "./common/resolvers/questions-by-topic.
         UserResolver,
         QuestionResolver,
         QuestionsByTopicResolver,
-        TopicResolver
+        TopicResolver,
+        RoleResolver,
 
     ],
     bootstrap: [AppComponent]
