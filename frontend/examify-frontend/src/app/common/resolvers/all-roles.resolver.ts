@@ -4,9 +4,9 @@ import { Injectable } from "@angular/core";
 import { Resolve, ActivatedRouteSnapshot } from "@angular/router";
 
 import { Role } from "../entity/role.entity";
+import { Permission } from "../entity/permission.enum";
 import { AuthService } from "../auth/auth.service";
 import { CommonApiService } from "../common-api.service";
-import { Permission } from "../entity/permission.enum";
 
 
 @Injectable()

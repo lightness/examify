@@ -14,17 +14,17 @@
     </div>
 
     <button (click)="save()" class="btn btn-success">
-        <i class="fas fa-save"></i>
+        <i class="fa fa-save"></i>
         {{ topic.id ? "Update" : "Create" }}
     </button>
     <a [routerLink]="questionsManagePageRoute" class="btn btn-primary" *ngIf="topic.id">
-        <i class="fas fa-list"></i>
+        <i class="fa fa-list"></i>
         Manage Questions
     </a>
 
     <div class="float-right">
         <button *ngIf="topic.id" (click)="deleteTopic()" class="btn btn-outline-danger">
-            <i class="fas fa-times"></i>
+            <i class="fa fa-times"></i>
             Delete Topic
         </button>
         <a [routerLink]="topicsPageRoute" class="btn btn-link">To Topic List</a>

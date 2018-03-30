@@ -25,11 +25,11 @@
                 Total questions
                 <button (click)="addMetric('totalQuestionsAmount')" *ngIf="!isMetricShown('totalQuestionsAmount')"
                     class="btn btn-sm btn-primary float-right">
-                    <i class="fas fa-plus"></i>
+                    <i class="fa fa-plus"></i>
                 </button>
                 <button (click)="deleteMetric('totalQuestionsAmount')" *ngIf="isMetricShown('totalQuestionsAmount')"
                     class="btn btn-sm btn-primary float-right">
-                    <i class="fas fa-minus"></i>
+                    <i class="fa fa-minus"></i>
                 </button>
             </td>
             <td>{{ statistics.totalQuestionsAmount.min | number : '1.0-2' }}</td>
@@ -46,11 +46,11 @@
                 Answered Questions
                 <button (click)="addMetric('answeredQuestionsAmount')" *ngIf="!isMetricShown('answeredQuestionsAmount')"
                     class="btn btn-sm btn-primary float-right">
-                    <i class="fas fa-plus"></i>
+                    <i class="fa fa-plus"></i>
                 </button>
                 <button (click)="deleteMetric('answeredQuestionsAmount')" *ngIf="isMetricShown('answeredQuestionsAmount')"
                     class="btn btn-sm btn-primary float-right">
-                    <i class="fas fa-minus"></i>
+                    <i class="fa fa-minus"></i>
                 </button>
             </td>
             <td>{{ statistics.answeredQuestionsAmount.min | number : '1.0-2' }}</td>
@@ -67,11 +67,11 @@
                 Correctly Answered Questions
                 <button (click)="addMetric('correctlyAnsweredQuestionsAmount')" *ngIf="!isMetricShown('correctlyAnsweredQuestionsAmount')"
                     class="btn btn-sm btn-primary float-right">
-                    <i class="fas fa-plus"></i>
+                    <i class="fa fa-plus"></i>
                 </button>
                 <button (click)="deleteMetric('correctlyAnsweredQuestionsAmount')" *ngIf="isMetricShown('correctlyAnsweredQuestionsAmount')"
                     class="btn btn-sm btn-primary float-right">
-                    <i class="fas fa-minus"></i>
+                    <i class="fa fa-minus"></i>
                 </button>
             </td>
             <td>{{ statistics.correctlyAnsweredQuestionsAmount.min | number : '1.0-2' }}</td>
@@ -87,10 +87,10 @@
             <td>
                 Wrong Answered Questions
                 <button (click)="addMetric('wrongAnsweredQuestionsAmount')" *ngIf="!isMetricShown('wrongAnsweredQuestionsAmount')" class="btn btn-sm btn-primary float-right">
-                    <i class="fas fa-plus"></i>
+                    <i class="fa fa-plus"></i>
                 </button>
                 <button (click)="deleteMetric('wrongAnsweredQuestionsAmount')" *ngIf="isMetricShown('wrongAnsweredQuestionsAmount')" class="btn btn-sm btn-primary float-right">
-                    <i class="fas fa-minus"></i>
+                    <i class="fa fa-minus"></i>
                 </button>
             </td>
             <td>{{ statistics.wrongAnsweredQuestionsAmount.min | number : '1.0-2' }}</td>
@@ -106,10 +106,10 @@
             <td>
                 Missed Questions
                 <button (click)="addMetric('missedQuestionsAmount')" *ngIf="!isMetricShown('missedQuestionsAmount')" class="btn btn-sm btn-primary float-right">
-                    <i class="fas fa-plus"></i>
+                    <i class="fa fa-plus"></i>
                 </button>
                 <button (click)="deleteMetric('missedQuestionsAmount')" *ngIf="isMetricShown('missedQuestionsAmount')" class="btn btn-sm btn-primary float-right">
-                    <i class="fas fa-minus"></i>
+                    <i class="fa fa-minus"></i>
                 </button>
             </td>
             <td>{{ statistics.missedQuestionsAmount.min | number : '1.0-2' }}</td>
